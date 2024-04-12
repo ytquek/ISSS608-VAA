@@ -1,11 +1,10 @@
 ---
 title: "ISSS608-VAA"
+last edit: 
 ---
 
-This is a Quarto website.
+This is a YT's Quadro website for Year 2024 TSKAM's Visual Analytics Course.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
-```{r}
-1 + 1g
-```
+
+
