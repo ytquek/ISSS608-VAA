@@ -25,7 +25,7 @@
     "href": "hands_on_ex1.html#visualising-data-in-histogram-in-bins",
     "title": "Hands_on_ex1",
     "section": "Visualising data in Histogram in bins",
-    "text": "Visualising data in Histogram in bins\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\nAdding colors\n{r}\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
+    "text": "Visualising data in Histogram in bins\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\nAdding colors\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
   },
   {
     "objectID": "hands_on_ex1.html#visualising-data-with-data-plotlines---geomdensity",
