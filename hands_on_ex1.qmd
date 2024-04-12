@@ -117,3 +117,46 @@ ggplot(data=exam_data,
   geom_point(position="jitter", 
              size = 0.5)        
 ```
+
+## Working with Essential Grammatical Elements in ggplot2: stat
+
+### Working with stat summary
+```{r}
+
+ggplot(data=exam_data, 
+       aes(y = MATHS, x= GENDER)) +
+  geom_boxplot() +
+  stat_summary(geom = "point",       
+               fun="mean",         
+               colour ="red",        
+               size=4)               
+
+```
+### Overriding soothing methods
+```{r}
+ggplot(data=exam_data, 
+       aes(x= MATHS, 
+           y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5)
+```
+
+## Working with Essential Grammatical Elements in ggplot2: Facet
+
+### Using Facetwraps
+```{r}
+ggplot(data=exam_data, 
+       aes(x= MATHS)) +
+  geom_histogram(bins=20) +
+    facet_wrap(~ CLASS)
+```
+
+### Using Facet Grid
+```{r}
+ggplot(data=exam_data, 
+       aes(x= MATHS)) +
+  geom_histogram(bins=20) +
+    facet_grid(~ CLASS)
+```
+

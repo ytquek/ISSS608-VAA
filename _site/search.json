@@ -63,6 +63,20 @@
     "text": "Combining boxplot with scatter plot\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot() +                    \n  geom_point(position=\"jitter\", \n             size = 0.5)"
   },
   {
+    "objectID": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-stat",
+    "href": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-stat",
+    "title": "Hands_on_ex1",
+    "section": "Working with Essential Grammatical Elements in ggplot2: stat",
+    "text": "Working with Essential Grammatical Elements in ggplot2: stat\n\nWorking with stat summary\n\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot() +\n  stat_summary(geom = \"point\",       \n               fun=\"mean\",         \n               colour =\"red\",        \n               size=4)               \n\n\n\n\n\n\nOverriding soothing methods\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5)\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n`geom_smooth()` using formula = 'y ~ x'"
+  },
+  {
+    "objectID": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-facet",
+    "href": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-facet",
+    "title": "Hands_on_ex1",
+    "section": "Working with Essential Grammatical Elements in ggplot2: Facet",
+    "text": "Working with Essential Grammatical Elements in ggplot2: Facet\n\nUsing Facetwraps\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)\n\n\n\n\n\n\nUsing Facet Grid\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "ISSS608-VAA",

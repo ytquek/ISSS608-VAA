@@ -155,6 +155,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#visualising-data-with-violin-plot---geomviolin" id="toc-visualising-data-with-violin-plot---geomviolin" class="nav-link" data-scroll-target="#visualising-data-with-violin-plot---geomviolin">Visualising data with violin plot - geomviolin()</a></li>
   <li><a href="#visualising-data-in-scatterplot" id="toc-visualising-data-in-scatterplot" class="nav-link" data-scroll-target="#visualising-data-in-scatterplot">Visualising data in scatterplot</a></li>
   <li><a href="#combining-boxplot-with-scatter-plot" id="toc-combining-boxplot-with-scatter-plot" class="nav-link" data-scroll-target="#combining-boxplot-with-scatter-plot">Combining boxplot with scatter plot</a></li>
+  <li><a href="#working-with-essential-grammatical-elements-in-ggplot2-stat" id="toc-working-with-essential-grammatical-elements-in-ggplot2-stat" class="nav-link" data-scroll-target="#working-with-essential-grammatical-elements-in-ggplot2-stat">Working with Essential Grammatical Elements in ggplot2: stat</a>
+  <ul class="collapse">
+  <li><a href="#working-with-stat-summary" id="toc-working-with-stat-summary" class="nav-link" data-scroll-target="#working-with-stat-summary">Working with stat summary</a></li>
+  <li><a href="#overriding-soothing-methods" id="toc-overriding-soothing-methods" class="nav-link" data-scroll-target="#overriding-soothing-methods">Overriding soothing methods</a></li>
+  </ul></li>
+  <li><a href="#working-with-essential-grammatical-elements-in-ggplot2-facet" id="toc-working-with-essential-grammatical-elements-in-ggplot2-facet" class="nav-link" data-scroll-target="#working-with-essential-grammatical-elements-in-ggplot2-facet">Working with Essential Grammatical Elements in ggplot2: Facet</a>
+  <ul class="collapse">
+  <li><a href="#using-facetwraps" id="toc-using-facetwraps" class="nav-link" data-scroll-target="#using-facetwraps">Using Facetwraps</a></li>
+  <li><a href="#using-facet-grid" id="toc-using-facet-grid" class="nav-link" data-scroll-target="#using-facet-grid">Using Facet Grid</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -335,8 +345,74 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 <p><img src="hands_on_ex1_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="working-with-essential-grammatical-elements-in-ggplot2-stat" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-essential-grammatical-elements-in-ggplot2-stat">Working with Essential Grammatical Elements in ggplot2: stat</h2>
+<section id="working-with-stat-summary" class="level3">
+<h3 class="anchored" data-anchor-id="working-with-stat-summary">Working with stat summary</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>,       </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun=</span><span class="st">"mean"</span>,         </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span><span class="st">"red"</span>,        </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">size=</span><span class="dv">4</span>)               </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="hands_on_ex1_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="overriding-soothing-methods" class="level3">
+<h3 class="anchored" data-anchor-id="overriding-soothing-methods">Overriding soothing methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>ENGLISH)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="hands_on_ex1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="working-with-essential-grammatical-elements-in-ggplot2-facet" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-essential-grammatical-elements-in-ggplot2-facet">Working with Essential Grammatical Elements in ggplot2: Facet</h2>
+<section id="using-facetwraps" class="level3">
+<h3 class="anchored" data-anchor-id="using-facetwraps">Using Facetwraps</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> CLASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="hands_on_ex1_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="using-facet-grid" class="level3">
+<h3 class="anchored" data-anchor-id="using-facet-grid">Using Facet Grid</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span> CLASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="hands_on_ex1_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
