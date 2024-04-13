@@ -8,7 +8,9 @@ warning: false
 freeze: true
 ---
 
-##Step 1: Installing the required libraries
+## Loading R packages
+
+In the code chunk below, [`p_load()`] of pacman pkg is used to load tidyverse family of packages.
 
 ```{r}
 pacman::p_load(tidyverse)
@@ -17,4 +19,7 @@ pacman::p_load(tidyverse)
 ```{r}
 realis <- read_csv("data/realis2019.csv")
 ```
+```{r}
+ggplot(data = realis, aes(x = `Unit Price ($ psm)`)) + geom_histogram()
 
+```
