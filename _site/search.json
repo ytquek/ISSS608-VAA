@@ -1,80 +1,24 @@
 [
   {
-    "objectID": "hands_on_ex1.html",
-    "href": "hands_on_ex1.html",
-    "title": "Hands_on_ex1",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "##Step 1: Installing the required libraries\npacman::p_load(tidyverse)"
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
-    "objectID": "hands_on_ex1.html#visualising-data-in-histogram",
-    "href": "hands_on_ex1.html#visualising-data-in-histogram",
-    "title": "Hands_on_ex1",
-    "section": "Visualising data in Histogram",
-    "text": "Visualising data in Histogram\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar()"
+    "objectID": "In_class_ex/In-class_Ex01.html",
+    "href": "In_class_ex/In-class_Ex01.html",
+    "title": "In-class_ex1",
+    "section": "",
+    "text": "In the code chunk below, [p_load()] of pacman pkg is used to load tidyverse family of packages.\n\npacman::p_load(tidyverse)\n\n\nrealis &lt;- read_csv(\"data/realis2019.csv\")\n\n\nggplot(data = realis, aes(x = `Unit Price ($ psm)`)) + geom_histogram()"
   },
   {
-    "objectID": "hands_on_ex1.html#visualising-data-in-dotplot",
-    "href": "hands_on_ex1.html#visualising-data-in-dotplot",
-    "title": "Hands_on_ex1",
-    "section": "Visualising data in Dotplot",
-    "text": "Visualising data in Dotplot\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(binwidth=2.5,         \n               dotsize = 0.5) +      \n  scale_y_continuous(NULL,           \n                     breaks = NULL)"
-  },
-  {
-    "objectID": "hands_on_ex1.html#visualising-data-in-histogram-in-bins",
-    "href": "hands_on_ex1.html#visualising-data-in-histogram-in-bins",
-    "title": "Hands_on_ex1",
-    "section": "Visualising data in Histogram in bins",
-    "text": "Visualising data in Histogram in bins\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\nAdding colors\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
-  },
-  {
-    "objectID": "hands_on_ex1.html#visualising-data-with-data-plotlines---geomdensity",
-    "href": "hands_on_ex1.html#visualising-data-with-data-plotlines---geomdensity",
-    "title": "Hands_on_ex1",
-    "section": "Visualising data with data plotlines - geomdensity()",
-    "text": "Visualising data with data plotlines - geomdensity()\n\nggplot(data=exam_data, \n       aes(x = MATHS, \n           colour = GENDER)) +\n  geom_density()"
-  },
-  {
-    "objectID": "hands_on_ex1.html#visualising-data-with-boxplot-diagrams",
-    "href": "hands_on_ex1.html#visualising-data-with-boxplot-diagrams",
-    "title": "Hands_on_ex1",
-    "section": "Visualising data with Boxplot diagrams",
-    "text": "Visualising data with Boxplot diagrams\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot(notch=TRUE)"
-  },
-  {
-    "objectID": "hands_on_ex1.html#visualising-data-with-violin-plot---geomviolin",
-    "href": "hands_on_ex1.html#visualising-data-with-violin-plot---geomviolin",
-    "title": "Hands_on_ex1",
-    "section": "Visualising data with violin plot - geomviolin()",
-    "text": "Visualising data with violin plot - geomviolin()\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_violin()"
-  },
-  {
-    "objectID": "hands_on_ex1.html#visualising-data-in-scatterplot",
-    "href": "hands_on_ex1.html#visualising-data-in-scatterplot",
-    "title": "Hands_on_ex1",
-    "section": "Visualising data in scatterplot",
-    "text": "Visualising data in scatterplot\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point()"
-  },
-  {
-    "objectID": "hands_on_ex1.html#combining-boxplot-with-scatter-plot",
-    "href": "hands_on_ex1.html#combining-boxplot-with-scatter-plot",
-    "title": "Hands_on_ex1",
-    "section": "Combining boxplot with scatter plot",
-    "text": "Combining boxplot with scatter plot\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot() +                    \n  geom_point(position=\"jitter\", \n             size = 0.5)"
-  },
-  {
-    "objectID": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-stat",
-    "href": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-stat",
-    "title": "Hands_on_ex1",
-    "section": "Working with Essential Grammatical Elements in ggplot2: stat",
-    "text": "Working with Essential Grammatical Elements in ggplot2: stat\n\nWorking with stat summary\n\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot() +\n  stat_summary(geom = \"point\",       \n               fun=\"mean\",         \n               colour =\"red\",        \n               size=4)               \n\n\n\n\n\n\nOverriding soothing methods\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5)\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n`geom_smooth()` using formula = 'y ~ x'"
-  },
-  {
-    "objectID": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-facet",
-    "href": "hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-facet",
-    "title": "Hands_on_ex1",
-    "section": "Working with Essential Grammatical Elements in ggplot2: Facet",
-    "text": "Working with Essential Grammatical Elements in ggplot2: Facet\n\nUsing Facetwraps\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)\n\n\n\n\n\n\nUsing Facet Grid\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
+    "objectID": "In_class_ex/In-class_Ex01.html#loading-r-packages",
+    "href": "In_class_ex/In-class_Ex01.html#loading-r-packages",
+    "title": "In-class_ex1",
+    "section": "",
+    "text": "In the code chunk below, [p_load()] of pacman pkg is used to load tidyverse family of packages.\n\npacman::p_load(tidyverse)\n\n\nrealis &lt;- read_csv(\"data/realis2019.csv\")\n\n\nggplot(data = realis, aes(x = `Unit Price ($ psm)`)) + geom_histogram()"
   },
   {
     "objectID": "index.html",
@@ -84,10 +28,80 @@
     "text": "This is a YT’s Quadro website for Year 2024 TSKAM’s Visual Analytics Course."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "In_class_ex/hands_on_ex1.html",
+    "href": "In_class_ex/hands_on_ex1.html",
+    "title": "Hands_on_ex1",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "##Step 1: Installing the required libraries\npacman::p_load(tidyverse)"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#visualising-data-in-histogram",
+    "href": "In_class_ex/hands_on_ex1.html#visualising-data-in-histogram",
+    "title": "Hands_on_ex1",
+    "section": "Visualising data in Histogram",
+    "text": "Visualising data in Histogram\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar()"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#visualising-data-in-dotplot",
+    "href": "In_class_ex/hands_on_ex1.html#visualising-data-in-dotplot",
+    "title": "Hands_on_ex1",
+    "section": "Visualising data in Dotplot",
+    "text": "Visualising data in Dotplot\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(binwidth=2.5,         \n               dotsize = 0.5) +      \n  scale_y_continuous(NULL,           \n                     breaks = NULL)"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#visualising-data-in-histogram-in-bins",
+    "href": "In_class_ex/hands_on_ex1.html#visualising-data-in-histogram-in-bins",
+    "title": "Hands_on_ex1",
+    "section": "Visualising data in Histogram in bins",
+    "text": "Visualising data in Histogram in bins\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n\n\n\n\nAdding colors\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#visualising-data-with-data-plotlines---geomdensity",
+    "href": "In_class_ex/hands_on_ex1.html#visualising-data-with-data-plotlines---geomdensity",
+    "title": "Hands_on_ex1",
+    "section": "Visualising data with data plotlines - geomdensity()",
+    "text": "Visualising data with data plotlines - geomdensity()\n\nggplot(data=exam_data, \n       aes(x = MATHS, \n           colour = GENDER)) +\n  geom_density()"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#visualising-data-with-boxplot-diagrams",
+    "href": "In_class_ex/hands_on_ex1.html#visualising-data-with-boxplot-diagrams",
+    "title": "Hands_on_ex1",
+    "section": "Visualising data with Boxplot diagrams",
+    "text": "Visualising data with Boxplot diagrams\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot(notch=TRUE)"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#visualising-data-with-violin-plot---geomviolin",
+    "href": "In_class_ex/hands_on_ex1.html#visualising-data-with-violin-plot---geomviolin",
+    "title": "Hands_on_ex1",
+    "section": "Visualising data with violin plot - geomviolin()",
+    "text": "Visualising data with violin plot - geomviolin()\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_violin()"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#visualising-data-in-scatterplot",
+    "href": "In_class_ex/hands_on_ex1.html#visualising-data-in-scatterplot",
+    "title": "Hands_on_ex1",
+    "section": "Visualising data in scatterplot",
+    "text": "Visualising data in scatterplot\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point()"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#combining-boxplot-with-scatter-plot",
+    "href": "In_class_ex/hands_on_ex1.html#combining-boxplot-with-scatter-plot",
+    "title": "Hands_on_ex1",
+    "section": "Combining boxplot with scatter plot",
+    "text": "Combining boxplot with scatter plot\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot() +                    \n  geom_point(position=\"jitter\", \n             size = 0.5)"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-stat",
+    "href": "In_class_ex/hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-stat",
+    "title": "Hands_on_ex1",
+    "section": "Working with Essential Grammatical Elements in ggplot2: stat",
+    "text": "Working with Essential Grammatical Elements in ggplot2: stat\n\nWorking with stat summary\n\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot() +\n  stat_summary(geom = \"point\",       \n               fun=\"mean\",         \n               colour =\"red\",        \n               size=4)               \n\n\n\n\n\n\nOverriding soothing methods\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5)"
+  },
+  {
+    "objectID": "In_class_ex/hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-facet",
+    "href": "In_class_ex/hands_on_ex1.html#working-with-essential-grammatical-elements-in-ggplot2-facet",
+    "title": "Hands_on_ex1",
+    "section": "Working with Essential Grammatical Elements in ggplot2: Facet",
+    "text": "Working with Essential Grammatical Elements in ggplot2: Facet\n\nUsing Facetwraps\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)\n\n\n\n\n\n\nUsing Facet Grid\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
   }
 ]

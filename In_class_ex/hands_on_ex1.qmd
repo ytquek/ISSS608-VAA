@@ -16,7 +16,6 @@ freeze: true
 pacman::p_load(tidyverse)
 ```
 
-
 ### Importing the required data
 
 ```{r}
