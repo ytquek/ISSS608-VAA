@@ -1,5 +1,6 @@
 ---
 title: "Hands_on_ex1"
+author: "QUEK You Ting"
 ---
 
 ##Step 1: Installing the required libraries
@@ -121,6 +122,7 @@ ggplot(data=exam_data,
 ## Working with Essential Grammatical Elements in ggplot2: stat
 
 ### Working with stat summary
+
 ```{r}
 
 ggplot(data=exam_data, 
@@ -132,7 +134,9 @@ ggplot(data=exam_data,
                size=4)               
 
 ```
+
 ### Overriding soothing methods
+
 ```{r}
 ggplot(data=exam_data, 
        aes(x= MATHS, 
@@ -145,6 +149,7 @@ ggplot(data=exam_data,
 ## Working with Essential Grammatical Elements in ggplot2: Facet
 
 ### Using Facetwraps
+
 ```{r}
 ggplot(data=exam_data, 
        aes(x= MATHS)) +
@@ -153,10 +158,10 @@ ggplot(data=exam_data,
 ```
 
 ### Using Facet Grid
+
 ```{r}
 ggplot(data=exam_data, 
        aes(x= MATHS)) +
   geom_histogram(bins=20) +
     facet_grid(~ CLASS)
 ```
-
