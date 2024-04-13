@@ -1,0 +1,20 @@
+---
+title: "In-class_ex1"
+author: "You Ting"
+execute: 
+  eval: true
+echo: true
+warning: false
+freeze: true
+---
+
+##Step 1: Installing the required libraries
+
+```{r}
+pacman::p_load(tidyverse)
+```
+
+```{r}
+realis <- read_csv("data/realis2019.csv")
+```
+

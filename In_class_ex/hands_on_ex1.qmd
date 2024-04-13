@@ -1,6 +1,13 @@
 ---
 title: "Hands_on_ex1"
 author: "QUEK You Ting"
+date: "April 13, 2024"
+date-modified: "Last-Modified"
+execute: 
+  eval: true
+echo: true
+warning: false
+freeze: true
 ---
 
 ##Step 1: Installing the required libraries
@@ -8,6 +15,7 @@ author: "QUEK You Ting"
 ```{r}
 pacman::p_load(tidyverse)
 ```
+
 
 ### Importing the required data
 
