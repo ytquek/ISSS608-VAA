@@ -4,6 +4,11 @@ project:
 website:
   title: "ISSS608-VAA"
   navbar:
+    tools:
+      - icon: linkedin
+        href: personal.yout.ing
+      - icon: github
+        href: https:github.com/ytquek
     left:
       - text: In class Exercise
         menu: 
@@ -13,12 +18,16 @@ website:
         menu:
           - text: "Hands On Exercise 1"
             href: "In_class_ex/hands_on_ex1.html"
-        
-
+      - text: Take Home Exercise
+        menu:
+          - text: "Take Home Exercise 1"
+            href: "take_home_ex/take_home_ex1.html"
+    sidebar:
+    contents: auto
 
 format:
   html:
-    theme: cosmo
+    theme: flatly
     css: styles.css
     toc: true
 

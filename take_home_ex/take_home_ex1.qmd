@@ -1,0 +1,58 @@
+---
+title: "Take Home Exercise 1"
+author: "You Ting Quek"
+date: "April 15, 2024"
+date-modified: "Last-Modified"
+execute: 
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+# Background
+There are two major residential property market in Singapore, namely public and private housing. Public housing aims to meet the basic need of the general public with monthly household income less than or equal to S$14,000. For families with monthly household income more than S$14,000, they need to turn to the private residential market.
+
+# The Task
+Assuming the role of a graphical editor of a median company, you are requested to prepare minimum two and maximum three data visualisation to reveal the private residential market and sub-markets of Singapore for the 1st quarter of 2024
+
+## Data Source
+To accomplish the task, transaction data of REALIS (2023-2024) will be used.
+
+# Data visualisation 
+## Preparing the Data
+
+## Installing required packages
+```{r}
+pacman::p_load(tidyverse, ggplot2, dplyr)
+```
+
+### Data Preparation
+
+```{r}
+# Define the paths to the individual CSV files
+file1 <- "data/ResidentialTransaction20240308160536.csv"
+file2 <- "data/ResidentialTransaction20240308160736.csv"
+file3 <- "data/ResidentialTransaction20240308161009.csv"
+file4 <- "data/ResidentialTransaction20240308161109.csv"
+file5 <- "data/ResidentialTransaction20240414220633.csv"
+
+# Read the individual CSV files
+data1 <- read_csv(file1)
+data2 <- read_csv(file2)
+data3 <- read_csv(file3)
+data4 <- read_csv(file4)
+data5 <- read_csv(file5)
+
+# Combine the data frames into one
+combined_transaction <- bind_rows(data1, data2, data3, data4, data5)
+
+glimpse (combined_transaction)
+
+```
+### Duplicate checks
+
+
+## Price index for private residential properties for 1st Quarter 2024
+
+## Upgraders from HDB for 1st Quarter 2024
