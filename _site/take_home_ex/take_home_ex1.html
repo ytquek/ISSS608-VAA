@@ -168,20 +168,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#assignment-context" id="toc-assignment-context" class="nav-link active" data-scroll-target="#assignment-context">Assignment Context</a></li>
   <li><a href="#the-task" id="toc-the-task" class="nav-link" data-scroll-target="#the-task">The Task</a>
   <ul class="collapse">
   <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">Data Source</a></li>
   </ul></li>
-  <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation">Data visualisation</a>
+  <li><a href="#research" id="toc-research" class="nav-link" data-scroll-target="#research">Research</a>
   <ul class="collapse">
-  <li><a href="#preparing-the-data" id="toc-preparing-the-data" class="nav-link" data-scroll-target="#preparing-the-data">Preparing the Data</a></li>
-  <li><a href="#installing-required-packages" id="toc-installing-required-packages" class="nav-link" data-scroll-target="#installing-required-packages">Installing required packages</a>
+  <li><a href="#setting-up-the-environment" id="toc-setting-up-the-environment" class="nav-link" data-scroll-target="#setting-up-the-environment">Setting up the environment</a>
   <ul class="collapse">
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a></li>
-  <li><a href="#duplicate-checks" id="toc-duplicate-checks" class="nav-link" data-scroll-target="#duplicate-checks">Duplicate checks</a></li>
+  <li><a href="#installing-required-packages" id="toc-installing-required-packages" class="nav-link" data-scroll-target="#installing-required-packages">Installing required packages</a></li>
   </ul></li>
-  <li><a href="#price-index-for-private-residential-properties-for-1st-quarter-2024" id="toc-price-index-for-private-residential-properties-for-1st-quarter-2024" class="nav-link" data-scroll-target="#price-index-for-private-residential-properties-for-1st-quarter-2024">Price index for private residential properties for 1st Quarter 2024</a></li>
+  <li><a href="#preparing-the-data" id="toc-preparing-the-data" class="nav-link" data-scroll-target="#preparing-the-data">Preparing the data</a>
+  <ul class="collapse">
+  <li><a href="#raw-data-import" id="toc-raw-data-import" class="nav-link" data-scroll-target="#raw-data-import">Raw Data Import</a></li>
+  <li><a href="#duplicate-checks" id="toc-duplicate-checks" class="nav-link" data-scroll-target="#duplicate-checks">Duplicate checks</a></li>
+  <li><a href="#filtering-on-q1-2024-data-for-private-properties" id="toc-filtering-on-q1-2024-data-for-private-properties" class="nav-link" data-scroll-target="#filtering-on-q1-2024-data-for-private-properties">Filtering on Q1 2024 data for Private properties</a></li>
+  </ul></li>
+  <li><a href="#binning-properties-according-to-region-types-defined-by-ura-this-section-tbc" id="toc-binning-properties-according-to-region-types-defined-by-ura-this-section-tbc" class="nav-link" data-scroll-target="#binning-properties-according-to-region-types-defined-by-ura-this-section-tbc">Binning Properties according to Region types defined by URA [THIS SECTION TBC]</a></li>
+  </ul></li>
+  <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation">Data Visualisation</a>
+  <ul class="collapse">
+  <li><a href="#psf-distribution-for-private-residential-properties-for-1st-quarter-2024" id="toc-psf-distribution-for-private-residential-properties-for-1st-quarter-2024" class="nav-link" data-scroll-target="#psf-distribution-for-private-residential-properties-for-1st-quarter-2024">PSF Distribution for private residential properties for 1st Quarter 2024</a></li>
   <li><a href="#upgraders-from-hdb-for-1st-quarter-2024" id="toc-upgraders-from-hdb-for-1st-quarter-2024" class="nav-link" data-scroll-target="#upgraders-from-hdb-for-1st-quarter-2024">Upgraders from HDB for 1st Quarter 2024</a></li>
   </ul></li>
   </ul>
@@ -225,8 +233,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="background" class="level1">
-<h1>Background</h1>
+<section id="assignment-context" class="level1">
+<h1>Assignment Context</h1>
 <p>There are two major residential property market in Singapore, namely public and private housing. Public housing aims to meet the basic need of the general public with monthly household income less than or equal to S$14,000. For families with monthly household income more than S$14,000, they need to turn to the private residential market.</p>
 </section>
 <section id="the-task" class="level1">
@@ -237,18 +245,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To accomplish the task, transaction data of REALIS (2023-2024) will be used.</p>
 </section>
 </section>
-<section id="data-visualisation" class="level1">
-<h1>Data visualisation</h1>
-<section id="preparing-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h2>
-</section>
-<section id="installing-required-packages" class="level2">
-<h2 class="anchored" data-anchor-id="installing-required-packages">Installing required packages</h2>
+<section id="research" class="level1">
+<h1>Research</h1>
+<p>Prior to kickstarting the project, the author must first do some preliminary research on the local property market in Singapore as well as the factors that may contribute to it’s pricing.</p>
+<p>The data provided by Realis are at it’s crux Transaction data, the author upon further research understands there are other determinant factors such as :</p>
+<p>1.) Regions <a href="https://www.propertyguru.com.sg/property-guides/ccr-ocr-rcr-region-singapore-ura-map-21045" class="uri">https://www.propertyguru.com.sg/property-guides/ccr-ocr-rcr-region-singapore-ura-map-21045</a></p>
+<p>which contributes significantly to the</p>
+<section id="setting-up-the-environment" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-the-environment">Setting up the environment</h2>
+<section id="installing-required-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-required-packages">Installing required packages</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, ggplot2, dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="data-preparation" class="level3">
-<h3 class="anchored" data-anchor-id="data-preparation">Data Preparation</h3>
+</section>
+</section>
+<section id="preparing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-data">Preparing the data</h2>
+<section id="raw-data-import" class="level3">
+<h3 class="anchored" data-anchor-id="raw-data-import">Raw Data Import</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the paths to the individual CSV files</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>file1 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240308160536.csv"</span></span>
@@ -257,17 +272,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>file4 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240308161109.csv"</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>file5 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240414220633.csv"</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the individual CSV files</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading the individual CSV files</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file1)</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file2)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>data3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file3)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>data4 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file4)</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>data5 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file5)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the data frames into one</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining the data frames into one</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>combined_transaction <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data1, data2, data3, data4, data5)</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span> (combined_transaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Viewing the data structure given</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">names</span>(combined_transaction)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>col_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Project Name"                "Transacted Price ($)"       
+ [3] "Area (SQFT)"                 "Unit Price ($ PSF)"         
+ [5] "Sale Date"                   "Address"                    
+ [7] "Type of Sale"                "Type of Area"               
+ [9] "Area (SQM)"                  "Unit Price ($ PSM)"         
+[11] "Nett Price($)"               "Property Type"              
+[13] "Number of Units"             "Tenure"                     
+[15] "Completion Date"             "Purchaser Address Indicator"
+[17] "Postal Code"                 "Postal District"            
+[19] "Postal Sector"               "Planning Region"            
+[21] "Planning Area"              </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span> (combined_transaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 26,806
 Columns: 21
@@ -297,10 +330,142 @@ $ `Planning Area`               &lt;chr&gt; "Bukit Merah", "Bedok", "Yishun", "Y
 </section>
 <section id="duplicate-checks" class="level3">
 <h3 class="anchored" data-anchor-id="duplicate-checks">Duplicate checks</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>duplicates <span class="ot">&lt;-</span> combined_transaction <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">duplicated</span>(.))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(duplicates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 0
+Columns: 21
+$ `Project Name`                &lt;chr&gt; 
+$ `Transacted Price ($)`        &lt;dbl&gt; 
+$ `Area (SQFT)`                 &lt;dbl&gt; 
+$ `Unit Price ($ PSF)`          &lt;dbl&gt; 
+$ `Sale Date`                   &lt;chr&gt; 
+$ Address                       &lt;chr&gt; 
+$ `Type of Sale`                &lt;chr&gt; 
+$ `Type of Area`                &lt;chr&gt; 
+$ `Area (SQM)`                  &lt;dbl&gt; 
+$ `Unit Price ($ PSM)`          &lt;dbl&gt; 
+$ `Nett Price($)`               &lt;chr&gt; 
+$ `Property Type`               &lt;chr&gt; 
+$ `Number of Units`             &lt;dbl&gt; 
+$ Tenure                        &lt;chr&gt; 
+$ `Completion Date`             &lt;chr&gt; 
+$ `Purchaser Address Indicator` &lt;chr&gt; 
+$ `Postal Code`                 &lt;chr&gt; 
+$ `Postal District`             &lt;chr&gt; 
+$ `Postal Sector`               &lt;chr&gt; 
+$ `Planning Region`             &lt;chr&gt; 
+$ `Planning Area`               &lt;chr&gt; </code></pre>
+</div>
+</div>
+<p>From our analysis, we can conclude the data is very sanitised very 0 duplicated transactions.</p>
+</section>
+<section id="filtering-on-q1-2024-data-for-private-properties" class="level3">
+<h3 class="anchored" data-anchor-id="filtering-on-q1-2024-data-for-private-properties">Filtering on Q1 2024 data for Private properties</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>combined_transaction<span class="sc">$</span><span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">dmy</span>(combined_transaction<span class="sc">$</span><span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure to ensure 'Sale Date' is now a Date object</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(combined_transaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [26,806 × 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Project Name               : chr [1:26806] "THE REEF AT KING'S DOCK" "URBAN TREASURES" "NORTH GAIA" "NORTH GAIA" ...
+ $ Transacted Price ($)       : num [1:26806] 2317000 1823500 1421112 1258112 1280000 ...
+ $ Area (SQFT)                : num [1:26806] 883 883 1076 1033 872 ...
+ $ Unit Price ($ PSF)         : num [1:26806] 2625 2066 1320 1218 1468 ...
+ $ Sale Date                  : Date[1:26806], format: "2023-01-01" "2023-01-02" ...
+ $ Address                    : chr [1:26806] "12 HARBOURFRONT AVENUE #05-32" "205 JALAN EUNOS #08-02" "29 YISHUN CLOSE #08-10" "45 YISHUN CLOSE #07-42" ...
+ $ Type of Sale               : chr [1:26806] "New Sale" "New Sale" "New Sale" "New Sale" ...
+ $ Type of Area               : chr [1:26806] "Strata" "Strata" "Strata" "Strata" ...
+ $ Area (SQM)                 : num [1:26806] 82 82 100 96 81 ...
+ $ Unit Price ($ PSM)         : num [1:26806] 28256 22238 14211 13105 15802 ...
+ $ Nett Price($)              : chr [1:26806] "-" "-" "-" "-" ...
+ $ Property Type              : chr [1:26806] "Condominium" "Condominium" "Executive Condominium" "Executive Condominium" ...
+ $ Number of Units            : num [1:26806] 1 1 1 1 1 1 1 1 1 1 ...
+ $ Tenure                     : chr [1:26806] "99 yrs from 12/01/2021" "Freehold" "99 yrs from 15/02/2021" "99 yrs from 15/02/2021" ...
+ $ Completion Date            : chr [1:26806] "Uncompleted" "Uncompleted" "Uncompleted" "Uncompleted" ...
+ $ Purchaser Address Indicator: chr [1:26806] "HDB" "Private" "HDB" "HDB" ...
+ $ Postal Code                : chr [1:26806] "097996" "419535" "269343" "269294" ...
+ $ Postal District            : chr [1:26806] "04" "14" "27" "27" ...
+ $ Postal Sector              : chr [1:26806] "09" "41" "26" "26" ...
+ $ Planning Region            : chr [1:26806] "Central Region" "East Region" "North Region" "North Region" ...
+ $ Planning Area              : chr [1:26806] "Bukit Merah" "Bedok" "Yishun" "Yishun" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   `Project Name` = col_character(),
+  ..   `Transacted Price ($)` = col_number(),
+  ..   `Area (SQFT)` = col_number(),
+  ..   `Unit Price ($ PSF)` = col_number(),
+  ..   `Sale Date` = col_character(),
+  ..   Address = col_character(),
+  ..   `Type of Sale` = col_character(),
+  ..   `Type of Area` = col_character(),
+  ..   `Area (SQM)` = col_number(),
+  ..   `Unit Price ($ PSM)` = col_number(),
+  ..   `Nett Price($)` = col_character(),
+  ..   `Property Type` = col_character(),
+  ..   `Number of Units` = col_double(),
+  ..   Tenure = col_character(),
+  ..   `Completion Date` = col_character(),
+  ..   `Purchaser Address Indicator` = col_character(),
+  ..   `Postal Code` = col_character(),
+  ..   `Postal District` = col_character(),
+  ..   `Postal Sector` = col_character(),
+  ..   `Planning Region` = col_character(),
+  ..   `Planning Area` = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Q1_2024_Private <span class="ot">&lt;-</span> combined_transaction <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2023-01-01"</span>) <span class="sc">&amp;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2024-03-31"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Q1_2024_Private)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 21
+  `Project Name`       `Transacted Price ($)` `Area (SQFT)` `Unit Price ($ PSF)`
+  &lt;chr&gt;                                 &lt;dbl&gt;         &lt;dbl&gt;                &lt;dbl&gt;
+1 THE REEF AT KING'S …                2317000          883.                 2625
+2 URBAN TREASURES                     1823500          883.                 2066
+3 NORTH GAIA                          1421112         1076.                 1320
+4 NORTH GAIA                          1258112         1033.                 1218
+5 PARC BOTANNIA                       1280000          872.                 1468
+6 NANYANG PARK                        5870000         3323.                 1767
+# ℹ 17 more variables: `Sale Date` &lt;date&gt;, Address &lt;chr&gt;, `Type of Sale` &lt;chr&gt;,
+#   `Type of Area` &lt;chr&gt;, `Area (SQM)` &lt;dbl&gt;, `Unit Price ($ PSM)` &lt;dbl&gt;,
+#   `Nett Price($)` &lt;chr&gt;, `Property Type` &lt;chr&gt;, `Number of Units` &lt;dbl&gt;,
+#   Tenure &lt;chr&gt;, `Completion Date` &lt;chr&gt;, `Purchaser Address Indicator` &lt;chr&gt;,
+#   `Postal Code` &lt;chr&gt;, `Postal District` &lt;chr&gt;, `Postal Sector` &lt;chr&gt;,
+#   `Planning Region` &lt;chr&gt;, `Planning Area` &lt;chr&gt;</code></pre>
+</div>
+</div>
 </section>
 </section>
-<section id="price-index-for-private-residential-properties-for-1st-quarter-2024" class="level2">
-<h2 class="anchored" data-anchor-id="price-index-for-private-residential-properties-for-1st-quarter-2024">Price index for private residential properties for 1st Quarter 2024</h2>
+<section id="binning-properties-according-to-region-types-defined-by-ura-this-section-tbc" class="level2">
+<h2 class="anchored" data-anchor-id="binning-properties-according-to-region-types-defined-by-ura-this-section-tbc">Binning Properties according to Region types defined by URA [THIS SECTION TBC]</h2>
+</section>
+</section>
+<section id="data-visualisation" class="level1">
+<h1>Data Visualisation</h1>
+<section id="psf-distribution-for-private-residential-properties-for-1st-quarter-2024" class="level2">
+<h2 class="anchored" data-anchor-id="psf-distribution-for-private-residential-properties-for-1st-quarter-2024">PSF Distribution for private residential properties for 1st Quarter 2024</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>Q1_2024_Private, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> <span class="st">`</span><span class="at">Unit Price ($ PSF)</span><span class="st">`</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">`</span><span class="at">Property Type</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color=</span><span class="st">"grey30"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="take_home_ex1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Observation</p>
 </section>
 <section id="upgraders-from-hdb-for-1st-quarter-2024" class="level2">
 <h2 class="anchored" data-anchor-id="upgraders-from-hdb-for-1st-quarter-2024">Upgraders from HDB for 1st Quarter 2024</h2>

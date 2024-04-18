@@ -10,24 +10,39 @@ execute:
   freeze: true
 ---
 
-# Background
-There are two major residential property market in Singapore, namely public and private housing. Public housing aims to meet the basic need of the general public with monthly household income less than or equal to S$14,000. For families with monthly household income more than S$14,000, they need to turn to the private residential market.
+# Assignment Context
+
+There are two major residential property market in Singapore, namely public and private housing. Public housing aims to meet the basic need of the general public with monthly household income less than or equal to S\$14,000. For families with monthly household income more than S\$14,000, they need to turn to the private residential market.
 
 # The Task
+
 Assuming the role of a graphical editor of a median company, you are requested to prepare minimum two and maximum three data visualisation to reveal the private residential market and sub-markets of Singapore for the 1st quarter of 2024
 
 ## Data Source
+
 To accomplish the task, transaction data of REALIS (2023-2024) will be used.
 
-# Data visualisation 
-## Preparing the Data
+# Research
 
-## Installing required packages
+Prior to kickstarting the project, the author must first do some preliminary research on the local property market in Singapore as well as the factors that may contribute to it's pricing.
+
+The data provided by Realis are at it's crux Transaction data, the author upon further research understands there are other determinant factors such as :
+
+1.) Regions <https://www.propertyguru.com.sg/property-guides/ccr-ocr-rcr-region-singapore-ura-map-21045>
+
+which contributes significantly to the
+
+## Setting up the environment
+
+### Installing required packages
+
 ```{r}
 pacman::p_load(tidyverse, ggplot2, dplyr)
 ```
 
-### Data Preparation
+## Preparing the data
+
+### Raw Data Import
 
 ```{r}
 # Define the paths to the individual CSV files
@@ -37,22 +52,73 @@ file3 <- "data/ResidentialTransaction20240308161009.csv"
 file4 <- "data/ResidentialTransaction20240308161109.csv"
 file5 <- "data/ResidentialTransaction20240414220633.csv"
 
-# Read the individual CSV files
+# Reading the individual CSV files
 data1 <- read_csv(file1)
 data2 <- read_csv(file2)
 data3 <- read_csv(file3)
 data4 <- read_csv(file4)
 data5 <- read_csv(file5)
 
-# Combine the data frames into one
+# Combining the data frames into one
 combined_transaction <- bind_rows(data1, data2, data3, data4, data5)
 
+# Viewing the data structure given
+col_names <- names(combined_transaction)
+col_names
+```
+
+```{r}
 glimpse (combined_transaction)
 
 ```
+
 ### Duplicate checks
 
+```{r}
+duplicates <- combined_transaction %>% 
+  filter(duplicated(.))
 
-## Price index for private residential properties for 1st Quarter 2024
+glimpse(duplicates)
+```
+
+From our analysis, we can conclude the data is very sanitised very 0 duplicated transactions.
+
+### Filtering on Q1 2024 data for Private properties
+
+```{r}
+
+combined_transaction$`Sale Date` <- dmy(combined_transaction$`Sale Date`)
+
+# Check the structure to ensure 'Sale Date' is now a Date object
+str(combined_transaction)
+
+```
+
+```{r}
+Q1_2024_Private <- combined_transaction %>%
+  filter(`Sale Date` >= as.Date("2023-01-01") & 
+         `Sale Date` <= as.Date("2024-03-31"))
+```
+
+```{r}
+head(Q1_2024_Private)
+```
+
+## Binning Properties according to Region types defined by URA \[THIS SECTION TBC\]
+
+# Data Visualisation
+
+## PSF Distribution for private residential properties for 1st Quarter 2024
+
+```{r}
+ggplot(data=Q1_2024_Private, 
+       aes(x= `Unit Price ($ PSF)`, 
+           fill = `Property Type`)) +
+  geom_histogram(bins=20, 
+                 color="grey30")
+
+```
+
+Observation
 
 ## Upgraders from HDB for 1st Quarter 2024
