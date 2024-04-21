@@ -1,0 +1,49 @@
+---
+title: "In-class_Ex02 Demo"
+author: "You Ting QUEK"
+date: "April 20, 2024"
+date-modified: "Last-Modified"
+execute: 
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+## Setting up the environment
+
+### Installing required packages
+
+```{r}
+pacman::p_load(tidyverse, ggplot2, ggdist, ggthemes, colorspace, ggridges)
+```
+
+### Importing the Exam_data.csv
+```{r}
+exam_data <- read_csv("data/Exam_data.csv")
+```
+## Visualising Distribution
+```{r}
+
+median_eng <- median(exam_data$ENGLISH)
+mean_eng <- mean(exam_data$ENGLISH)
+std_eng <- sd(exam_data$ENGLISH)
+
+ggplot(exam_data,
+       aes(x = ENGLISH)) +
+  geom_density(
+    color = "#1696d2",
+    adjust = .65,
+    alpha = .6
+  )+
+  stat_function(
+    fun = dnorm,
+    args = list(mean = mean_eng,
+                sd = std_eng),
+    col = "grey30",
+    size = .8) +
+  geom_vline(
+    aes(xintercept = mean_eng),
+    
+  )
+```
