@@ -81,9 +81,15 @@ duplicates <- combined_transaction %>%
 glimpse(duplicates)
 ```
 
-From our analysis, we can conclude the data is very sanitised very 0 duplicated transactions.
+::: callout-tip
+## Data Analysis
 
-### Filtering on Q1 2024 data for Private properties
+Using glimpse() as a dipstick to run through our duplicate() checks, we concluded that the data is very sanitised with 0 duplicated transactions.
+
+However we noted that there is an unsuitable data type for the field 'Sale Date' which will result in difficulty for us not being able to do filtering later on.
+:::
+
+### Filtering Q1 2024 data for Private properties
 
 ```{r}
 
@@ -111,14 +117,160 @@ head(Q1_2024_Private)
 ## PSF Distribution for private residential properties for 1st Quarter 2024
 
 ```{r}
+
+
 ggplot(data=Q1_2024_Private, 
        aes(x= `Unit Price ($ PSF)`, 
            fill = `Property Type`)) +
   geom_histogram(bins=20, 
                  color="grey30")
 
+ggplot(data=Q1_2024_Private, 
+       aes(x = `Property Type`, 
+           fill = `Property Type`)) +
+  geom_bar(color = "grey30") +
+  labs(x = "Property Type", y = "Count", title = "Count of Property Types") +
+  theme_minimal()
+
+
+ggplot(data=Q1_2024_Private, 
+       aes(x = `Unit Price ($ PSF)`)) +
+  geom_histogram(bins = 10, fill = "skyblue", color = "black") +
+  facet_grid(`Planning Region` ~ `Property Type`, scales = "free_y") +
+  labs(x = "PSF Price", y = "Count", title = "Distribution of PSF Prices by Property Type and Region") +
+  theme_minimal()
+
+
+ggplot(data=Q1_2024_Private, 
+       aes(x = `Unit Price ($ PSF)`, 
+           fill = `Type of Sale`)) +
+  geom_histogram(position = "dodge", binwidth = 100) +  # Adjust binwidth as needed
+  facet_grid(`Planning Region` ~ `Property Type`) +
+  labs(x = "PSF Price", y = "Count", title = "Distribution of PSF Prices by Property Type, Region, and Transaction Type") +
+  scale_fill_brewer(palette = "Set1") +  # Use a color palette that is distinct
+  theme_minimal() +
+  theme(legend.position = "bottom")  # Adjust legend position as needed
 ```
 
-Observation
+::: callout-tip
+### Observation from visualisation
 
-## Upgraders from HDB for 1st Quarter 2024
+From the transaction volumes of Property Types segregated by the different regions, we observed that majority of the transactions happening in 2024 involves either Apartments or Condominiums in the Central Region.
+
+Shifting gears into the types of sale, we can also observe that New Sale is very popular for Apartments in Central Region as well as Executive Condominiums in the West Region. This sentiment is also backed by [Straits Times](https://www.straitstimes.com/singapore/housing/first-executive-condo-launch-of-2024-sells-53-of-units)
+:::
+
+## Average Transaction Price by Region
+
+To visualise the variation in average property prices across different regions in Singapore, we will use a choropleth map and shade each region according to its average property price which makes pricing differences immediately obvious.
+
+To create the map, we will need the sub-zone boundary of URA Master Plan 2019 dataset as well as our own Q1_2024_Private dataset.
+
+```{r}
+pacman::p_load(tmap,sf, httr2, dplyr, future, furrr)
+```
+
+```{r}
+cache <- new.env()
+plan(multisession)
+
+fetch_geocode_data <- function(postcode) {
+  # Check cache first
+  if (exists(postcode, envir = cache)) {
+    return(get(postcode, envir = cache))
+  }
+  
+  # API parameters
+  url <- "https://www.onemap.gov.sg/api/common/elastic/search"
+  query_params <- list(searchVal = postcode, returnGeom = 'Y', getAddrDetails = 'Y', pageNum = '1')
+
+  # API call with error handling
+  response <- tryCatch({
+    GET(url, query = query_params)
+  }, error = function(e) {
+    message("Error fetching data for postcode ", postcode, ": ", e$message)
+    return(NULL)
+  })
+
+  # Check if the API call was successful
+  if (is.null(response) || http_error(response)) {
+    return(data.frame(postcode = postcode, lat = NA, lon = NA))
+  }
+
+  # Parse response
+  content_data <- content(response, type = "application/json")
+
+  # Store in cache and return results
+  if (content_data$found > 0) {
+    lat <- content_data$results[[1]]$LATITUDE
+    lon <- content_data$results[[1]]$LONGITUDE
+    result <- data.frame(postcode = postcode, lat = lat, lon = lon)
+  } else {
+    result <- data.frame(postcode = postcode, lat = NA, lon = NA)
+  }
+
+  assign(postcode, result, envir = cache)
+  return(result)
+}
+```
+
+```{r}
+# Search 'Q1_2024_Private' dataframe for 'Postal Code' column
+data_pc <- unique(Q1_2024_Private$`Postal Code`)
+
+# Use futures for asynchronous processing
+results <- future_map(data_pc, fetch_geocode_data)
+combined_results <- bind_rows(results)
+
+# Combine results and filter out unsuccessful ones
+successful_results <- combined_results %>%
+  filter(!is.na(lat) & !is.na(lon))
+
+# Write results to a CSV file
+write.csv(successful_results, file = "data/PostalCodeList.csv", row.names = FALSE)
+```
+
+## Linking PostalCodeList to Transaction (Q1_2024_Private) Tibble
+```{r}
+Q1_2024_Private_with_Coordinates <- Q1_2024_Private %>%
+  left_join(successful_results, by = c("Postal Code" = "postcode"))
+
+```
+
+## Importing Geospatial Data
+### Load Map into MPSZ
+```{r}
+# Instantiate the map from MPSZ 2019
+mpsz <- st_read(dsn = "data/",
+                layer = "MPSZ-2019") %>%
+  st_transform(crs = 3414)
+```
+```{r}
+# Remove rows where latitude or longitude is NA
+Q1_2024_Private_with_Coordinates <- Q1_2024_Private_with_Coordinates %>%
+  filter(!is.na(lat) & !is.na(lon))
+
+q1_2024_sf <- st_as_sf(Q1_2024_Private_with_Coordinates ,
+                       coords = c("lon", "lat"),
+                       crs =4326) %>%
+  st_transform(crs = 3414)
+```
+## Extracting study data (Average Transacted Price)
+We will filter out the column data - Transacted Price & Planning Area which is required for a drill-down analysis on consumer pattern.
+
+```{r}
+q1_avg_txn <- Q1_2024_Private_with_Coordinates %>%
+    group_by(`Planning Area`) %>%
+    summarise(Avg_Transacted_Price = mean(`Transacted Price ($)`, na.rm = TRUE))
+
+q1_avg_txn <- q1_avg_txn %>%
+    mutate(`Planning Area` = toupper(`Planning Area`))
+
+q1_avg_txn <- st_drop_geometry(q1_avg_txn)
+
+```
+
+## Geospatial Data Wrangling
+### Overlaying HoneyComb 
+### Combining MPSZ & Average Transaction Price
+
