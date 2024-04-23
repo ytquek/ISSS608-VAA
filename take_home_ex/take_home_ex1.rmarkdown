@@ -10,6 +10,7 @@ execute:
   freeze: true
 ---
 
+
 # Assignment Context
 
 There are two major residential property market in Singapore, namely public and private housing. Public housing aims to meet the basic need of the general public with monthly household income less than or equal to S\$14,000. For families with monthly household income more than S\$14,000, they need to turn to the private residential market.
@@ -36,9 +37,11 @@ which contributes significantly to the
 
 ### Installing required packages
 
+
 ```{r}
 pacman::p_load(tidyverse, ggplot2, dplyr, shiny, bslib)
 ```
+
 
 ## Preparing the data
 
@@ -48,6 +51,7 @@ Given that there are 5 sets of Transaction CSV files, we will need to open each 
 
 ::: panel-tabset
 ## Code
+
 
 ```{r}
 #| eval: false
@@ -73,7 +77,9 @@ col_names <- names(combined_transaction)
 col_names
 ```
 
+
 ## Output
+
 
 ```{r}
 #| echo: false
@@ -99,19 +105,23 @@ combined_transaction <- bind_rows(data1, data2, data3, data4, data5)
 col_names <- names(combined_transaction)
 col_names
 ```
+
 :::
 
 Using glimpse to ensure our tibble dataframe is correct
+
 
 ```{r}
 glimpse (combined_transaction)
 
 ```
 
+
 ### Duplicate checks
 
 ::: panel-tabset
 ## Code
+
 
 ```{r}
 #| eval: false
@@ -120,7 +130,9 @@ duplicates <- combined_transaction %>%
 glimpse(duplicates)
 ```
 
+
 ## Output
+
 
 ```{r}
 duplicates <- combined_transaction %>% 
@@ -128,6 +140,7 @@ duplicates <- combined_transaction %>%
 
 glimpse(duplicates)
 ```
+
 :::
 
 ::: callout-tip
@@ -143,6 +156,7 @@ However we noted that there is an unsuitable data type for the field 'Sale Date'
 ::: panel-tabset
 ## Code
 
+
 ```{r}
 #| eval: false
 
@@ -158,7 +172,9 @@ Q1_2024_Private <- combined_transaction %>%
 head(Q1_2024_Private)
 ```
 
+
 ## Date Format Change
+
 
 ```{r}
 combined_transaction$`Sale Date` <- dmy(combined_transaction$`Sale Date`)
@@ -168,7 +184,9 @@ str(combined_transaction)
 
 ```
 
+
 ## Filtering for only Q1 data
+
 
 ```{r}
 Q1_2024_Private <- combined_transaction %>%
@@ -176,11 +194,14 @@ Q1_2024_Private <- combined_transaction %>%
          `Sale Date` <= as.Date("2024-03-31"))
 ```
 
+
 ## Sample of Q1 Only Data
+
 
 ```{r}
 head(Q1_2024_Private)
 ```
+
 :::
 
 # Data Visualisation
@@ -193,6 +214,7 @@ To test this hypothesis, we will use a FacetGrid to show the significance each m
 ::: panel-tabset
 ## Code for FacetGrid
 
+
 ```{r}
 #| eval: false
 ggplot(data=Q1_2024_Private, 
@@ -206,7 +228,9 @@ ggplot(data=Q1_2024_Private,
   theme(legend.position = "bottom")  # Adjust legend position as needed
 ```
 
+
 ## Plot for FaceGrid
+
 
 ```{r}
 ggplot(data=Q1_2024_Private, 
@@ -221,7 +245,9 @@ ggplot(data=Q1_2024_Private,
 
 ```
 
+
 ## Drilldown 
+
 ```{r}
 ggplot(data=Q1_2024_Private, 
        aes(x = `Planning Region`, 
@@ -231,7 +257,9 @@ ggplot(data=Q1_2024_Private,
   theme_minimal()
 
 ```
+
 :::
+
 
 ```{r}
 #| eval: false
@@ -268,6 +296,7 @@ ggplot(data=Q1_2024_Private,
   theme(legend.position = "bottom")  # Adjust legend position as needed
 ```
 
+
 ::: callout-tip
 ### Observation from visualisation
 
@@ -287,9 +316,11 @@ To create the map, we will need the sub-zone boundary of URA Master Plan 2019 da
 
 The tools required are :
 
+
 ```{r}
 pacman::p_load(tmap,sf, httr, dplyr, future, furrr)
 ```
+
 
 | Components | Description                                                                                                          |
 |------------------------------------|------------------------------------|
@@ -305,13 +336,16 @@ The first step is to utilise Singapore's OneMap service to map each postal code 
 ::: panel-tabset
 ## Create a new cache layer to store found postal code
 
+
 ```{r}
 #| eval: false
 cache <- new.env()
 plan(multisession)
 ```
 
+
 ## Create Base API call with a catch clause
+
 
 ```{r}
 #| eval: false
@@ -351,7 +385,9 @@ fetch_geocode_data <- function(postcode)
   }
 ```
 
+
 ## Store found data in 'result' dataframe
+
 
 ```{r}
 #| eval: false
@@ -359,7 +395,9 @@ fetch_geocode_data <- function(postcode)
   return(result)
 ```
 
+
 ##Output
+
 
 ```{r}
 cache <- new.env()
@@ -404,11 +442,13 @@ fetch_geocode_data <- function(postcode) {
   return(result)
 }
 ```
+
 :::
 
 ### Step 2
 
 We will now match Transaction (Q1_2024_Private) Tibble Dataframe's unique postal code to our list of postal code extracted from OneMap.
+
 
 ```{r}
 # Search 'Q1_2024_Private' dataframe for 'Postal Code' column
@@ -432,9 +472,11 @@ Q1_2024_Private_with_Coordinates <- Q1_2024_Private %>%
 
 ```
 
+
 ### Step 3 Importing Geospatial Data
 
 Load Map into MPSZ
+
 
 ```{r}
 # Instantiate the map from MPSZ 2019
@@ -454,9 +496,11 @@ q1_2024_sf <- st_as_sf(Q1_2024_Private_with_Coordinates ,
   st_transform(crs = 3414)
 ```
 
+
 ## Extracting study data (Average Transacted Price)
 
 We will filter out the column data - Transacted Price, PSF & Planning Area which is required for a drill-down analysis on consumer pattern.
+
 
 ```{r}
 q1_avg_txn <- Q1_2024_Private_with_Coordinates %>%
@@ -478,10 +522,12 @@ q1_avg_psf <- st_drop_geometry(q1_avg_psf)
 
 ```
 
+
 ## Geospatial Data Wrangling
 
 ::: panel-tabset
 ## Average Transacted Price ( Planning Region )
+
 
 ```{r}
 
@@ -507,7 +553,9 @@ map2
 
 ```
 
+
 ## Average PSF ( Planning Region )
+
 
 ```{r}
 mpsz_avg_psf <- mpsz %>%
@@ -530,4 +578,6 @@ map3 <- tm_shape(mpsz_avg_psf) +
 map3
 
 ```
+
 :::
+
