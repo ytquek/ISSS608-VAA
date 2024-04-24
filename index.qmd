@@ -5,8 +5,10 @@ last edit:
 
 This is a YT's Quadro website for Year 2024 TSKAM's Visual Analytics Course.
 
-Below is a brief summary of what to expect:
+Below is me 2024 January
 
+![](images/DALL·E 2024-04-24 19.35.21 - A humorous and chaotic illustration of messy visual analytics. The image features a disorganized office space with papers, charts, and graphs scattere.webp)
 
+& Now this is me:
 
-
+![](images/DALL·E 2024-04-24 19.48.11 - A creative and amusing illustration of a 'Visual Analytics God' portrayed as a young Greek deity. This character is depicted as a youthful, handsome g.webp){fig-align="center"}

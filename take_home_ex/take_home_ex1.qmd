@@ -14,6 +14,8 @@ execute:
 
 There are two major residential property market in Singapore, namely public and private housing. Public housing aims to meet the basic need of the general public with monthly household income less than or equal to S\$14,000. For families with monthly household income more than S\$14,000, they need to turn to the private residential market.
 
+![](images/HDBBuildings.webp){fig-align="center"}
+
 # The Task
 
 Assuming the role of a graphical editor of a median company, you are requested to prepare minimum two and maximum three data visualisation to reveal the private residential market and sub-markets of Singapore for the 1st quarter of 2024
@@ -123,6 +125,7 @@ glimpse(duplicates)
 ## Output
 
 ```{r}
+#| echo: false
 duplicates <- combined_transaction %>% 
   filter(duplicated(.))
 
@@ -189,9 +192,7 @@ head(Q1_2024_Private)
 
 From our initial peek into the available data attributes, there are a few key attributes which we believe is useful in revealing interesting observable trends such as Planning Region, PSF price and Property types.
 
-To test this hypothesis, we will use a FacetGrid to show the significance each metric has on the total transactions.
-::: panel-tabset
-## Code for FacetGrid
+To test this hypothesis, we will use a FacetGrid to show the significance each metric has on the total transactions. ::: panel-tabset \## Code for FacetGrid
 
 ```{r}
 #| eval: false
@@ -206,9 +207,10 @@ ggplot(data=Q1_2024_Private,
   theme(legend.position = "bottom")  # Adjust legend position as needed
 ```
 
-## Plot for FaceGrid
+## Plot for FacetGrid
 
 ```{r}
+#| echo: false
 ggplot(data=Q1_2024_Private, 
        aes(x = `Unit Price ($ PSF)`, 
            fill = `Type of Sale`)) +
@@ -221,7 +223,8 @@ ggplot(data=Q1_2024_Private,
 
 ```
 
-## Drilldown 
+## Drilldown
+
 ```{r}
 ggplot(data=Q1_2024_Private, 
        aes(x = `Planning Region`, 
@@ -231,50 +234,15 @@ ggplot(data=Q1_2024_Private,
   theme_minimal()
 
 ```
+
 :::
 
-```{r}
-#| eval: false
-ggplot(data=Q1_2024_Private, 
-       aes(x= `Unit Price ($ PSF)`, 
-           fill = `Property Type`)) +
-  geom_histogram(bins=20, 
-                 color="grey30")
-
-ggplot(data=Q1_2024_Private, 
-       aes(x = `Planning Region`, 
-           fill = `Property Type`)) +
-  geom_bar(color = "grey30") +
-  labs(x = "Property Type", y = "Count", title = "Count of Property Types") +
-  theme_minimal()
-
-
-ggplot(data=Q1_2024_Private, 
-       aes(x = `Unit Price ($ PSF)`)) +
-  geom_histogram(bins = 10, fill = "skyblue", color = "black") +
-  facet_grid(`Planning Region` ~ `Property Type`, scales = "free_y") +
-  labs(x = "PSF Price", y = "Count", title = "Distribution of PSF Prices by Property Type and Region") +
-  theme_minimal()
-
-
-ggplot(data=Q1_2024_Private, 
-       aes(x = `Unit Price ($ PSF)`, 
-           fill = `Type of Sale`)) +
-  geom_histogram(position = "dodge", binwidth = 100) +  # Adjust binwidth as needed
-  facet_grid(`Planning Region` ~ `Property Type`) +
-  labs(x = "PSF Price", y = "Count", title = "Distribution of PSF Prices by Property Type, Region, and Transaction Type") +
-  scale_fill_brewer(palette = "Set1") +  # Use a color palette that is distinct
-  theme_minimal() +
-  theme(legend.position = "bottom")  # Adjust legend position as needed
-```
-
 ::: callout-tip
-### Observation from visualisation
+### Observation from the Drilldown chart
 
-From the Facii Grid transaction volumes of Property Types segregated by the different regions, we observed that majority of the transactions happening in 2024 involves either Apartments or Condominiums in the Central Region. 
+From the FacetGrid transaction volumes of Property Types segregated by the different regions, we observed that majority of the transactions happening in 2024 involves either Apartments or Condominiums in the Central Region.
 
 Shifting gears into the types of sale, we can also observe that New Sale is very popular for Apartments in Central Region as well as Executive Condominiums in the West Region. This sentiment is also backed by [Straits Times](https://www.straitstimes.com/singapore/housing/first-executive-condo-launch-of-2024-sells-53-of-units)
-
 
 Given that the graph has highlighted Region and Apartment Type has a high correlation in contributing to buyer's interest, we will use a histogram to prove it in the drilldown chart.
 :::
@@ -454,7 +422,7 @@ q1_2024_sf <- st_as_sf(Q1_2024_Private_with_Coordinates ,
   st_transform(crs = 3414)
 ```
 
-## Extracting study data (Average Transacted Price)
+### Step 4 - Extracting study data (Average Transacted Price)
 
 We will filter out the column data - Transacted Price, PSF & Planning Area which is required for a drill-down analysis on consumer pattern.
 
@@ -478,7 +446,7 @@ q1_avg_psf <- st_drop_geometry(q1_avg_psf)
 
 ```
 
-## Geospatial Data Wrangling
+### Step 5 - Geospatial Data Wrangling
 
 ::: panel-tabset
 ## Average Transacted Price ( Planning Region )
