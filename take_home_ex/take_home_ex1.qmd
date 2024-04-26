@@ -28,11 +28,11 @@ To accomplish the task, transaction data of REALIS (2023-2024) will be used.
 
 Prior to kickstarting the project, the author must first do some preliminary research on the local property market in Singapore as well as the factors that may contribute to it's pricing.
 
-The data provided by Realis are at it's crux Transaction data, the author upon further research understands there are other determinant factors such as :
+The data provided by Realis are at it's crux Transaction data, the author upon further research understands there are crucial determinant factors such as :
 
 1.) Regions <https://www.propertyguru.com.sg/property-guides/ccr-ocr-rcr-region-singapore-ura-map-21045>
 
-which contributes significantly to the
+2.) And age of the property <https://www.businesstimes.com.sg/property/price-gap-between-resale-condos-ccr-and-rcr-smallest-22-years-orangetee-tie>
 
 ## Setting up the environment
 
@@ -192,7 +192,11 @@ head(Q1_2024_Private)
 
 From our initial peek into the available data attributes, there are a few key attributes which we believe is useful in revealing interesting observable trends such as Planning Region, PSF price and Property types.
 
-To test this hypothesis, we will use a FacetGrid to show the significance each metric has on the total transactions. ::: panel-tabset \## Code for FacetGrid
+To test this hypothesis, we will use a FacetGrid to show the significance each metric has on the total transactions.
+
+::: panel-tabset
+
+## Code for FacetGrid
 
 ```{r}
 #| eval: false
@@ -244,7 +248,7 @@ From the FacetGrid transaction volumes of Property Types segregated by the diffe
 
 Shifting gears into the types of sale, we can also observe that New Sale is very popular for Apartments in Central Region as well as Executive Condominiums in the West Region. This sentiment is also backed by [Straits Times](https://www.straitstimes.com/singapore/housing/first-executive-condo-launch-of-2024-sells-53-of-units)
 
-Given that the graph has highlighted Region and Apartment Type has a high correlation in contributing to buyer's interest, we will use a histogram to prove it in the drilldown chart.
+Given that the graph has highlighted Region and Apartment Type has a high correlation in contributing to buyer's interest, we have use a histogram to illustrate it in the drilldown chart.
 :::
 
 ## Average Transaction Price by Region
