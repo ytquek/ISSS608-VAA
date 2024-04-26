@@ -443,7 +443,7 @@ q1_avg_txn <- st_drop_geometry(q1_avg_txn)
 ```{r}
 q1_avg_psf <- Q1_2024_Private_with_Coordinates %>%
     group_by(`Planning Area`) %>%
-    summarise(Avg_Transacted_Price = mean(`Unit Price ($ PSF)`, na.rm = TRUE))
+    summarise(Avg_Transacted_PSF = mean(`Unit Price ($ PSF)`, na.rm = TRUE))
 q1_avg_psf <- q1_avg_psf %>%
     mutate(`Planning Area` = toupper(`Planning Area`))
 q1_avg_psf <- st_drop_geometry(q1_avg_psf)
@@ -467,7 +467,7 @@ tmap_mode("view")
 
 map2 <- tm_shape(mpsz_avg_txn_px) +
     tm_polygons(col = "Avg_Transacted_Price", 
-                palette = "YlOrRd", 
+                palette = "YlOrRd",
                 alpha = 0.3,
                 style = "quantile",
                 n = 7) +
@@ -491,7 +491,7 @@ mpsz_avg_psf <- mpsz %>%
 tmap_mode("view")
 
 map3 <- tm_shape(mpsz_avg_psf) +
-    tm_polygons(col = "Avg_Transacted_Price", 
+    tm_polygons(col = "Avg_Transacted_PSF",
                 palette = "YlOrRd", 
                 alpha = 0.3,
                 style = "quantile",
