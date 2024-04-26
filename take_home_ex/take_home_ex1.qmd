@@ -195,7 +195,6 @@ From our initial peek into the available data attributes, there are a few key at
 To test this hypothesis, we will use a FacetGrid to show the significance each metric has on the total transactions.
 
 ::: panel-tabset
-
 ## Code for FacetGrid
 
 ```{r}
@@ -238,7 +237,6 @@ ggplot(data=Q1_2024_Private,
   theme_minimal()
 
 ```
-
 :::
 
 ::: callout-tip
@@ -251,7 +249,47 @@ Shifting gears into the types of sale, we can also observe that New Sale is very
 Given that the graph has highlighted Region and Apartment Type has a high correlation in contributing to buyer's interest, we have use a histogram to illustrate it in the drilldown chart.
 :::
 
-## Average Transaction Price by Region
+## Average Transaction Price by Sale Type and Region
+
+
+Using Geospatial mapping later, we notice can now see clearly from a macro POV that the price distribution by PSF in Singapore.
+
+However, our literature research also shows that there are experts who claims that prices of properties are also affected by their age and sale type.
+
+```{r}
+library(ggthemes)
+
+q1_psf <- Q1_2024_Private %>%
+  group_by(`Type of Sale` , `Planning Region`) %>%
+  summarize(`Average PSF` = mean(`Unit Price ($ PSF)`), .groups = "drop")
+q1_psf
+
+# Calculate overall mean of 'Average PSF'
+overall_mean <- mean(q1_psf$`Average PSF`)
+
+ggplot(q1_psf, aes(x = `Planning Region`, y = `Average PSF`, fill = `Type of Sale`)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_hline(yintercept = overall_mean, linetype = "dashed", color = "black") +
+  theme_minimal() +
+  labs(title = "Average PSF by Region and Type of Sale",
+       x = "Planning Region",
+       y = "Average PSF",
+       fill = "Type of Sale") +
+  scale_fill_manual(values = c("New Sale" = "blue", "Resale" = "red", "Sub Sale" = "orange")) +   annotate("text", x = Inf, y = overall_mean, label = paste("Average PSF:", round(overall_mean, 2)), 
+           vjust = -0.5, hjust = 1.1, color = "black", size = 3.5)
+```
+
+::: callout-tip
+### Observation of PSF prices for all transactions
+
+Observing the bar chart, we can note that the Central Region exhibits the highest Average PSF for new sales, which is significantly above the overall average. 
+In contrast, the North Region presents the lowest Average PSF figures for both new sales and resales. 
+
+Lastly, the chart also shows a clear trend where new sales consistently have higher Average PSF values compared to resales across all regions. The additional category of 'Sub Sale'—present only for the East Region—falls below the overall mean. The overall mean PSF, marked by the dashed line, lies just below the Average PSF for resales in the Central Region, suggesting a higher concentration of sales with above-average prices in that region. 
+
+::: 
+
+## [Additional Bonus] Average Transaction Price by Region
 
 To visualise the variation in average property prices across different regions in Singapore, we will use a choropleth map and shade each region according to its average property price which makes pricing differences immediately obvious.
 
@@ -503,3 +541,12 @@ map3
 
 ```
 :::
+
+
+
+```{r}
+
+
+
+```
+
