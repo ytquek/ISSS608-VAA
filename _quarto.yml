@@ -20,6 +20,10 @@ website:
         menu:
           - text: "Hands On Exercise 1"
             href: "In_class_ex/hands_on_ex1.html"
+          - text: "Hands On Exercise 2"
+            href: "In_class_ex/hands_on_ex1.html"
+          - text: "Hands On Exercise 3"
+            href: "In_class_ex/hands_on_ex3.html"
       - text: Take Home Exercise
         menu:
           - text: "Take Home Exercise 1"

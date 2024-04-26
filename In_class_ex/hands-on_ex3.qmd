@@ -1,0 +1,51 @@
+---
+title: "Hands On Exercise 3"
+author: "You Ting QUEK"
+date: "April 25, 2024"
+date-modified: "Last-Modified"
+execute: 
+  eval: true
+echo: true
+warning: false
+freeze: true
+---
+
+# Objectives:
+
+-   Create interactive data visualisation by using functions provided by **ggiraph** and **plotlyr** packages
+
+# Getting Started
+
+## Installing the required libraries
+
+```{r}
+pacman::p_load(ggiraph, plotly, 
+               patchwork, DT, tidyverse)
+```
+
+## Importing the Data
+
+```{r}
+exam_data <- read_csv("data/Exam_data.csv")
+```
+
+To create an interactive version of ggplot2 geom (i.e. [`geom_dotplot_interactive()`] we first need to create the basic graph. Then, [`girafe()`](https://davidgohel.github.io/ggiraph/reference/girafe.html) will be used to generate an svg object to be displayed on an html page.
+
+```{r}
+#| echo: false
+
+p <- ggplot(data=exam_data, 
+       aes(x = MATHS)) +
+  geom_dotplot_interactive(
+    aes(tooltip = ID),
+    stackgroups = TRUE, 
+    binwidth = 1, 
+    method = "histodot") +
+  scale_y_continuous(NULL, 
+                     breaks = NULL)
+girafe(
+  ggobj = p,
+  width_svg = 6,
+  height_svg = 6*0.618
+)
+```

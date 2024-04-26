@@ -250,5 +250,26 @@
     "title": "In-class_Ex02 Demo",
     "section": "Finishing touch",
     "text": "Finishing touch\n coord_flip() of ggplot2 package is used to flip the raincloud chart horizontally to give it the raincloud appearance. theme_economist() of ggthemes package is also used to give the raincloud chart a professional publishing standard look.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\nggplot(exam_df, \n       aes(x = RACE, \n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = .20,\n               outlier.shape = NA) +\n  stat_dots(side = \"left\", \n            justification = 1.2, \n            binwidth = .5,\n            dotsize = 1.5) +\n  coord_flip() +\n  theme_economist()"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html",
+    "href": "In_class_ex/hands-on_ex3.html",
+    "title": "Hands On Exercise 3",
+    "section": "",
+    "text": "Create interactive data visualisation by using functions provided by ggiraph and plotlyr packages"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#installing-the-required-libraries",
+    "href": "In_class_ex/hands-on_ex3.html#installing-the-required-libraries",
+    "title": "Hands On Exercise 3",
+    "section": "Installing the required libraries",
+    "text": "Installing the required libraries\n\npacman::p_load(ggiraph, plotly, \n               patchwork, DT, tidyverse)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#importing-the-data",
+    "href": "In_class_ex/hands-on_ex3.html#importing-the-data",
+    "title": "Hands On Exercise 3",
+    "section": "Importing the Data",
+    "text": "Importing the Data\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")\n\nTo create an interactive version of ggplot2 geom (i.e. [geom_dotplot_interactive()] we first need to create the basic graph. Then, girafe() will be used to generate an svg object to be displayed on an html page."
   }
 ]
