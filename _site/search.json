@@ -133,6 +133,27 @@
     "text": "Working with Essential Grammatical Elements in ggplot2: Facet\n\nUsing Facetwraps\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)\n\n\n\n\n\n\nUsing Facet Grid\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
   },
   {
+    "objectID": "In_class_ex/In-class_Ex01.html",
+    "href": "In_class_ex/In-class_Ex01.html",
+    "title": "In-class_ex1",
+    "section": "",
+    "text": "In the code chunk below, [p_load()] of pacman pkg is used to load tidyverse family of packages.\n\npacman::p_load(tidyverse)\n\n\nrealis &lt;- read_csv(\"data/realis2019.csv\")\n\n\nggplot(data = realis, aes(x = `Unit Price ($ psm)`)) + geom_histogram()"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex01.html#loading-r-packages",
+    "href": "In_class_ex/In-class_Ex01.html#loading-r-packages",
+    "title": "In-class_ex1",
+    "section": "",
+    "text": "In the code chunk below, [p_load()] of pacman pkg is used to load tidyverse family of packages.\n\npacman::p_load(tidyverse)\n\n\nrealis &lt;- read_csv(\"data/realis2019.csv\")\n\n\nggplot(data = realis, aes(x = `Unit Price ($ psm)`)) + geom_histogram()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ISSS608-VAA",
+    "section": "",
+    "text": "This is a YT’s Quadro website for Year 2024 TSKAM’s Visual Analytics Course.\nBelow is me 2024 January\n\n& Now this is me:"
+  },
+  {
     "objectID": "In_class_ex/In-class_Ex02.html",
     "href": "In_class_ex/In-class_Ex02.html",
     "title": "In-class_Ex02 Demo",
@@ -152,34 +173,6 @@
     "title": "In-class_Ex02 Demo",
     "section": "Visualising Distribution",
     "text": "Visualising Distribution\n\nmedian_eng &lt;- median(exam_df$ENGLISH)\nmean_eng &lt;- mean(exam_df$ENGLISH)\nstd_eng &lt;- sd(exam_df$ENGLISH)\n\nggplot(exam_df,\n       aes(x = ENGLISH)) +\n  geom_density(\n    color = \"#1696d2\",\n    adjust = .65,\n    alpha = .6\n  )+\n  stat_function(\n    fun = dnorm,\n    args = list(mean = mean_eng,\n                sd = std_eng),\n    col = \"grey30\",\n    size = .8) +\n  geom_vline(\n    aes(xintercept = mean_eng),\n    \n  )"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ISSS608-VAA",
-    "section": "",
-    "text": "This is a YT’s Quadro website for Year 2024 TSKAM’s Visual Analytics Course.\nBelow is me 2024 January\n\n& Now this is me:"
-  },
-  {
-    "objectID": "In_class_ex/In-class_Ex01.html",
-    "href": "In_class_ex/In-class_Ex01.html",
-    "title": "In-class_ex1",
-    "section": "",
-    "text": "In the code chunk below, [p_load()] of pacman pkg is used to load tidyverse family of packages.\n\npacman::p_load(tidyverse)\n\n\nrealis &lt;- read_csv(\"data/realis2019.csv\")\n\n\nggplot(data = realis, aes(x = `Unit Price ($ psm)`)) + geom_histogram()"
-  },
-  {
-    "objectID": "In_class_ex/In-class_Ex01.html#loading-r-packages",
-    "href": "In_class_ex/In-class_Ex01.html#loading-r-packages",
-    "title": "In-class_ex1",
-    "section": "",
-    "text": "In the code chunk below, [p_load()] of pacman pkg is used to load tidyverse family of packages.\n\npacman::p_load(tidyverse)\n\n\nrealis &lt;- read_csv(\"data/realis2019.csv\")\n\n\nggplot(data = realis, aes(x = `Unit Price ($ psm)`)) + geom_histogram()"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "In_class_ex/In-class_Ex02.html#probability-density-plot",
@@ -271,5 +264,12 @@
     "title": "Hands On Exercise 3",
     "section": "Importing the Data",
     "text": "Importing the Data\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")\n\nTo create an interactive version of ggplot2 geom (i.e. [geom_dotplot_interactive()] we first need to create the basic graph. Then, girafe() will be used to generate an svg object to be displayed on an html page."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
   }
 ]
