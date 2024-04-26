@@ -11,4 +11,4 @@ Below is me 2024 January
 
 & Now this is me:
 
-![](images/DALL·E 2024-04-24 19.48.11 - A creative and amusing illustration of a 'Visual Analytics God' portrayed as a young Greek deity. This character is depicted as a youthful, handsome g.webp){fig-align="center"}
+![](images/greek.webp){fig-align="center"}

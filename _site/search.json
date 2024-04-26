@@ -137,28 +137,28 @@
     "href": "In_class_ex/In-class_Ex02.html",
     "title": "In-class_Ex02 Demo",
     "section": "",
-    "text": "pacman::p_load(tidyverse, ggplot2, ggdist, ggthemes, colorspace, ggridges)\n\n\n\n\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")"
+    "text": "pacman::p_load(tidyverse, ggplot2, ggdist, ggthemes, colorspace, ggridges)\n\n\n\n\n\nexam_df &lt;- read_csv(\"data/Exam_data.csv\")"
   },
   {
     "objectID": "In_class_ex/In-class_Ex02.html#setting-up-the-environment",
     "href": "In_class_ex/In-class_Ex02.html#setting-up-the-environment",
     "title": "In-class_Ex02 Demo",
     "section": "",
-    "text": "pacman::p_load(tidyverse, ggplot2, ggdist, ggthemes, colorspace, ggridges)\n\n\n\n\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")"
+    "text": "pacman::p_load(tidyverse, ggplot2, ggdist, ggthemes, colorspace, ggridges)\n\n\n\n\n\nexam_df &lt;- read_csv(\"data/Exam_data.csv\")"
   },
   {
     "objectID": "In_class_ex/In-class_Ex02.html#visualising-distribution",
     "href": "In_class_ex/In-class_Ex02.html#visualising-distribution",
     "title": "In-class_Ex02 Demo",
     "section": "Visualising Distribution",
-    "text": "Visualising Distribution\n\nmedian_eng &lt;- median(exam_data$ENGLISH)\nmean_eng &lt;- mean(exam_data$ENGLISH)\nstd_eng &lt;- sd(exam_data$ENGLISH)\n\nggplot(exam_data,\n       aes(x = ENGLISH)) +\n  geom_density(\n    color = \"#1696d2\",\n    adjust = .65,\n    alpha = .6\n  )+\n  stat_function(\n    fun = dnorm,\n    args = list(mean = mean_eng,\n                sd = std_eng),\n    col = \"grey30\",\n    size = .8) +\n  geom_vline(\n    aes(xintercept = mean_eng),\n    \n  )"
+    "text": "Visualising Distribution\n\nmedian_eng &lt;- median(exam_df$ENGLISH)\nmean_eng &lt;- mean(exam_df$ENGLISH)\nstd_eng &lt;- sd(exam_df$ENGLISH)\n\nggplot(exam_df,\n       aes(x = ENGLISH)) +\n  geom_density(\n    color = \"#1696d2\",\n    adjust = .65,\n    alpha = .6\n  )+\n  stat_function(\n    fun = dnorm,\n    args = list(mean = mean_eng,\n                sd = std_eng),\n    col = \"grey30\",\n    size = .8) +\n  geom_vline(\n    aes(xintercept = mean_eng),\n    \n  )"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "ISSS608-VAA",
     "section": "",
-    "text": "This is a YT’s Quadro website for Year 2024 TSKAM’s Visual Analytics Course.\nBelow is me 2024 January\n\n& Now this is me:\n[](images/DALL·E 2024-04-24 19.48.11 - A creative and amusing illustration of a ‘Visual Analytics God’ portrayed as a young Greek deity. This character is depicted as a youthful, handsome g.webp){fig-align=“center”}"
+    "text": "This is a YT’s Quadro website for Year 2024 TSKAM’s Visual Analytics Course.\nBelow is me 2024 January\n\n& Now this is me:"
   },
   {
     "objectID": "In_class_ex/In-class_Ex01.html",
@@ -180,5 +180,75 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#probability-density-plot",
+    "href": "In_class_ex/In-class_Ex02.html#probability-density-plot",
+    "title": "In-class_Ex02 Demo",
+    "section": "Probability Density Plot",
+    "text": "Probability Density Plot\nAppropriate method for representing continuous values"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#density-plot-with-summary-statistics",
+    "href": "In_class_ex/In-class_Ex02.html#density-plot-with-summary-statistics",
+    "title": "In-class_Ex02 Demo",
+    "section": "Density Plot with Summary Statistics",
+    "text": "Density Plot with Summary Statistics\nThe code chunk below includes a probability density plot (violet) and normal distribution plot (gray). The mean (green) and median (blue) of the data is also plotted.\n\nmedian_eng &lt;- median(exam_df$ENGLISH)\nmean_eng &lt;- mean(exam_df$ENGLISH)\nstd_eng &lt;- sd(exam_df$ENGLISH)\n\n\n# Probability Density Plot\nggplot(data=exam_df, aes(x = ENGLISH)) +\n  geom_density(color=\"violet\", \n               adjust = .65,\n               alpha = .1) +\n  stat_function( # Normal Distribution Plot\n    fun = dnorm,\n    args = list(mean = mean_eng, sd = std_eng),\n    col = \"gray\",\n    linewidth = .8) +\n  geom_vline( # Mean line\n    aes(xintercept = mean_eng),\n    colour = \"darkgreen\",\n    linewidth = .6,\n    linetype = \"dashed\") +\n  annotate(geom = \"text\",\n           x = mean_eng -8,\n           y = .04,\n           label = paste0(\"Mean: \",\n                          round((mean_eng),2)),\n           colour=\"darkgreen\") +\n  geom_vline( # Median Line\n    aes(xintercept = median_eng),\n    colour = \"navy\",\n    linewidth = .6,\n    linetype = \"dashed\") +\n  annotate(geom = \"text\",\n           x = median_eng +8,\n           y = .04,\n           label = paste0(\"Median: \",\n                          round((mean_eng),2)),\n           colour=\"navy\") +\n  ggtitle(\"Density Plot with Summary Statistics of English Scores\")"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#ridgeline-plot",
+    "href": "In_class_ex/In-class_Ex02.html#ridgeline-plot",
+    "title": "In-class_Ex02 Demo",
+    "section": "Ridgeline Plot",
+    "text": "Ridgeline Plot\nRidgeline plot (i.e. Joyplot) reveals the distribution of a numeric value for several groups. Distribution can be represented using histograms or density plots, all aligned to the same horizontal scale with slightoverlaps"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#varying-fill-colours-along-the-x-axis",
+    "href": "In_class_ex/In-class_Ex02.html#varying-fill-colours-along-the-x-axis",
+    "title": "In-class_Ex02 Demo",
+    "section": "Varying Fill Colours along the X-axis",
+    "text": "Varying Fill Colours along the X-axis\nSometimes we would like to have the area under a ridgeline not filled with a single solid color but rather with colors that vary in some form along the x axis.\n\nggplot(exam_df, \n       aes(x = ENGLISH, \n           y = CLASS,\n           fill = after_stat(x))) +\n  geom_density_ridges_gradient(\n    scale = 3,\n    rel_min_height = 0.01) +\n  scale_fill_viridis_c(name = \"Temp. [°C]\",\n                       option = \"C\") +\n  scale_x_continuous(\n    name = \"English Grades\",\n    expand = c(0, 0)\n  ) +\n  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +\n  theme_ridges()"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#mapping-probabilities-directly-onto-colour",
+    "href": "In_class_ex/In-class_Ex02.html#mapping-probabilities-directly-onto-colour",
+    "title": "In-class_Ex02 Demo",
+    "section": "Mapping Probabilities directly onto colour",
+    "text": "Mapping Probabilities directly onto colour\nFigure below is plotted by mapping the probabilities calculated by using stat(ecdf) which represent the empirical cumulative density function for the distribution of English score."
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#ridgeline-plots-with-quantile-lines",
+    "href": "In_class_ex/In-class_Ex02.html#ridgeline-plots-with-quantile-lines",
+    "title": "In-class_Ex02 Demo",
+    "section": "Ridgeline Plots with Quantile Lines",
+    "text": "Ridgeline Plots with Quantile Lines\nRidgeline plots can be coloured by quantile using geom_density_ridges_gradient(), via the calculated stat(quantile) \n\n\n\n\n\nQuantiles can also be specified by cut points e.g. 2.5% and 97.5% tails to colour the ridgeline plot."
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#plotting-a-half-eye-graph",
+    "href": "In_class_ex/In-class_Ex02.html#plotting-a-half-eye-graph",
+    "title": "In-class_Ex02 Demo",
+    "section": "Plotting a Half Eye graph",
+    "text": "Plotting a Half Eye graph\nPlot a Half-Eye graph by using stat_halfeye() of ggdist package, producing a Half Eye visualization, which is contains a half-density and a slab-interval.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nRemove the slab interval by setting .width = 0 and point_colour = NA."
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#adding-the-boxplot",
+    "href": "In_class_ex/In-class_Ex02.html#adding-the-boxplot",
+    "title": "In-class_Ex02 Demo",
+    "section": "Adding the boxplot",
+    "text": "Adding the boxplot\nThe second geometry layer i.e. a narrow boxplot is produced using geom_boxplot() of ggplot2 This produces a narrow boxplot.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\nggplot(exam_df, \n       aes(x = RACE, \n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = .20,\n               outlier.shape = NA)"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#adding-the-dot-plots",
+    "href": "In_class_ex/In-class_Ex02.html#adding-the-dot-plots",
+    "title": "In-class_Ex02 Demo",
+    "section": "Adding the Dot Plots",
+    "text": "Adding the Dot Plots\nThe third geometry layer is added using stat_dots() of ggdist package. This produces a half-dotplot, similar to a histogram that indicates the number of samples (number of dots) in each bin. Use side = “left” to specify the dot plots on the left-hand side.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\nggplot(exam_df, \n       aes(x = RACE, \n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = .20,\n               outlier.shape = NA) +\n  stat_dots(side = \"left\", \n            justification = 1.2, \n            binwidth = .5,\n            dotsize = 2)"
+  },
+  {
+    "objectID": "In_class_ex/In-class_Ex02.html#finishing-touch",
+    "href": "In_class_ex/In-class_Ex02.html#finishing-touch",
+    "title": "In-class_Ex02 Demo",
+    "section": "Finishing touch",
+    "text": "Finishing touch\n coord_flip() of ggplot2 package is used to flip the raincloud chart horizontally to give it the raincloud appearance. theme_economist() of ggthemes package is also used to give the raincloud chart a professional publishing standard look.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\nggplot(exam_df, \n       aes(x = RACE, \n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = .20,\n               outlier.shape = NA) +\n  stat_dots(side = \"left\", \n            justification = 1.2, \n            binwidth = .5,\n            dotsize = 1.5) +\n  coord_flip() +\n  theme_economist()"
   }
 ]

@@ -19,17 +19,20 @@ pacman::p_load(tidyverse, ggplot2, ggdist, ggthemes, colorspace, ggridges)
 ```
 
 ### Importing the Exam_data.csv
+
 ```{r}
-exam_data <- read_csv("data/Exam_data.csv")
+exam_df <- read_csv("data/Exam_data.csv")
 ```
+
 ## Visualising Distribution
+
 ```{r}
 
-median_eng <- median(exam_data$ENGLISH)
-mean_eng <- mean(exam_data$ENGLISH)
-std_eng <- sd(exam_data$ENGLISH)
+median_eng <- median(exam_df$ENGLISH)
+mean_eng <- mean(exam_df$ENGLISH)
+std_eng <- sd(exam_df$ENGLISH)
 
-ggplot(exam_data,
+ggplot(exam_df,
        aes(x = ENGLISH)) +
   geom_density(
     color = "#1696d2",
@@ -47,3 +50,352 @@ ggplot(exam_data,
     
   )
 ```
+## Probability Density Plot
+
+Appropriate method for representing continuous values
+
+```{r}
+#| echo: false
+
+ggplot(data=exam_df, aes(x = ENGLISH)) +
+  geom_density(color="skyblue", 
+               adjust = .65,
+               alpha = .1) +
+  ggtitle("Probability Density Plot of English scores")
+```
+
+## Density Plot with Summary Statistics
+
+The code chunk below includes a probability density plot (violet) and normal distribution plot (gray). The mean (green) and median (blue) of the data is also plotted.
+
+
+```{r}
+median_eng <- median(exam_df$ENGLISH)
+mean_eng <- mean(exam_df$ENGLISH)
+std_eng <- sd(exam_df$ENGLISH)
+
+
+# Probability Density Plot
+ggplot(data=exam_df, aes(x = ENGLISH)) +
+  geom_density(color="violet", 
+               adjust = .65,
+               alpha = .1) +
+  stat_function( # Normal Distribution Plot
+    fun = dnorm,
+    args = list(mean = mean_eng, sd = std_eng),
+    col = "gray",
+    linewidth = .8) +
+  geom_vline( # Mean line
+    aes(xintercept = mean_eng),
+    colour = "darkgreen",
+    linewidth = .6,
+    linetype = "dashed") +
+  annotate(geom = "text",
+           x = mean_eng -8,
+           y = .04,
+           label = paste0("Mean: ",
+                          round((mean_eng),2)),
+           colour="darkgreen") +
+  geom_vline( # Median Line
+    aes(xintercept = median_eng),
+    colour = "navy",
+    linewidth = .6,
+    linetype = "dashed") +
+  annotate(geom = "text",
+           x = median_eng +8,
+           y = .04,
+           label = paste0("Median: ",
+                          round((mean_eng),2)),
+           colour="navy") +
+  ggtitle("Density Plot with Summary Statistics of English Scores")
+```
+
+## Ridgeline Plot
+
+[*Ridgeline plot*](https://www.data-to-viz.com/graph/ridgeline.html) (i.e. *Joyplot*) reveals the distribution of a numeric value for several groups. Distribution can be represented using histograms or density plots, all aligned to the same horizontal scale with slightoverlaps
+
+```{r}
+#| echo: false
+
+ggplot(exam_df, 
+       aes(x = ENGLISH, 
+           y = CLASS)) +
+  geom_density_ridges(
+    scale = 3,
+    rel_min_height = 0.01,
+    bandwidth = 3.4,
+    fill = lighten("#7097BB", .3),
+    color = "white"
+  ) +
+  scale_x_continuous(
+    name = "English Grades",
+    expand = c(0, 0)
+    ) +
+  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
+  theme_ridges()
+```
+
+## Varying Fill Colours along the X-axis
+
+Sometimes we would like to have the area under a ridgeline not filled with a single solid color but rather with colors that vary in some form along the x axis.
+
+```{r}
+
+ggplot(exam_df, 
+       aes(x = ENGLISH, 
+           y = CLASS,
+           fill = after_stat(x))) +
+  geom_density_ridges_gradient(
+    scale = 3,
+    rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Temp. [°C]",
+                       option = "C") +
+  scale_x_continuous(
+    name = "English Grades",
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
+  theme_ridges()
+```
+
+## Mapping Probabilities directly onto colour
+
+Figure below is plotted by mapping the probabilities calculated by using `stat(ecdf)` which represent the empirical cumulative density function for the distribution of English score.
+
+
+```{r}
+#| echo: false
+
+ggplot(exam_df,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = 0.5 - abs(0.5-stat(ecdf)))) +
+  stat_density_ridges(geom = "density_ridges_gradient", 
+                      calc_ecdf = TRUE) +
+  scale_fill_viridis_c(name = "Tail probability",
+                       direction = -1) +
+  theme_ridges()
+```
+
+## Ridgeline Plots with Quantile Lines
+
+Ridgeline plots can be coloured by quantile using [`geom_density_ridges_gradient()`](geom_density_ridges_gradient()), via the calculated `stat(quantile)` 
+
+
+```{r}
+#| echo: false
+
+ggplot(exam_df,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = 4,
+    quantile_lines = TRUE) +
+  scale_fill_viridis_d(name = "Quartiles") +
+  theme_ridges()
+```
+
+Quantiles can also be specified by cut points e.g. 2.5% and 97.5% tails to colour the ridgeline plot.
+
+```{r}
+#| echo: false
+
+ggplot(exam_df,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = c(0.025, 0.975)
+    ) +
+  scale_fill_manual(
+    name = "Probability",
+    values = c("red", "grey", "navy"),
+    labels = c("(0, 0.025]", "(0.025, 0.975]", "(0.975, 1]")
+  ) +
+  theme_ridges()
+```
+
+# Raincloud Plot
+
+A data visualisation technique that produces a half-density to a distribution plot. It got its name due to the likeness of the density plot to a shape of a "raincloud". The raincloud (half-density) plot enhances the traditional box-plot by highlighting multiple modalities (an indicator that groups may exist). The raincloud plot shows where densities are clustered.
+
+It is created by using functions provided by **ggdist** and ggplot2 packages.
+
+## Plotting a Half Eye graph
+
+Plot a Half-Eye graph by using [`stat_halfeye()`](https://mjskay.github.io/ggdist/reference/stat_halfeye.html) of **ggdist** package, producing a Half Eye visualization, which is contains a half-density and a slab-interval.
+
+::: panel-tabset
+## Plot
+
+```{r}
+#| echo: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA)
+```
+
+## Code
+
+```{r}
+#| echo: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA)
+```
+:::
+
+::: callout-note
+Remove the slab interval by setting .width = 0 and point_colour = NA.
+:::
+
+## **Adding the boxplot**
+
+The second geometry layer i.e. a narrow boxplot is produced using [`geom_boxplot()`](https://r4va.netlify.app/chap09) of ggplot2 This produces a narrow boxplot.
+
+::: panel-tabset
+## Plot
+
+```{r}
+#| echo: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA)
+```
+
+## Code
+
+```{r}
+#| eval: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA)
+```
+:::
+
+## **Adding the Dot Plots**
+
+The third geometry layer is added using [`stat_dots()`](https://mjskay.github.io/ggdist/reference/stat_dots.html) of ggdist package. This produces a half-dotplot, similar to a histogram that indicates the number of samples (number of dots) in each bin. Use `side = “left”` to specify the dot plots on the left-hand side.
+
+::: panel-tabset
+## Plot
+
+```{r}
+#| echo: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 2)
+```
+
+## Code
+
+```{r}
+#| eval: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 2)
+```
+:::
+
+## **Finishing touch**
+
+ [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html) of ggplot2 package is used to flip the raincloud chart horizontally to give it the raincloud appearance. `theme_economist()` of ggthemes package is also used to give the raincloud chart a professional publishing standard look.
+
+::: panel-tabset
+## Plot
+
+```{r}
+#| echo: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = NA,
+            dotsize = 1.5) +
+  coord_flip() +
+  theme_economist()
+```
+
+## Code
+
+```{r}
+#| eval: false
+
+ggplot(exam_df, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 1.5) +
+  coord_flip() +
+  theme_economist()
+```
+:::
