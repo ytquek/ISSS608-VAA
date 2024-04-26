@@ -109,8 +109,6 @@ girafe(
 THis is an advanced way to customise tooltip. In this example, a function is used to compute 90% confident interval of the mean. The derived statistics are then displayed in the tooltip.
 
 ```{r}
-#| echo: false
-
 tooltip <- function(y, ymax, accuracy = .01) {
   mean <- scales::number(y, accuracy = accuracy)
   sem <- scales::number(ymax - y, accuracy = accuracy)
@@ -134,17 +132,17 @@ gg_point <- ggplot(data=exam_data,
 
 girafe(ggobj = gg_point,
        width_svg = 8,
-       height_svg = 8*0)
+       height_svg = 8*0.618)
 ```
 
-## Hover effect with *data_id* aesthetic
+
+## Hover effect with data id. aesthetic
 
 Code chunk below shows the second interactive feature of ggiraph, namely `data_id`.
 
 Elements associated with a *data_id* (i.e CLASS) will be highlighted upon mouse over.
 
 ```{r}
-
 p <- ggplot(data=exam_data, 
        aes(x = MATHS)) +
   geom_dotplot_interactive(           

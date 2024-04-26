@@ -35,20 +35,6 @@
     "text": "Transaction Type Distribution across Planning Regions on Different Private Residential Types in 1st Quarter 2024\nFrom our initial peek into the available data attributes, there are a few key attributes which we believe is useful in revealing interesting observable trends such as Planning Region, PSF price and Property types.\nTo test this hypothesis, we will use a FacetGrid to show the significance each metric has on the total transactions.\n\nCode for FacetGridPlot for FacetGridDrilldown\n\n\n\nggplot(data=Q1_2024_Private, \n       aes(x = `Unit Price ($ PSF)`, \n           fill = `Type of Sale`)) +\n  geom_histogram(position = \"dodge\", binwidth = 100) +  # Adjust binwidth as needed\n  facet_grid(`Planning Region` ~ `Property Type`) +\n  labs(x = \"PSF Price\", y = \"Count\", title = \"Distribution of PSF Prices by Property Type, Region, and Transaction Type\") +\n  scale_fill_brewer(palette = \"Set1\") +  # Use a color palette that is distinct\n  theme_minimal() +\n  theme(legend.position = \"bottom\")  # Adjust legend position as needed\n\n\n\n\n\n\n\n\n\n\n\nggplot(data=Q1_2024_Private, \n       aes(x = `Planning Region`, \n           fill = `Property Type`)) +\n  geom_bar(color = \"grey30\") +\n  labs(x = \"Region\", y = \"Transactions\", title = \"Sale of different property types in different Regions\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\n\n\nObservation from the Drilldown chart\n\n\n\nFrom the FacetGrid transaction volumes of Property Types segregated by the different regions, we observed that majority of the transactions happening in 2024 involves either Apartments or Condominiums in the Central Region.\nShifting gears into the types of sale, we can also observe that New Sale is very popular for Apartments in Central Region as well as Executive Condominiums in the West Region. This sentiment is also backed by Straits Times\nGiven that the graph has highlighted Region and Apartment Type has a high correlation in contributing to buyer’s interest, we have use a histogram to illustrate it in the drilldown chart."
   },
   {
-    "objectID": "take_home_ex/take_home_ex1.html#plot-for-facetgrid",
-    "href": "take_home_ex/take_home_ex1.html#plot-for-facetgrid",
-    "title": "Take Home Exercise 1",
-    "section": "Plot for FacetGrid",
-    "text": "Plot for FacetGrid"
-  },
-  {
-    "objectID": "take_home_ex/take_home_ex1.html#drilldown",
-    "href": "take_home_ex/take_home_ex1.html#drilldown",
-    "title": "Take Home Exercise 1",
-    "section": "Drilldown",
-    "text": "Drilldown\n\nggplot(data=Q1_2024_Private, \n       aes(x = `Planning Region`, \n           fill = `Property Type`)) +\n  geom_bar(color = \"grey30\") +\n  labs(x = \"Region\", y = \"Transactions\", title = \"Sale of different property types in different Regions\") +\n  theme_minimal()\n\n\n\n\n:::\n\n\n\n\n\n\nObservation from the Drilldown chart\n\n\n\nFrom the FacetGrid transaction volumes of Property Types segregated by the different regions, we observed that majority of the transactions happening in 2024 involves either Apartments or Condominiums in the Central Region.\nShifting gears into the types of sale, we can also observe that New Sale is very popular for Apartments in Central Region as well as Executive Condominiums in the West Region. This sentiment is also backed by Straits Times\nGiven that the graph has highlighted Region and Apartment Type has a high correlation in contributing to buyer’s interest, we will use a histogram to prove it in the drilldown chart."
-  },
-  {
     "objectID": "take_home_ex/take_home_ex1.html#average-transaction-price-by-region",
     "href": "take_home_ex/take_home_ex1.html#average-transaction-price-by-region",
     "title": "Take Home Exercise 1",
@@ -271,5 +257,117 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#displaying-multiple-information-on-tooltip",
+    "href": "In_class_ex/hands-on_ex3.html#displaying-multiple-information-on-tooltip",
+    "title": "Hands On Exercise 3",
+    "section": "Displaying multiple information on tooltip",
+    "text": "Displaying multiple information on tooltip\nThe first three lines of codes in the code chunk create a new field called tooltip. At the same time, it populates text in ID and CLASS fields into the newly created field. Next, this newly created field is used as tooltip field as shown in the code of line 7. By hovering the mouse pointer on an data point of interest, the student’s ID will be displayed.\n\nexam_data$tooltip &lt;- c(paste0(     \n  \"Name = \", exam_data$ID,         \n  \"\\n Class = \", exam_data$CLASS)) \n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = exam_data$tooltip), \n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(\n  ggobj = p,\n  width_svg = 8,\n  height_svg = 8*0.618\n)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#customising-tooltop-style",
+    "href": "In_class_ex/hands-on_ex3.html#customising-tooltop-style",
+    "title": "Hands On Exercise 3",
+    "section": "Customising Tooltop style",
+    "text": "Customising Tooltop style\nCode chunk below uses [opts_tooltip()] of ggiraph to customize tooltip rendering by add css declarations.\n\ntooltip_css &lt;- \"background-color:white; #&lt;&lt;\nfont-style:bold; color:black;\" #&lt;&lt;\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(              \n    aes(tooltip = ID),                   \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618,\n  options = list(    #&lt;&lt;\n    opts_tooltip(    #&lt;&lt;\n      css = tooltip_css)) #&lt;&lt;\n)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#displaying-statistics-on-tooltip",
+    "href": "In_class_ex/hands-on_ex3.html#displaying-statistics-on-tooltip",
+    "title": "Hands On Exercise 3",
+    "section": "Displaying statistics on tooltip",
+    "text": "Displaying statistics on tooltip\nTHis is an advanced way to customise tooltip. In this example, a function is used to compute 90% confident interval of the mean. The derived statistics are then displayed in the tooltip.\n\ntooltip &lt;- function(y, ymax, accuracy = .01) {\n  mean &lt;- scales::number(y, accuracy = accuracy)\n  sem &lt;- scales::number(ymax - y, accuracy = accuracy)\n  paste(\"Mean maths scores:\", mean, \"+/-\", sem)\n}\n\ngg_point &lt;- ggplot(data=exam_data, \n                   aes(x = RACE),\n) +\n  stat_summary(aes(y = MATHS, \n                   tooltip = after_stat(  \n                     tooltip(y, ymax))),  \n    fun.data = \"mean_se\", \n    geom = GeomInteractiveCol,  \n    fill = \"light blue\"\n  ) +\n  stat_summary(aes(y = MATHS),\n    fun.data = mean_se,\n    geom = \"errorbar\", width = 0.2, size = 0.2\n  )\n\ngirafe(ggobj = gg_point,\n       width_svg = 8,\n       height_svg = 8*0.618)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#hover-effect-with-data-id.-aesthetic",
+    "href": "In_class_ex/hands-on_ex3.html#hover-effect-with-data-id.-aesthetic",
+    "title": "Hands On Exercise 3",
+    "section": "Hover effect with data id. aesthetic",
+    "text": "Hover effect with data id. aesthetic\nCode chunk below shows the second interactive feature of ggiraph, namely data_id.\nElements associated with a data_id (i.e CLASS) will be highlighted upon mouse over.\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(           \n    aes(data_id = CLASS),             \n    stackgroups = TRUE,               \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618                      \n)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#styling-hover-effect",
+    "href": "In_class_ex/hands-on_ex3.html#styling-hover-effect",
+    "title": "Hands On Exercise 3",
+    "section": "Styling hover effect",
+    "text": "Styling hover effect\nIn the code chunk below, css codes are used to change the highlighting effect.\nElements associated with a data_id (i.e CLASS) will be highlighted upon mouse over."
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#plot-1-combining-tooltip-and-hover-effect",
+    "href": "In_class_ex/hands-on_ex3.html#plot-1-combining-tooltip-and-hover-effect",
+    "title": "Hands On Exercise 3",
+    "section": "Plot 1: Combining tooltip and hover effect",
+    "text": "Plot 1: Combining tooltip and hover effect\nThe tooltip and hover effects are combined in the interactive statistical graph in the code chunk below.\nElements associated with a data_id (i.e CLASS) will be highlighted upon mouse over. At the same time, the tooltip will show the CLASS.\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(              \n    aes(tooltip = CLASS, \n        data_id = CLASS),              \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618,\n  options = list(                        \n    opts_hover(css = \"fill: #202020;\"),  \n    opts_hover_inv(css = \"opacity:0.2;\") \n  )                                        \n)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#click-effect-with-onclick",
+    "href": "In_class_ex/hands-on_ex3.html#click-effect-with-onclick",
+    "title": "Hands On Exercise 3",
+    "section": "Click effect with onclick",
+    "text": "Click effect with onclick\nonclick argument of ggiraph provides hotlink interactivity on the web. Web document link with a data object will be displayed on the web browser upon mouse click.\nThe code chunk below shown an example of onclick.\n\nexam_data$onclick &lt;- sprintf(\"window.open(\\\"%s%s\\\")\",\n\"https://www.moe.gov.sg/schoolfinder?journey=Primary%20school\",\nas.character(exam_data$ID))\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(              \n    aes(onclick = onclick),              \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618)                                        \n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nClick actions must be a string column in the dataset containing valid javascript instructions."
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#coordinated-multiple-views-with-ggiraph",
+    "href": "In_class_ex/hands-on_ex3.html#coordinated-multiple-views-with-ggiraph",
+    "title": "Hands On Exercise 3",
+    "section": "Coordinated Multiple Views with ggiraph",
+    "text": "Coordinated Multiple Views with ggiraph\nWhen a data point of one of the dotplot is selected, the corresponding data point ID on the second data visualisation will be highlighted too.\nIn order to build a coordinated multiple views, the following programming strategy will be used:\n\nAppropriate interactive functions of ggiraph will be used to create the multiple views.\npatchwork function of patchwork package will be used inside girafe function to create the interactive coordinated multiple views.\n\nThe data_id aesthetic is critical to link observations between plots and the tooltip aesthetic is optional but nice to have when mouse over a point.\n\np1 &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(              \n    aes(data_id = ID),              \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") +  \n  coord_cartesian(xlim=c(0,100)) + \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\n\np2 &lt;- ggplot(data=exam_data, \n       aes(x = ENGLISH)) +\n  geom_dotplot_interactive(              \n    aes(data_id = ID),              \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") + \n  coord_cartesian(xlim=c(0,100)) + \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\n\ngirafe(code = print(p1 + p2), \n       width_svg = 6,\n       height_svg = 3,\n       options = list(\n         opts_hover(css = \"fill: #202020;\"),\n         opts_hover_inv(css = \"opacity:0.2;\")\n         )\n       )"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#there-are-two-ways-to-create-interactive-graph-by-using-plotly-they-are",
+    "href": "In_class_ex/hands-on_ex3.html#there-are-two-ways-to-create-interactive-graph-by-using-plotly-they-are",
+    "title": "Hands On Exercise 3",
+    "section": "There are two ways to create interactive graph by using plotly, they are:",
+    "text": "There are two ways to create interactive graph by using plotly, they are:\n\nby using plot_ly(), and\nby using ggplotly()"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#creating-an-interactive-scatter-plot-plot_ly-method",
+    "href": "In_class_ex/hands-on_ex3.html#creating-an-interactive-scatter-plot-plot_ly-method",
+    "title": "Hands On Exercise 3",
+    "section": "Creating an interactive scatter plot: plot_ly() method",
+    "text": "Creating an interactive scatter plot: plot_ly() method\nA basic interactive plot created by using plot_ly().\n\nplot_ly(data = exam_data, \n             x = ~MATHS, \n             y = ~ENGLISH)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#working-with-visual-variable-plot_ly-method",
+    "href": "In_class_ex/hands-on_ex3.html#working-with-visual-variable-plot_ly-method",
+    "title": "Hands On Exercise 3",
+    "section": "Working with visual variable: plot_ly() method",
+    "text": "Working with visual variable: plot_ly() method\nIn the code chunk below, color argument is mapped to a qualitative visual variable (i.e. RACE).\n\nplot_ly(data = exam_data, \n        x = ~ENGLISH, \n        y = ~MATHS, \n        color = ~RACE)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#creating-an-interactive-scatter-plot-ggplotly-method",
+    "href": "In_class_ex/hands-on_ex3.html#creating-an-interactive-scatter-plot-ggplotly-method",
+    "title": "Hands On Exercise 3",
+    "section": "Creating an interactive scatter plot: ggplotly() method",
+    "text": "Creating an interactive scatter plot: ggplotly() method\nThe code chunk below plots an interactive scatter plot by using ggplotly()."
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#plot",
+    "href": "In_class_ex/hands-on_ex3.html#plot",
+    "title": "Hands On Exercise 3",
+    "section": "Plot",
+    "text": "Plot\n\np &lt;- ggplot(data=exam_data, \n            aes(x = MATHS,\n                y = ENGLISH)) +\n  geom_point(size=1) +\n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\nggplotly(p)\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nThe only extra line you need to include in the code chunk is ggplotly()."
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#interactive-data-visualisation---crosstalk-methods",
+    "href": "In_class_ex/hands-on_ex3.html#interactive-data-visualisation---crosstalk-methods",
+    "title": "Hands On Exercise 3",
+    "section": "Interactive Data Visualisation - crosstalk methods",
+    "text": "Interactive Data Visualisation - crosstalk methods\nCrosstalk is an add-on to the htmlwidgets package. It extends htmlwidgets with a set of classes, functions, and conventions for implementing cross-widget interactions (currently, linked brushing and filtering).\n\nDT::datatable(exam_data, class= \"compact\")"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#linked-brushing-crosstalk-method",
+    "href": "In_class_ex/hands-on_ex3.html#linked-brushing-crosstalk-method",
+    "title": "Hands On Exercise 3",
+    "section": "Linked brushing: crosstalk method",
+    "text": "Linked brushing: crosstalk method\nCode chunk below is used to implement coordinated brushing."
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3.html#plot-1",
+    "href": "In_class_ex/hands-on_ex3.html#plot-1",
+    "title": "Hands On Exercise 3",
+    "section": "Plot",
+    "text": "Plot\n\nd &lt;- highlight_key(exam_data) \np &lt;- ggplot(d, \n            aes(ENGLISH, \n                MATHS)) + \n  geom_point(size=1) +\n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\ngg &lt;- highlight(ggplotly(p),        \n                \"plotly_selected\")  \n\ncrosstalk::bscols(gg,               \n                  DT::datatable(d), \n                  widths = 5)"
   }
 ]
