@@ -29,7 +29,7 @@ pacman::p_load(ggiraph, plotly,
 exam_data <- read_csv("data/Exam_data.csv")
 ```
 
-To create an interactive version of ggplot2 geom (i.e. [`geom_dotplot_interactive()`] we first need to create the basic graph. Then, [`girafe()`](https://davidgohel.github.io/ggiraph/reference/girafe.html) will be used to generate an svg object to be displayed on an html page.
+To create an interactive version of ggplot2 geom (i.e. \[`geom_dotplot_interactive()`\] we first need to create the basic graph. Then, [`girafe()`](https://davidgohel.github.io/ggiraph/reference/girafe.html) will be used to generate an svg object to be displayed on an html page.
 
 ```{r}
 #| echo: false
@@ -78,7 +78,7 @@ girafe(
 
 ## Customising Tooltop style
 
-Code chunk below uses [`opts_tooltip()`] of **ggiraph** to customize tooltip rendering by add css declarations.
+Code chunk below uses \[`opts_tooltip()`\] of **ggiraph** to customize tooltip rendering by add css declarations.
 
 ```{r}
 
@@ -134,7 +134,6 @@ girafe(ggobj = gg_point,
        width_svg = 8,
        height_svg = 8*0.618)
 ```
-
 
 ## Hover effect with data id. aesthetic
 
@@ -307,8 +306,6 @@ Plotly’s R graphing library create interactive web graphics from **ggplot2** g
 
 A basic interactive plot created by using *plot_ly()*.
 
-
-
 ```{r}
 
 plot_ly(data = exam_data, 
@@ -316,11 +313,9 @@ plot_ly(data = exam_data,
              y = ~ENGLISH)
 ```
 
-
 ## Working with visual variable: plot_ly() method
 
 In the code chunk below, *color* argument is mapped to a qualitative visual variable (i.e. RACE).
-
 
 ```{r}
 
@@ -329,7 +324,6 @@ plot_ly(data = exam_data,
         y = ~MATHS, 
         color = ~RACE)
 ```
-
 
 ## Creating an interactive scatter plot: ggplotly() method
 
@@ -351,7 +345,6 @@ ggplotly(p)
 ::: callout-tip
 The only extra line you need to include in the code chunk is *ggplotly()*.
 :::
-
 
 ## **Interactive Data Visualisation - crosstalk methods**
 
@@ -384,6 +377,3 @@ crosstalk::bscols(gg,
                   DT::datatable(d), 
                   widths = 5)        
 ```
-
-
-

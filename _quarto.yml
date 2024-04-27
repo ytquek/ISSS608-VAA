@@ -24,6 +24,8 @@ website:
             href: "In_class_ex/hands_on_ex1.html"
           - text: "Hands On Exercise 3"
             href: "In_class_ex/hands-on_ex3.html"
+          - text: "Hands On Exercise 3 Part 2"
+            href: "In_class_ex/hands-on_ex3_2.html"
       - text: Take Home Exercise
         menu:
           - text: "Take Home Exercise 1"

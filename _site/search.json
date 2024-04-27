@@ -383,5 +383,54 @@
     "title": "Take Home Exercise 1",
     "section": "Average Transaction Price by Sale Type and Region",
     "text": "Average Transaction Price by Sale Type and Region\nUsing Geospatial mapping later, we notice can now see clearly from a macro POV that the price distribution by PSF in Singapore.\nHowever, our literature research also shows that there are experts who claims that prices of properties are also affected by their age and sale type.\n\nlibrary(ggthemes)\n\nq1_psf &lt;- Q1_2024_Private %&gt;%\n  group_by(`Type of Sale` , `Planning Region`) %&gt;%\n  summarize(`Average PSF` = mean(`Unit Price ($ PSF)`), .groups = \"drop\")\nq1_psf\n\n# A tibble: 15 × 3\n   `Type of Sale` `Planning Region` `Average PSF`\n   &lt;chr&gt;          &lt;chr&gt;                     &lt;dbl&gt;\n 1 New Sale       Central Region            2682.\n 2 New Sale       East Region               1793.\n 3 New Sale       North East Region         2161.\n 4 New Sale       North Region              1319.\n 5 New Sale       West Region               1911.\n 6 Resale         Central Region            1895.\n 7 Resale         East Region               1369.\n 8 Resale         North East Region         1440.\n 9 Resale         North Region              1213.\n10 Resale         West Region               1376.\n11 Sub Sale       Central Region            2154.\n12 Sub Sale       East Region               1659.\n13 Sub Sale       North East Region         1729.\n14 Sub Sale       North Region              1485 \n15 Sub Sale       West Region               1995.\n\n# Calculate overall mean of 'Average PSF'\noverall_mean &lt;- mean(q1_psf$`Average PSF`)\n\nggplot(q1_psf, aes(x = `Planning Region`, y = `Average PSF`, fill = `Type of Sale`)) +\n  geom_bar(stat = \"identity\", position = position_dodge()) +\n  geom_hline(yintercept = overall_mean, linetype = \"dashed\", color = \"black\") +\n  theme_minimal() +\n  labs(title = \"Average PSF by Region and Type of Sale\",\n       x = \"Planning Region\",\n       y = \"Average PSF\",\n       fill = \"Type of Sale\") +\n  scale_fill_manual(values = c(\"New Sale\" = \"blue\", \"Resale\" = \"red\", \"Sub Sale\" = \"orange\")) +   annotate(\"text\", x = Inf, y = overall_mean, label = paste(\"Average PSF:\", round(overall_mean, 2)), \n           vjust = -0.5, hjust = 1.1, color = \"black\", size = 3.5)\n\n\n\n\n\n\n\n\n\n\nObservation of PSF prices for all transactions\n\n\n\nObserving the bar chart, we can note that the Central Region exhibits the highest Average PSF for new sales, which is significantly above the overall average. In contrast, the North Region presents the lowest Average PSF figures for both new sales and resales.\nLastly, the chart also shows a clear trend where new sales consistently have higher Average PSF values compared to resales across all regions. The additional category of ‘Sub Sale’—present only for the East Region—falls below the overall mean. The overall mean PSF, marked by the dashed line, lies just below the Average PSF for resales in the Central Region, suggesting a higher concentration of sales with above-average prices in that region."
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3_2.html",
+    "href": "In_class_ex/hands-on_ex3_2.html",
+    "title": "hands-on_ex3_2",
+    "section": "",
+    "text": "#Objectives - Create animated data visualisation by using gganimate and plotly r packages - Reshape data by using tidyr package - Process, wrangle and transform data by using dplyr package"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3_2.html#installing-and-loading-the-required-libraries",
+    "href": "In_class_ex/hands-on_ex3_2.html#installing-and-loading-the-required-libraries",
+    "title": "hands-on_ex3_2",
+    "section": "Installing and loading the required libraries",
+    "text": "Installing and loading the required libraries\nThe following R packages will be used:\n\nplotly, R library for plotting interactive statistical graphs.\ngganimate, an ggplot extension for creating animated statistical graphs.\ngifski converts video frames to GIF animations using pngquant’s fancy features for efficient cross-frame palettes and temporal dithering. It produces animated GIFs that use thousands of colors per frame.\ngapminder: An excerpt of the data available at Gapminder.org. We just want to use its country_colors scheme.\ntidyverse, a family of modern R packages specially designed to support data science, analysis and communication task including creating static statistical graphs.\n\n\npacman::p_load(readxl, gifski, gapminder,\n               plotly, gganimate, tidyverse)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3_2.html#importing-the-data",
+    "href": "In_class_ex/hands-on_ex3_2.html#importing-the-data",
+    "title": "hands-on_ex3_2",
+    "section": "Importing the Data",
+    "text": "Importing the Data\n\nThe code chunk below imports GlobalPopulation.xlsx into R environment by using read_xls() function of readr package.\nreadr is a pacakge within tidyverse.\n\n\ncol &lt;- c(\"Country\", \"Continent\")\nglobalPop &lt;- read_xls(\"data/GlobalPopulation.xls\",\n                      sheet=\"Data\") %&gt;%\n  mutate_at(col, as.factor) %&gt;%\n  mutate(Year = as.integer(Year))"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3_2.html#building-a-static-population-bubble-plot",
+    "href": "In_class_ex/hands-on_ex3_2.html#building-a-static-population-bubble-plot",
+    "title": "hands-on_ex3_2",
+    "section": "Building a static population bubble plot",
+    "text": "Building a static population bubble plot\nIn the code chunk below, the basic ggplot2 functions are used to create a static bubble plot.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\nggplot(globalPop, aes(x = Old, y = Young, \n                      size = Population, \n                      colour = Country)) +\n  geom_point(alpha = 0.7, \n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = 'Year: {frame_time}', \n       x = '% Aged', \n       y = '% Young')"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3_2.html#building-the-animated-bubble-plot",
+    "href": "In_class_ex/hands-on_ex3_2.html#building-the-animated-bubble-plot",
+    "title": "hands-on_ex3_2",
+    "section": "Building the animated bubble plot",
+    "text": "Building the animated bubble plot\nIn the code chunk below,\n\ntransition_time() of gganimate is used to create transition through distinct states in time (i.e. Year).\nease_aes() is used to control easing of aesthetics.\n\nThe default is linear.\nOther methods are: quadratic, cubic, quartic, quintic, sine, circular, exponential, elastic, back, and bounce.\n\n\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\nggplot(globalPop, aes(x = Old, y = Young, \n                      size = Population, \n                      colour = Country)) +\n  geom_point(alpha = 0.7, \n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = 'Year: {frame_time}', \n       x = '% Aged', \n       y = '% Young') +\n  transition_time(Year) +       \n  ease_aes('linear')"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3_2.html#building-an-animated-bubble-plot-ggplotly-method",
+    "href": "In_class_ex/hands-on_ex3_2.html#building-an-animated-bubble-plot-ggplotly-method",
+    "title": "hands-on_ex3_2",
+    "section": "Building an animated bubble plot: ggplotly() method",
+    "text": "Building an animated bubble plot: ggplotly() method\nCreate an animated bubble plot by using ggplotly() method.\n\nAppropriate ggplot2 functions are used to create a static bubble plot. The output is then saved as an R object called gg.\nggplotly() is then used to convert the R graphic object into an animated svg object.\n\nAlthough show.legend = FALSE argument was used, the legend still appears on the plot. To overcome this problem, theme(legend.position='none') should be used\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\ngg &lt;- ggplot(globalPop, \n       aes(x = Old, \n           y = Young, \n           size = Population, \n           colour = Country)) +\n  geom_point(aes(size = Population,\n                 frame = Year),\n             alpha = 0.7) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(x = '% Aged', \n       y = '% Young') + \n  theme(legend.position='none')\n\nggplotly(gg)"
+  },
+  {
+    "objectID": "In_class_ex/hands-on_ex3_2.html#building-an-animated-bubble-plot-plot_ly-method",
+    "href": "In_class_ex/hands-on_ex3_2.html#building-an-animated-bubble-plot-plot_ly-method",
+    "title": "hands-on_ex3_2",
+    "section": "Building an animated bubble plot: plot_ly() method",
+    "text": "Building an animated bubble plot: plot_ly() method\nCreate an animated bubble plot by using plot_ly() method.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\nbp &lt;- globalPop %&gt;%\n  plot_ly(x = ~Old, \n          y = ~Young, \n          size = ~Population, \n          color = ~Continent,\n          sizes = c(2, 100),\n          frame = ~Year, \n          text = ~Country, \n          hoverinfo = \"text\",\n          type = 'scatter',\n          mode = 'markers'\n          ) %&gt;%\n  layout(showlegend = FALSE)\nbp"
   }
 ]
