@@ -6,9 +6,9 @@ website:
   navbar:
     tools:
       - icon: linkedin
-        href: personal.yout.ing
+        href: "https://personal.yout.ing"
       - icon: github
-        href: https:github.com/ytquek
+        href: "https://github.com/ytquek"
     left:
       - text: In class Exercise
         menu: 
