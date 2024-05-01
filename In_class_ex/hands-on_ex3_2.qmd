@@ -10,10 +10,7 @@ warning: false
 freeze: true
 ---
 
-#Objectives
--   Create animated data visualisation by using **gganimate** and **plotly r** packages
--   Reshape data by using **tidyr** package
--   Process, wrangle and transform data by using **dplyr** package
+#Objectives - Create animated data visualisation by using **gganimate** and **plotly r** packages - Reshape data by using **tidyr** package - Process, wrangle and transform data by using **dplyr** package
 
 # Getting Started
 
@@ -259,4 +256,3 @@ bp <- globalPop %>%
 bp                                  
 ```
 :::
-
