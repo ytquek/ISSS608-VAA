@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="You Ting QUEK">
+<meta name="dcterms.date" content="2024-05-02">
+
+<title>ISSS608-VAA - Take Home Exercise 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script src="../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../site_libs/datatables-binding-0.30/datatables.js"></script>
+<script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../site_libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../site_libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../site_libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
+<link href="../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ISSS608-VAA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-in-class-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">In class Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercise">    
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/In-class_Ex01.html" rel="" target="">
+ <span class="dropdown-text">In Class Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/In-class_Ex02.html" rel="" target="">
+ <span class="dropdown-text">In Class Exercise 2</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Hands on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands_on_ex1.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands_on_ex1.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex3.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex3_2.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 3 Part 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex4.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 4 Part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex4_2.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 4 Part 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex4_3.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 4 Part 3</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Take Home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../take_home_ex/take_home_ex1.html" rel="" target="">
+ <span class="dropdown-text">Take Home Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+    <a href="https://personal.yout.ing" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-linkedin"></i></a>
+    <a href="https://github.com/ytquek" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#original-visualisation" id="toc-original-visualisation" class="nav-link" data-scroll-target="#original-visualisation">Original Visualisation</a>
+  <ul class="collapse">
+  <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
+  <li><a href="#how-might-we-do-it-differntly." id="toc-how-might-we-do-it-differntly." class="nav-link" data-scroll-target="#how-might-we-do-it-differntly.">How might we do it differntly.</a></li>
+  </ul></li>
+  <li><a href="#data-preperation" id="toc-data-preperation" class="nav-link" data-scroll-target="#data-preperation">Data preperation</a>
+  <ul class="collapse">
+  <li><a href="#loading-the-required-packages" id="toc-loading-the-required-packages" class="nav-link" data-scroll-target="#loading-the-required-packages">Loading the required packages</a></li>
+  <li><a href="#data-extraction" id="toc-data-extraction" class="nav-link" data-scroll-target="#data-extraction">Data Extraction</a></li>
+  <li><a href="#implementing-the-visualisation" id="toc-implementing-the-visualisation" class="nav-link" data-scroll-target="#implementing-the-visualisation">Implementing the visualisation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Take Home Exercise 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>You Ting QUEK </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 2, 2024</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">May 3, 2024</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="objective" class="level1">
+<h1>Objective</h1>
+<p>In this particular section, we will revisit Take-home Exercise 1 which visualises trends in the Real Estate Market of Q1 2024.</p>
+<p>We will pick a visualisation which the author can learn from to improve on it’s clarity and aesthetics by way of using the best practices for visualizing data.</p>
+</section>
+<section id="original-visualisation" class="level1">
+<h1>Original Visualisation</h1>
+<p>We will focus on <a href="https://isss608-aryasiahaan.netlify.app/take-home_ex/take-home_ex01/take-home_ex01">Arya Siahaan</a> visualization of “SALES DISTRIBUTION BASED ON PROPERTY TYPE IN SINGAPORE PRIVATE RESIDENTIAL MARKET”.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot 2024-05-02 at 8.36.02 PM.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<section id="review" class="level2">
+<h2 class="anchored" data-anchor-id="review">Review</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">The Good</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">The Not-So-Good</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ul>
+<li><p>The interpretation of the data is very forward at a glance.</p></li>
+<li><p>The results are also extremely straightforward, we are able to tell which property garners the highest volume of sales.</p></li>
+</ul>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<ul>
+<li><p>There is not much data nor further story telling to be had and this can be achieved easily with a simple excel function.</p></li>
+<li><p>There is no interaction with the graphs hence, it is not possible to tell the exact numbers for each property type.</p></li>
+<li><p>In addition, it is also possible to merge both of Aryan’s graph together such that they show a comprehensive picture of the private estate resale market.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="how-might-we-do-it-differntly." class="level2">
+<h2 class="anchored" data-anchor-id="how-might-we-do-it-differntly.">How might we do it differntly.</h2>
+<p>Firstly, we have to ascertain the story point which we would like to tell which is:</p>
+<p>What is the monthly sales volume of each property type in Singapore?</p>
+<p>TO do that, we will need the following datapoints from the RELIS database:</p>
+<ul>
+<li><p><strong>Property Type</strong></p></li>
+<li><p><strong>Sale Date</strong></p></li>
+<li><p><strong>Transacted Price ($)</strong></p></li>
+</ul>
+</section>
+</section>
+<section id="data-preperation" class="level1">
+<h1>Data preperation</h1>
+<section id="loading-the-required-packages" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-required-packages">Loading the required packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, scales, patchwork, ggtext, DT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="data-extraction">Data Extraction</h2>
+<p>First we will import the data from the 5 csv files</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the paths to the individual CSV files</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>file1 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240308160536.csv"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>file2 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240308160736.csv"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>file3 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240308161009.csv"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>file4 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240308161109.csv"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>file5 <span class="ot">&lt;-</span> <span class="st">"data/ResidentialTransaction20240414220633.csv"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading the individual CSV files</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file1)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file2)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>data3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file3)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>data4 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file4)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>data5 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file5)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining the data frames into one</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>combined_transaction <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data1, data2, data3, data4, data5)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Viewing the data structure given</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">names</span>(combined_transaction)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>col_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Project Name"                "Transacted Price ($)"       
+ [3] "Area (SQFT)"                 "Unit Price ($ PSF)"         
+ [5] "Sale Date"                   "Address"                    
+ [7] "Type of Sale"                "Type of Area"               
+ [9] "Area (SQM)"                  "Unit Price ($ PSM)"         
+[11] "Nett Price($)"               "Property Type"              
+[13] "Number of Units"             "Tenure"                     
+[15] "Completion Date"             "Purchaser Address Indicator"
+[17] "Postal Code"                 "Postal District"            
+[19] "Postal Sector"               "Planning Region"            
+[21] "Planning Area"              </code></pre>
+</div>
+</div>
+<p>Secondly, we will filter the data into Q1,Q2,Q3 and Q4</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>combined_transaction<span class="sc">$</span><span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">dmy</span>(combined_transaction<span class="sc">$</span><span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure to ensure 'Sale Date' is now a Date object</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(combined_transaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [26,806 × 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Project Name               : chr [1:26806] "THE REEF AT KING'S DOCK" "URBAN TREASURES" "NORTH GAIA" "NORTH GAIA" ...
+ $ Transacted Price ($)       : num [1:26806] 2317000 1823500 1421112 1258112 1280000 ...
+ $ Area (SQFT)                : num [1:26806] 883 883 1076 1033 872 ...
+ $ Unit Price ($ PSF)         : num [1:26806] 2625 2066 1320 1218 1468 ...
+ $ Sale Date                  : Date[1:26806], format: "2023-01-01" "2023-01-02" ...
+ $ Address                    : chr [1:26806] "12 HARBOURFRONT AVENUE #05-32" "205 JALAN EUNOS #08-02" "29 YISHUN CLOSE #08-10" "45 YISHUN CLOSE #07-42" ...
+ $ Type of Sale               : chr [1:26806] "New Sale" "New Sale" "New Sale" "New Sale" ...
+ $ Type of Area               : chr [1:26806] "Strata" "Strata" "Strata" "Strata" ...
+ $ Area (SQM)                 : num [1:26806] 82 82 100 96 81 ...
+ $ Unit Price ($ PSM)         : num [1:26806] 28256 22238 14211 13105 15802 ...
+ $ Nett Price($)              : chr [1:26806] "-" "-" "-" "-" ...
+ $ Property Type              : chr [1:26806] "Condominium" "Condominium" "Executive Condominium" "Executive Condominium" ...
+ $ Number of Units            : num [1:26806] 1 1 1 1 1 1 1 1 1 1 ...
+ $ Tenure                     : chr [1:26806] "99 yrs from 12/01/2021" "Freehold" "99 yrs from 15/02/2021" "99 yrs from 15/02/2021" ...
+ $ Completion Date            : chr [1:26806] "Uncompleted" "Uncompleted" "Uncompleted" "Uncompleted" ...
+ $ Purchaser Address Indicator: chr [1:26806] "HDB" "Private" "HDB" "HDB" ...
+ $ Postal Code                : chr [1:26806] "097996" "419535" "269343" "269294" ...
+ $ Postal District            : chr [1:26806] "04" "14" "27" "27" ...
+ $ Postal Sector              : chr [1:26806] "09" "41" "26" "26" ...
+ $ Planning Region            : chr [1:26806] "Central Region" "East Region" "North Region" "North Region" ...
+ $ Planning Area              : chr [1:26806] "Bukit Merah" "Bedok" "Yishun" "Yishun" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   `Project Name` = col_character(),
+  ..   `Transacted Price ($)` = col_number(),
+  ..   `Area (SQFT)` = col_number(),
+  ..   `Unit Price ($ PSF)` = col_number(),
+  ..   `Sale Date` = col_character(),
+  ..   Address = col_character(),
+  ..   `Type of Sale` = col_character(),
+  ..   `Type of Area` = col_character(),
+  ..   `Area (SQM)` = col_number(),
+  ..   `Unit Price ($ PSM)` = col_number(),
+  ..   `Nett Price($)` = col_character(),
+  ..   `Property Type` = col_character(),
+  ..   `Number of Units` = col_double(),
+  ..   Tenure = col_character(),
+  ..   `Completion Date` = col_character(),
+  ..   `Purchaser Address Indicator` = col_character(),
+  ..   `Postal Code` = col_character(),
+  ..   `Postal District` = col_character(),
+  ..   `Postal Sector` = col_character(),
+  ..   `Planning Region` = col_character(),
+  ..   `Planning Area` = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Q1_2024_Private <span class="ot">&lt;-</span> combined_transaction <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2024-01-01"</span>) <span class="sc">&amp;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2024-03-31"</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Q4_2023_Private <span class="ot">&lt;-</span> combined_transaction <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2023-10-01"</span>) <span class="sc">&amp;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Sale Date</span><span class="st">`</span> <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2023-12-31"</span>))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(Q1_2024_Private, <span class="at">n =</span> <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-118fd54009480e804d83" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-118fd54009480e804d83">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["THE LANDMARK","POLLEN COLLECTION","SKY EDEN@BEDOK","TERRA HILL","PINETREE HILL","THE RESERVE RESIDENCES","SUMMER VILLAS","THE MINTON","SEMBAWANG HILLS ESTATE","NV RESIDENCES","SANT RITZ","ECOPOLITAN","AFFINITY AT SERANGOON","PARC KOMO","TREASURE CREST","ECO","SIXTH AVENUE CENTRE","NOMA","PARC CLEMATIS","MARINA BAY RESIDENCES"],[2726888,3850000,2346000,2190000,1954000,3412201,2960000,1840000,4200000,1350000,890000,1390000,1938000,1758000,1790000,1620000,1935000,1500000,1990000,1420000],[1076.4,1808.35,1087.16,807.3,796.54,1323.97,3530.59,1216.33,2092.52,1108.69,527.4399999999999,1097.93,1173.28,1001.05,1248.62,990.2900000000001,1173.28,850.3599999999999,904.1800000000001,710.42],[2533,2129,2158,2713,2453,2577,838,1513,2007,1218,1687,1266,1652,1756,1434,1636,1649,1764,2201,1999],["2024-01-01","2024-01-01","2024-01-01","2024-01-01","2024-01-01","2024-01-01","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02","2024-01-02"],["173 CHIN SWEE ROAD #22-11","34 POLLEN PLACE","1 BEDOK CENTRAL #09-10","18A YEW SIANG ROAD #03-12","36 PINE GROVE #05-18","13 JALAN ANAK BUKIT #28-106","73 GERALD DRIVE #01-06","6 HOUGANG STREET 11 #11-09","67 JALAN CHENGAM","99 PASIR RIS GROVE #08-47","1 PHENG GECK AVENUE #06-24","134 PUNGGOL WALK #07-21","20 SERANGOON NORTH AVENUE 1 #01-20","959 UPPER CHANGI ROAD NORTH #05-65","54 ANCHORVALE CRESCENT #05-15","275 BEDOK SOUTH AVENUE 3 #01-22","805 BUKIT TIMAH ROAD #04-03","333 GUILLEMARD ROAD #02-04","8 JALAN LEMPENG #09-16","18 MARINA BOULEVARD #26-04"],["New Sale","New Sale","New Sale","New Sale","New Sale","New Sale","Resale","Resale","Resale","Resale","Resale","Resale","Sub Sale","Sub Sale","Resale","Resale","Resale","Sub Sale","Sub Sale","Resale"],["Strata","Land","Strata","Strata","Strata","Strata","Strata","Strata","Land","Strata","Strata","Strata","Strata","Strata","Strata","Strata","Strata","Strata","Strata","Strata"],[100,168,101,75,74,123,328,113,194.4,103,49,102,109,93,116,92,109,79,84,66],[27269,22917,23228,29200,26405,27741,9024,16283,21605,13107,18163,13627,17780,18903,15431,17609,17752,18987,23690,21515],["-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"],["Condominium","Terrace House","Apartment","Apartment","Condominium","Apartment","Terrace House","Condominium","Terrace House","Condominium","Condominium","Executive Condominium","Apartment","Apartment","Executive Condominium","Condominium","Apartment","Apartment","Apartment","Condominium"],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["99 yrs from 28/08/2020","99 yrs from 09/12/2019","99 yrs from 05/01/2022","Freehold","99 yrs from 12/09/2022","99 yrs from 29/11/2021","Freehold","99 yrs from 27/07/2007","Freehold","99 yrs from 07/01/2008","99 yrs from 01/10/2012","99 yrs from 04/12/2012","99 yrs from 18/05/2018","Freehold","99 yrs from 05/05/2015","99 yrs from 14/05/2012","Freehold","Freehold","99 yrs from 08/08/2019","99 yrs from 11/10/2005"],["Uncompleted","Uncompleted","Uncompleted","Uncompleted","Uncompleted","Uncompleted","2004","2013","2015","2013","2016","2016","2023","2023","2018","2017","1986","2023","2023","2010"],["Private","N.A","HDB","N.A","Private","Private","Private","HDB","Private","HDB","HDB","HDB","HDB","Private","Private","Private","Private","Private","HDB","HDB"],["169878","807233","469657","118992","598444","589605","797703","538755","578350","518194","348196","828778","554337","506787","544631","465491","279883","399758","128796","018980"],["03","28","16","05","21","21","28","19","20","18","13","19","19","17","19","16","10","14","05","01"],["16","80","46","11","59","58","79","53","57","51","34","82","55","50","54","46","27","39","12","01"],["Central Region","North East Region","East Region","Central Region","Central Region","Central Region","North East Region","North East Region","North East Region","East Region","Central Region","North East Region","North East Region","East Region","North East Region","East Region","Central Region","Central Region","West Region","Central Region"],["Outram","Serangoon","Bedok","Queenstown","Bukit Timah","Bukit Timah","Hougang","Hougang","Ang Mo Kio","Pasir Ris","Toa Payoh","Punggol","Serangoon","Pasir Ris","Sengkang","Bedok","Bukit Timah","Geylang","Clementi","Downtown Core"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Project Name<\/th>\n      <th>Transacted Price ($)<\/th>\n      <th>Area (SQFT)<\/th>\n      <th>Unit Price ($ PSF)<\/th>\n      <th>Sale Date<\/th>\n      <th>Address<\/th>\n      <th>Type of Sale<\/th>\n      <th>Type of Area<\/th>\n      <th>Area (SQM)<\/th>\n      <th>Unit Price ($ PSM)<\/th>\n      <th>Nett Price($)<\/th>\n      <th>Property Type<\/th>\n      <th>Number of Units<\/th>\n      <th>Tenure<\/th>\n      <th>Completion Date<\/th>\n      <th>Purchaser Address Indicator<\/th>\n      <th>Postal Code<\/th>\n      <th>Postal District<\/th>\n      <th>Postal Sector<\/th>\n      <th>Planning Region<\/th>\n      <th>Planning Area<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,9,10,13]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(Q4_2023_Private, <span class="at">n =</span> <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-348414c62f3c0f3f7285" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-348414c62f3c0f3f7285">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["LEEDON GREEN","LIV @ MB","MORI","THE ARDEN","LENTOR MODERN","THE LAKEGARDEN RESIDENCES","LENTOR HILLS RESIDENCES","LENTOR HILLS RESIDENCES","THE MYST","STUDIO8","SERANGOON PARK","MAYFAIR PARK","REFLECTIONS AT KEPPEL BAY","LENTOR VILLAS","LIVIA","PAVILION PARK","THE TRE VER","PRINCIPAL GARDEN","THREE THREE ROBIN","MELVILLE PARK"],[1749000,3148740,2422337,1330000,2237000,1249900,2890000,1678000,1555000,800000,3300000,1350000,1825000,4025000,1750000,5250000,1950000,2700000,4350000,898888],[538.2,1453.14,1259.39,721.1900000000001,1130.22,592.02,1356.26,753.48,699.66,538.2,1646.89,5348.63,1108.69,2122.66,1603.84,3717.89,1011.82,1194.8,1948.28,1044.11],[3250,2167,1923,1844,1979,2111,2131,2227,2223,1486,2004,252,1646,1896,1091,1412,1927,2260,2233,861],["2023-10-01","2023-10-01","2023-10-01","2023-10-01","2023-10-01","2023-10-01","2023-10-01","2023-10-01","2023-10-01","2023-10-02","2023-10-02","2023-10-02","2023-10-02","2023-10-02","2023-10-02","2023-10-02","2023-10-02","2023-10-02","2023-10-02","2023-10-02"],["26 LEEDON HEIGHTS #11-08","114A ARTHUR ROAD #01-01","223 GUILLEMARD ROAD #05-21","6 PHOENIX ROAD #01-18","3 LENTOR CENTRAL #05-03","82 YUAN CHING ROAD #04-14","31 LENTOR HILLS ROAD #15-03","37 LENTOR HILLS ROAD #21-26","802 UPPER BUKIT TIMAH ROAD #16-17","8 JALAN AYER #05-01","6 JALAN SUKACHITA","23 JALAN WAJEK","15 KEPPEL BAY VIEW #06-55","98 LENTOR STREET","61 PASIR RIS GROVE #01-03","1 PAVILION STREET","68 POTONG PASIR AVENUE 1 #06-38","93 PRINCE CHARLES CRESCENT #22-06","33 ROBIN ROAD #01-02","22 SIMEI STREET 1 #01-01"],["New Sale","New Sale","New Sale","New Sale","New Sale","New Sale","New Sale","New Sale","New Sale","Resale","Resale","Resale","Resale","Resale","Resale","Resale","Sub Sale","Resale","Resale","Resale"],["Strata","Strata","Strata","Strata","Strata","Strata","Strata","Strata","Strata","Strata","Land","Land","Strata","Land","Strata","Land","Strata","Strata","Strata","Strata"],[50,135,117,67,105,55,126,70,65,50,153,496.9,103,197.2,149,345.4,94,111,181,97],[34980,23324,20704,19851,21305,22725,22937,23971,23923,16000,21569,2717,17718,20411,11745,15200,20745,24324,24033,9267],["-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"],["Condominium","Condominium","Apartment","Apartment","Apartment","Condominium","Apartment","Apartment","Condominium","Apartment","Terrace House","Semi-Detached House","Condominium","Terrace House","Condominium","Terrace House","Condominium","Condominium","Apartment","Condominium"],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],["Freehold","99 yrs from 23/11/2021","Freehold","99 yrs from 14/07/2023","99 yrs from 26/10/2021","99 yrs from 31/05/2023","99 yrs from 25/04/2022","99 yrs from 25/04/2022","99 yrs from 11/05/2023","Freehold","Freehold","99 yrs from 28/03/1952","99 yrs from 15/03/2006","Freehold","99 yrs from 07/01/2008","Freehold","99 yrs from 27/03/2018","99 yrs from 21/07/2014","Freehold","99 yrs from 01/09/1992"],["Uncompleted","Uncompleted","Uncompleted","Uncompleted","Uncompleted","Uncompleted","Uncompleted","Uncompleted","Uncompleted","2014","-","1971","2011","1997","2011","2001","2022","2018","2005","1996"],["Private","Private","Private","Private","Private","HDB","HDB","Private","N.A","HDB","Private","Private","Private","HDB","HDB","Private","Private","Private","Private","Private"],["266221","439826","399738","668159","788888","619614","788881","788884","678140","389144","358882","588476","098410","786808","518215","658681","358395","159026","258208","529945"],["10","15","14","23","26","22","26","26","23","14","13","21","04","26","18","23","13","03","10","18"],["26","43","39","66","78","61","78","78","67","38","35","58","09","78","51","65","35","15","25","52"],["Central Region","Central Region","Central Region","West Region","North East Region","West Region","North East Region","North East Region","West Region","Central Region","North East Region","Central Region","Central Region","North East Region","East Region","West Region","Central Region","Central Region","Central Region","East Region"],["Bukit Timah","Marine Parade","Geylang","Bukit Batok","Ang Mo Kio","Jurong East","Ang Mo Kio","Ang Mo Kio","Bukit Panjang","Kallang","Serangoon","Bukit Timah","Bukit Merah","Ang Mo Kio","Pasir Ris","Bukit Batok","Toa Payoh","Bukit Merah","Tanglin","Tampines"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Project Name<\/th>\n      <th>Transacted Price ($)<\/th>\n      <th>Area (SQFT)<\/th>\n      <th>Unit Price ($ PSF)<\/th>\n      <th>Sale Date<\/th>\n      <th>Address<\/th>\n      <th>Type of Sale<\/th>\n      <th>Type of Area<\/th>\n      <th>Area (SQM)<\/th>\n      <th>Unit Price ($ PSM)<\/th>\n      <th>Nett Price($)<\/th>\n      <th>Property Type<\/th>\n      <th>Number of Units<\/th>\n      <th>Tenure<\/th>\n      <th>Completion Date<\/th>\n      <th>Purchaser Address Indicator<\/th>\n      <th>Postal Code<\/th>\n      <th>Postal District<\/th>\n      <th>Postal Sector<\/th>\n      <th>Planning Region<\/th>\n      <th>Planning Area<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,9,10,13]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Third we will wrangle the data</p>
+</section>
+<section id="implementing-the-visualisation" class="level2">
+<h2 class="anchored" data-anchor-id="implementing-the-visualisation">Implementing the visualisation</h2>
+<p>ggplot(Q1_2024_Private, aes(x = ‘Unit Price ($ PSF)’, y = ‘Property Type’)) + stat_halfeye(adjust = 0.5, justification = -0.2, .width = 0, point_colour = NA) + geom_boxplot(width = .20, outlier.shape = NA) + stat_dots(side = “left”, justification = 1.2, binwidth = .5, dotsize = 2)</p>
+<p>ggplot(Q1_2024_Private, aes(x = ‘Property Type’, y = ‘Unit Price ($ PSF)’, fill = factor(stat(quantile)) )) + stat_density_ridges( geom = “density_ridges_gradient”, calc_ecdf = TRUE, quantiles = 4, quantile_lines = TRUE) + scale_fill_viridis_d(name = “Quartiles”) + theme_ridges()</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
