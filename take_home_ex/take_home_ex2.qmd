@@ -59,7 +59,7 @@ TO do that, we will need the following datapoints from the RELIS database:
 
 ## Loading the required packages
 ```{r}
-pacman::p_load(tidyverse, scales, patchwork, ggtext, DT)
+pacman::p_load(tidyverse, scales, patchwork, ggtext, DT, plotly, ggplot2)
 ```
 
 ## Data Extraction
@@ -97,51 +97,95 @@ str(combined_transaction)
 ```
 
 ```{r}
-Q1_2024_Private <- combined_transaction %>%
-  filter(`Sale Date` >= as.Date("2024-01-01") & 
-         `Sale Date` <= as.Date("2024-03-31"))
 
-Q4_2023_Private <- combined_transaction %>%
-  filter(`Sale Date` >= as.Date("2023-10-01") & 
-         `Sale Date` <= as.Date("2023-12-31"))
+combined_transaction <- combined_transaction %>%
+  rename_with(~ gsub(" ", "_", .), everything())
 
-datatable(head(Q1_2024_Private, n = 20))
-datatable(head(Q4_2023_Private, n = 20))
+combined_transaction$Sale_Date <- as.Date(combined_transaction$Sale_Date, format = "%d %b %Y")
+combined_transaction$Quarter <- paste(year(combined_transaction$Sale_Date), "Q", quarter(combined_transaction$Sale_Date), sep="")
+combined_transaction$Month <- month(combined_transaction$Sale_Date, label = TRUE)
+
 
 ```
 
-Third we will wrangle the data
+```{r}
+datatable(head(combined_transaction, n = 20))
+```
+
+## Data Wrangling
+
+### Plotting initial graph
+
+```{r}
+# Plotting transactions by property type across quarters
+ggplot(combined_transaction, aes(x = Quarter, fill = Property_Type)) +
+  geom_bar(stat = "count", position = "dodge") +
+  labs(title = "Transactions by Property Type from Q1 2023 to Q1 2024",
+       x = "Quarter",
+       y = "Number of Transactions",
+       fill = "Property Type") +
+  theme_minimal()
+```
+### Refining it 
+
+```{r}
+
+# Assuming combined_transaction already contains aggregated data
+# If not, you would need to aggregate data as follows:
+# combined_transaction <- combined_transaction %>%
+#   group_by(Quarter, Property_Type) %>%
+#   summarise(Transactions = n())
+# Aggregate data to get the count of transactions per quarter and per property type
+aggregated_data <- combined_transaction %>%
+  group_by(Quarter, Property_Type) %>%
+  summarise(Transactions = n(), .groups = 'drop')  # `n()` counts the number of rows in each group
+
+# Plotting transactions by property type across quarters using a line graph
+ggplot(aggregated_data, aes(x = Quarter, y = Transactions, color = Property_Type, group = Property_Type)) +
+  geom_line() +  # Adds lines
+  geom_point() + # Adds points at each data entry
+  labs(title = "Transactions by Property Type from Q1 2023 to Q1 2024",
+       x = "Quarter",
+       y = "Number of Transactions",
+       color = "Property Type") +
+  theme_minimal() # Improve label readability
+
+```
+
+### Combining it together
+```{r}
+# Start with the bar graph
+p <- ggplot(aggregated_data, aes(x = Quarter, y = Transactions, fill = Property_Type)) +
+  geom_bar(stat = "identity", position = position_dodge(), width = 0.6) +  # Draw the bars
+
+  # Add the line graph
+  geom_line(aes(group = Property_Type, color = Property_Type), 
+            position = position_dodge(0.6), size = 0.5) +
+
+  # Labels and themes
+  labs(title = "Transactions by Property Type from Q1 2023 to Q1 2024",
+       x = "Quarter",
+       y = "Number of Transactions",
+       fill = "Property Type",
+       color = "Property Trend Line") +
+  theme_minimal() 
+
+# Print the plot
+p
+
+```
+
+### Finishing touches with Interaction using Plotly
+```{r}
+
+# Convert the ggplot object to a plotly object
+p_interactive <- ggplotly(p, tooltip = c("x", "y", "text"))
+
+# Customize the hoverlabel for better appearance
+p_interactive <- layout(p_interactive, hoverlabel = list(bgcolor = "white"))
+
+# Print the interactive plot
+p_interactive
 
 
-## Implementing the visualisation
-
-
-
-ggplot(Q1_2024_Private,
-       aes(x = 'Unit Price ($ PSF)', 
-           y = 'Property Type')) +
-  stat_halfeye(adjust = 0.5,
-               justification = -0.2,
-               .width = 0,
-               point_colour = NA) +
-  geom_boxplot(width = .20,
-               outlier.shape = NA) +
-  stat_dots(side = "left", 
-            justification = 1.2, 
-            binwidth = .5,
-            dotsize = 2)
-
-ggplot(Q1_2024_Private,
-       aes(x = 'Property Type', 
-           y = 'Unit Price ($ PSF)', 
-           fill = factor(stat(quantile))
-           )) +
-  stat_density_ridges(
-    geom = "density_ridges_gradient",
-    calc_ecdf = TRUE, 
-    quantiles = 4,
-    quantile_lines = TRUE) +
-  scale_fill_viridis_d(name = "Quartiles") +
-  theme_ridges()
-
-
+```
