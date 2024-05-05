@@ -20,12 +20,12 @@ We will pick a visualisation which the author can learn from to improve on it's 
 
 We will focus on [Arya Siahaan](https://isss608-aryasiahaan.netlify.app/take-home_ex/take-home_ex01/take-home_ex01) visualization of "SALES DISTRIBUTION BASED ON PROPERTY TYPE IN SINGAPORE PRIVATE RESIDENTIAL MARKET".
 
-![](images/Screenshot%202024-05-02%20at%208.36.02%20PM.png){fig-align="center"}
+![](images/Screenshot 2024-05-02 at 8.36.02 PM.png){fig-align="center"}
 
 ## Review
 
 ::: panel-tabset
-## The Good 
+## The Good
 
 -   The interpretation of the data is very forward at a glance.
 
@@ -44,26 +44,36 @@ We will focus on [Arya Siahaan](https://isss608-aryasiahaan.netlify.app/take-hom
 
 Firstly, we have to ascertain the story point which we would like to tell which is:
 
-What is the monthly sales volume of each property type in Singapore?
+**What is the quaterly sales volume of each property type in Singapore?**
 
-TO do that, we will need the following datapoints from the RELIS database:
+To do that, we will need the following datapoints from the RELIS database:
 
 -   **Property Type**
 
 -   **Sale Date**
 
--   **Transacted Price ($)**
+-   **Transacted Price (\$)**
 
+Broadly speaking, we will need to do the following data wrangling followed by visualisation:
 
-# Data preperation
+-   First is to bin the sale date of each transaction into the respective quarters
+-   Plot an initial bar graph of the quarterly sales volume
+-   Plot a second line graph showing the trend of the quarterly sales volume
+-   Merge the two graphs together with ggplot
+-   Finishing up with theming touches and interactions
+
+# Data preparation
 
 ## Loading the required packages
+
 ```{r}
-pacman::p_load(tidyverse, scales, patchwork, ggtext, DT, plotly, ggplot2)
+pacman::p_load(tidyverse, scales, DT, plotly, ggplot2)
 ```
 
 ## Data Extraction
-First we will import the data from the 5 csv files
+
+First we will import the data from the 5 csv files from RELIS 
+
 ```{r}
 # Define the paths to the individual CSV files
 file1 <- "data/ResidentialTransaction20240308160536.csv"
@@ -87,27 +97,32 @@ col_names <- names(combined_transaction)
 col_names
 ```
 
-Secondly, we will filter the data into Q1,Q2,Q3 and Q4
+Secondly, we will bin the data into Q1,Q2,Q3 and Q4
 
+::: panel-tabset
+## Codechunk
 ```{r}
-combined_transaction$`Sale Date` <- dmy(combined_transaction$`Sale Date`)
-
-# Check the structure to ensure 'Sale Date' is now a Date object
-str(combined_transaction)
-```
-
-```{r}
-
+#| eval: false
 combined_transaction <- combined_transaction %>%
   rename_with(~ gsub(" ", "_", .), everything())
 
 combined_transaction$Sale_Date <- as.Date(combined_transaction$Sale_Date, format = "%d %b %Y")
 combined_transaction$Quarter <- paste(year(combined_transaction$Sale_Date), "Q", quarter(combined_transaction$Sale_Date), sep="")
 combined_transaction$Month <- month(combined_transaction$Sale_Date, label = TRUE)
-
-
 ```
+## Output
+```{r}
+#| echo: false
+combined_transaction <- combined_transaction %>%
+  rename_with(~ gsub(" ", "_", .), everything())
 
+combined_transaction$Sale_Date <- as.Date(combined_transaction$Sale_Date, format = "%d %b %Y")
+combined_transaction$Quarter <- paste(year(combined_transaction$Sale_Date), "Q", quarter(combined_transaction$Sale_Date), sep="")
+combined_transaction$Month <- month(combined_transaction$Sale_Date, label = TRUE)
+```
+::: 
+
+We will then use databtable to get a glimpse of our combined_transaction tibble
 ```{r}
 datatable(head(combined_transaction, n = 20))
 ```
@@ -115,27 +130,23 @@ datatable(head(combined_transaction, n = 20))
 ## Data Wrangling
 
 ### Plotting initial graph
+The initial graph shall be a barchart which shows the Number of Transactions by each Quarter
 
 ```{r}
 # Plotting transactions by property type across quarters
 ggplot(combined_transaction, aes(x = Quarter, fill = Property_Type)) +
   geom_bar(stat = "count", position = "dodge") +
-  labs(title = "Transactions by Property Type from Q1 2023 to Q1 2024",
+  labs(title = "Transactions  by Property Type from Q1 2023 to Q1 2024",
        x = "Quarter",
        y = "Number of Transactions",
        fill = "Property Type") +
   theme_minimal()
 ```
-### Refining it 
 
+### Plotting secondary graph
+The secondary graph shall show the line trend of the Number of Transactions by each Quarter.
 ```{r}
 
-# Assuming combined_transaction already contains aggregated data
-# If not, you would need to aggregate data as follows:
-# combined_transaction <- combined_transaction %>%
-#   group_by(Quarter, Property_Type) %>%
-#   summarise(Transactions = n())
-# Aggregate data to get the count of transactions per quarter and per property type
 aggregated_data <- combined_transaction %>%
   group_by(Quarter, Property_Type) %>%
   summarise(Transactions = n(), .groups = 'drop')  # `n()` counts the number of rows in each group
@@ -153,6 +164,7 @@ ggplot(aggregated_data, aes(x = Quarter, y = Transactions, color = Property_Type
 ```
 
 ### Combining it together
+We will then merge both the graphs together to have a clear picture of each quarter's transactions volumes
 ```{r}
 # Start with the bar graph
 p <- ggplot(aggregated_data, aes(x = Quarter, y = Transactions, fill = Property_Type)) +
@@ -176,6 +188,7 @@ p
 ```
 
 ### Finishing touches with Interaction using Plotly
+Finally we will add in Plotly's interactive capability.
 ```{r}
 
 # Convert the ggplot object to a plotly object
@@ -189,3 +202,5 @@ p_interactive
 
 
 ```
+
+## Conclusion
