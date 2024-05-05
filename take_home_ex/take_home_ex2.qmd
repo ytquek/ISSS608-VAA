@@ -20,7 +20,7 @@ We will pick a visualisation which the author can learn from to improve on it's 
 
 We will focus on [Arya Siahaan](https://isss608-aryasiahaan.netlify.app/take-home_ex/take-home_ex01/take-home_ex01) visualization of "SALES DISTRIBUTION BASED ON PROPERTY TYPE IN SINGAPORE PRIVATE RESIDENTIAL MARKET".
 
-![](images/Screenshot 2024-05-02 at 8.36.02 PM.png){fig-align="center"}
+![](images/Screenshot%202024-05-02%20at%208.36.02%20PM.png){fig-align="center"}
 
 ## Review
 
@@ -72,7 +72,7 @@ pacman::p_load(tidyverse, scales, DT, plotly, ggplot2)
 
 ## Data Extraction
 
-First we will import the data from the 5 csv files from RELIS 
+First we will import the data from the 5 csv files from RELIS
 
 ```{r}
 # Define the paths to the individual CSV files
@@ -101,6 +101,7 @@ Secondly, we will bin the data into Q1,Q2,Q3 and Q4
 
 ::: panel-tabset
 ## Codechunk
+
 ```{r}
 #| eval: false
 combined_transaction <- combined_transaction %>%
@@ -110,7 +111,9 @@ combined_transaction$Sale_Date <- as.Date(combined_transaction$Sale_Date, format
 combined_transaction$Quarter <- paste(year(combined_transaction$Sale_Date), "Q", quarter(combined_transaction$Sale_Date), sep="")
 combined_transaction$Month <- month(combined_transaction$Sale_Date, label = TRUE)
 ```
+
 ## Output
+
 ```{r}
 #| echo: false
 combined_transaction <- combined_transaction %>%
@@ -120,9 +123,10 @@ combined_transaction$Sale_Date <- as.Date(combined_transaction$Sale_Date, format
 combined_transaction$Quarter <- paste(year(combined_transaction$Sale_Date), "Q", quarter(combined_transaction$Sale_Date), sep="")
 combined_transaction$Month <- month(combined_transaction$Sale_Date, label = TRUE)
 ```
-::: 
+:::
 
 We will then use databtable to get a glimpse of our combined_transaction tibble
+
 ```{r}
 datatable(head(combined_transaction, n = 20))
 ```
@@ -130,6 +134,7 @@ datatable(head(combined_transaction, n = 20))
 ## Data Wrangling
 
 ### Plotting initial graph
+
 The initial graph shall be a barchart which shows the Number of Transactions by each Quarter
 
 ```{r}
@@ -144,7 +149,9 @@ ggplot(combined_transaction, aes(x = Quarter, fill = Property_Type)) +
 ```
 
 ### Plotting secondary graph
+
 The secondary graph shall show the line trend of the Number of Transactions by each Quarter.
+
 ```{r}
 
 aggregated_data <- combined_transaction %>%
@@ -164,8 +171,15 @@ ggplot(aggregated_data, aes(x = Quarter, y = Transactions, color = Property_Type
 ```
 
 ### Combining it together
+
 We will then merge both the graphs together to have a clear picture of each quarter's transactions volumes
+
 ```{r}
+# Getting the mean number for each property transaction for all quarters
+  average_data <- aggregated_data %>%
+  group_by(Property_Type) %>%
+  summarise(Average_Transactions = mean(Transactions))
+  
 # Start with the bar graph
 p <- ggplot(aggregated_data, aes(x = Quarter, y = Transactions, fill = Property_Type)) +
   geom_bar(stat = "identity", position = position_dodge(), width = 0.6) +  # Draw the bars
@@ -173,7 +187,12 @@ p <- ggplot(aggregated_data, aes(x = Quarter, y = Transactions, fill = Property_
   # Add the line graph
   geom_line(aes(group = Property_Type, color = Property_Type), 
             position = position_dodge(0.6), size = 0.5) +
-
+  
+  # Adding mean line
+geom_hline(data = average_data, aes(yintercept = Average_Transactions, color = Property_Type, 
+                                      text = paste("Property Type:", Property_Type, 
+                                            "<br>Average Transactions:", Average_Transactions)),
+linetype = "dashed", size = 0.35) +
   # Labels and themes
   labs(title = "Transactions by Property Type from Q1 2023 to Q1 2024",
        x = "Quarter",
@@ -188,8 +207,30 @@ p
 ```
 
 ### Finishing touches with Interaction using Plotly
+
 Finally we will add in Plotly's interactive capability.
+
+::: panel-tabset 
+## Codechunk
+
 ```{r}
+#| eval: false
+# Convert the ggplot object to a plotly object
+p_interactive <- ggplotly(p, tooltip = c("x", "y", "text"))
+
+# Customize the hoverlabel for better appearance
+p_interactive <- layout(p_interactive, hoverlabel = list(bgcolor = "white"))
+
+# Print the interactive plot
+p_interactive
+
+
+```
+
+## Output
+
+```{r}
+#| echo: false
 
 # Convert the ggplot object to a plotly object
 p_interactive <- ggplotly(p, tooltip = c("x", "y", "text"))
@@ -203,4 +244,16 @@ p_interactive
 
 ```
 
+::: 
+
 ## Conclusion
+
+With our own interpretation translated into amendments on [Arya Siahaan](https://isss608-aryasiahaan.netlify.app/take-home_ex/take-home_ex01/take-home_ex01) visualization completed above, below is a recap on the changes we have done and reasoning for the associated
+
+| S\\N | Aryan's Visusalisation Element                                                                 | Our Changes                                                                                                                                                            |
+|---------------|-----------------------------|-----------------------------|
+| 1    | 2 seperate bar graphs to showcase monthly sales volume and it's distribution by property type. | Using **ggplot** library to merge both sets of visualization into a single graph so that end users will not have to scroll between 2 graphs to make the reconciliation |
+| 2    | Mono color scheme for different property types represented in a bar graph                      | Using **ggplot's** themes to segregate property types into colors for easier identification                                                                            |
+| 3    | Sales volume transaction is represented in different months instead of Quarters                | Binned transactions into their respective quarters for ease of comparison as required by the Professor.                                                                |
+| 4    | Static data visualization                                                                      | Added **plotly's** interactive elements such that onhover, detailed transaction numbers can be taken immediately.                                                      |
+| 5    | Mean line for total sales' volume graph only                                                   | Segregated each property types' mean transaction for all 5 quarters                                                                                                    |
