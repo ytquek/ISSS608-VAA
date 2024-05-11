@@ -190,9 +190,8 @@ p <- ggplot(aggregated_data, aes(x = Quarter, y = Transactions, fill = Property_
   
   # Adding mean line
 geom_hline(data = average_data, aes(yintercept = Average_Transactions, color = Property_Type, 
-                                      text = paste("Property Type:", Property_Type, 
-                                            "<br>Average Transactions:", Average_Transactions)),
-linetype = "dashed", size = 0.35) +
+                                     text = paste("Property Type:", Property_Type, "<br>Avg Transactions:", Average_Transactions)),
+             linetype = "dashed", size = 0.35) +
   # Labels and themes
   labs(title = "Transactions by Property Type from Q1 2023 to Q1 2024",
        x = "Quarter",
@@ -216,7 +215,7 @@ Finally we will add in Plotly's interactive capability.
 ```{r}
 #| eval: false
 # Convert the ggplot object to a plotly object
-p_interactive <- ggplotly(p, tooltip = c("x", "y", "text"))
+p_interactive <- ggplotly(p, tooltip = "text")
 
 # Customize the hoverlabel for better appearance
 p_interactive <- layout(p_interactive, hoverlabel = list(bgcolor = "white"))
