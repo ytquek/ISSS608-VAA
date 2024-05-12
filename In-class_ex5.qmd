@@ -1,0 +1,19 @@
+---
+title: "In-class_ex5"
+author: "You Ting QUEK"
+date: "11 May, 2024"
+date-modified: last-modified
+execute: 
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+```{r}
+pacman::p_load(tidyverse, readtext, quanteda, tidytext)
+```
+
+```{r}
+text_data <- readtext(paste0("data/articles","/"))
+```

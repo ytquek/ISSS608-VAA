@@ -1,0 +1,20 @@
+---
+title: "In-class_ex5_2"
+author: "You Ting QUEK"
+---
+
+
+```{r}
+pacman::p_load(tidyverse, readtext, quanteda, tidytext)
+```
+
+```{r}
+mc1_data <- fromJSON("data/mc1.json")
+```
+
+## To view the dataframe
+
+```{r}
+view(mc1_data[["nodes"]])
+view(mc1_data[["links"]])
+```
