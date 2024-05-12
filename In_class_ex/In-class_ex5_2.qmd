@@ -3,9 +3,9 @@ title: "In-class_ex5_2"
 author: "You Ting QUEK"
 ---
 
-
 ```{r}
-pacman::p_load(tidyverse, readtext, quanteda, tidytext)
+pacman::p_load(tidyverse, readtext, quanteda, tidytext, jsonlite, DT)
+
 ```
 
 ```{r}

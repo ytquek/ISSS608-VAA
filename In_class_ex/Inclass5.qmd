@@ -1,0 +1,46 @@
+---
+title: "test"
+author: "yt"
+date: "11 May, 2024"
+date-modified: last-modified
+execute: 
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+
+```{r}
+pacman::p_load(tidyverse, readtext, quanteda, tidytext, jsonlite, DT)
+```
+
+```{r}
+print(paste0("Checking directory: ", "/data/articles/*"))
+print(list.files("/data/articles/*"))
+```
+
+```{r}
+text_data = readtext("data/articles/*")
+glimpse(text_data)
+```
+
+```{r}
+usenet_words <- text_data %>%
+  unnest_tokens(word, text) %>%
+  filter(str_detect(word, "[a-z']$"),
+         !word %in% stop_words$word)
+```
+
+```{r}
+usenet_words %>%
+  count(word, sort = TRUE)
+```
+
+```{r}
+text_data_splitted <- text_data %>%
+  separate_wider_delim("doc_id",
+                       delim = "__0__",
+                       names = c("X","Y"),
+                       too_few = "align_end")
+```

@@ -11,11 +11,17 @@ execute:
 ---
 
 ```{r}
-pacman::p_load(tidyverse, readtext, quanteda, tidytext)
+pacman::p_load(tidyverse, readtext, quanteda, tidytext, jsonlite, DT)
 ```
 
 ```{r}
-text_data <- readtext("data/articles")
+print(paste0("Checking directory: ", "/data/articles/*"))
+print(list.files("/data/articles/*"))
+```
+
+```{r}
+text_data = readtext("data/articles/*")
+glimpse(text_data)
 ```
 
 ```{r}
@@ -37,4 +43,3 @@ text_data_splitted <- text_data %>%
                        names = c("X","Y"),
                        too_few = "align_end")
 ```
-

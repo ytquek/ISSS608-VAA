@@ -22,7 +22,7 @@ Learning Objectives:
 
 -   visualise words with Word Cloud,
 
--   compute term frequency–inverse document frequency (TF-IDF) using tidytext method, and
+-   compute term frequency--inverse document frequency (TF-IDF) using tidytext method, and
 
 -   visualising texts and terms relationship.
 
@@ -139,15 +139,15 @@ raw_text %>%
 
 -   Using tidy data principles in processing, analysing and visualising text data.
 
--   Much of the infrastructure needed for text mining with tidy data frames already exists in packages like ‘dplyr’, ‘broom’, ‘tidyr’, and ‘ggplot2’.
+-   Much of the infrastructure needed for text mining with tidy data frames already exists in packages like 'dplyr', 'broom', 'tidyr', and 'ggplot2'.
 
 ### **Removing header and automated email signitures**
 
 Each message contains certain structural elements and additional text that are undesirable for inclusion in the analysis. For example:
 
--   Header containing fields such as “from:” or “in_reply_to:”
+-   Header containing fields such as "from:" or "in_reply_to:"
 
--   Automated email signatures, which occur after a line like “–”.
+-   Automated email signatures, which occur after a line like "--".
 
 The code chunk below uses:
 
@@ -297,7 +297,7 @@ ggplot(aes(label = word,
 
 ## **Basic Concept of TF-IDF**
 
-[tf–idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf), short for term frequency–inverse document frequency, is a numerical statistic that is intended to reflect how important a word is to a document in a collection of [corpus](https://en.wikipedia.org/wiki/Text_corpus).
+[tf--idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf), short for term frequency--inverse document frequency, is a numerical statistic that is intended to reflect how important a word is to a document in a collection of [corpus](https://en.wikipedia.org/wiki/Text_corpus).
 
 $idf(term) = ln \frac{n_{documents}}{n_{documents containing term}}$
 
@@ -403,7 +403,7 @@ tf_idf %>%
 
 -   Most operations for finding pairwise counts or correlations need to turn the data into a wide matrix first.
 
--   [**widyr**](https://cran.r-project.org/web/packages/widyr/) package first ‘casts’ a tidy dataset into a wide matrix, performs an operation such as a correlation on it, then re-tidies the result.
+-   [**widyr**](https://cran.r-project.org/web/packages/widyr/) package first 'casts' a tidy dataset into a wide matrix, performs an operation such as a correlation on it, then re-tidies the result.
 
 In this code chunk below, `pairwise_cor()` of **widyr** package is used to compute the correlation between newsgroup based on the common words found.
 
