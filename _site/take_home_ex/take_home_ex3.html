@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="You Ting QUEK">
+<meta name="dcterms.date" content="2024-05-17">
+
+<title>ISSS608-VAA - Take Home 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ISSS608-VAA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-in-class-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">In class Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercise">    
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/In-class_Ex01.html" rel="" target="">
+ <span class="dropdown-text">In Class Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/In-class_Ex02.html" rel="" target="">
+ <span class="dropdown-text">In Class Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/In-class_Ex4.html" rel="" target="">
+ <span class="dropdown-text">In Class Exercise 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/In-class_ex5.html" rel="" target="">
+ <span class="dropdown-text">In Class Exercise 5</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Hands on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands_on_ex1.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands_on_ex1.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex3.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex3_2.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 3 Part 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex4.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 4 Part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex4_2.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 4 Part 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_ex4_3.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 4 Part 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_Ex5.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../In_class_ex/hands-on_Ex6.html" rel="" target="">
+ <span class="dropdown-text">Hands On Exercise 6</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Take Home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../take_home_ex/take_home_ex1.html" rel="" target="">
+ <span class="dropdown-text">Take Home Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../take_home_ex/take_home_ex2.html" rel="" target="">
+ <span class="dropdown-text">Take Home Exercise 2</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+    <a href="https://personal.yout.ing" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-linkedin"></i></a>
+    <a href="https://github.com/ytquek" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-source" id="toc-the-source" class="nav-link active" data-scroll-target="#the-source"><strong>The Source</strong></a></li>
+  <li><a href="#the-task" id="toc-the-task" class="nav-link" data-scroll-target="#the-task"><strong>The Task</strong></a>
+  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  <li><a href="#tasks-and-questions" id="toc-tasks-and-questions" class="nav-link" data-scroll-target="#tasks-and-questions">Tasks and Questions:</a></li>
+  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a>
+  <ul class="collapse">
+  <li><a href="#installing-and-loading-the-required-libraries" id="toc-installing-and-loading-the-required-libraries" class="nav-link" data-scroll-target="#installing-and-loading-the-required-libraries">Installing and loading the required libraries</a></li>
+  <li><a href="#importing-multiple-text-files" id="toc-importing-multiple-text-files" class="nav-link" data-scroll-target="#importing-multiple-text-files"><strong>Importing Multiple Text Files</strong></a>
+  <ul class="collapse">
+  <li><a href="#creating-a-folder-list" id="toc-creating-a-folder-list" class="nav-link" data-scroll-target="#creating-a-folder-list"><strong>Creating a folder list</strong></a></li>
+  <li><a href="#define-a-function-to-read-all-files-from-a-folder-into-a-data-frame" id="toc-define-a-function-to-read-all-files-from-a-folder-into-a-data-frame" class="nav-link" data-scroll-target="#define-a-function-to-read-all-files-from-a-folder-into-a-data-frame"><strong>Define a function to read all files from a folder into a data frame</strong></a></li>
+  <li><a href="#text-data-processing" id="toc-text-data-processing" class="nav-link" data-scroll-target="#text-data-processing"><strong>Text Data Processing</strong></a></li>
+  <li><a href="#explore-common-words" id="toc-explore-common-words" class="nav-link" data-scroll-target="#explore-common-words">Explore Common words</a></li>
+  <li><a href="#split-doc_id-column" id="toc-split-doc_id-column" class="nav-link" data-scroll-target="#split-doc_id-column">Split doc_id column</a></li>
+  </ul></li>
+  <li><a href="#eda" id="toc-eda" class="nav-link" data-scroll-target="#eda">EDA</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Take Home 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>You Ting QUEK </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 17, 2024</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">May 17, 2024</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="the-source" class="level1">
+<h1><strong>The Source</strong></h1>
+<p>The task is taken from the <a href="https://vast-challenge.github.io/2024/">VAST Challenge 2024</a>. Questions from <a href="https://vast-challenge.github.io/2024/MC1.html">Mini Case 1</a> will be completed.</p>
+</section>
+<section id="the-task" class="level1">
+<h1><strong>The Task</strong></h1>
+<p>Apply appropriate visual analytics methods to help FishEye, a non-profit organization that focuses on illegal fishing, to better identify bias, track behavior changes, and infer temporal patterns from the knowledge graphs prepared by their data analysts.</p>
+<p>This take home exercise is done in conjunction with the group project. My group members are <a href="https://isss608keke.netlify.app/">Keke</a> and <a href="https://lnealicia-isss608.netlify.app/">Alicia Loh</a>.</p>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>In Oceanus, commercial fishing is a major part of the local economy, and the activities of local fishing companies are often discussed in local news reports, especially when there is a major disruption or controversial issue. Lately, the news is filled with stories of companies who are willing to break the law and fish illegally.</p>
+<p>FishEye International is an organization whose mission is to discover and stop illegal, unreported, and unregulated fishing. FishEye is an independent non-profit, but they share their findings with law enforcement when warranted. FishEye analysts collect open-source data, including news articles and public reports, and have recently started extracting embedded knowledge from these free text sources using several advanced language models. Knowledge from multiple sources is combined to form CatchNet: the Oceanus Knowledge Graph, which is used to search for evidence of possible illegal fishing activity. Analysts know that data may be biased so they review and edit extracted information before it is added to CatchNet. Data for this challenge includes both the extracted and analyst modified knowledge graph and the original source articles.</p>
+<p>Recently, the commercial fishing community in Oceanus was rocked with scandal after SouthSeafood Express Corp was caught fishing illegally. The company’s leaders claim an innocent mistake, while others in the industry have suggested getting caught was overdue and is likely part of a larger pattern of suspect behavior. FishEye analysts are aware that a polarizing event like this is likely to attract biased perspectives. They are looking for your help to identify sources of bias in their data. They are having particular trouble determining whether bias comes from the source article, the algorithms used to extract the knowledge graph, or possibly somewhere else…</p>
+</section>
+<section id="tasks-and-questions" class="level2">
+<h2 class="anchored" data-anchor-id="tasks-and-questions">Tasks and Questions:</h2>
+<p>Your task is to develop visual analytics approaches that FishEye analysts can use to verify the facts included in their knowledge graph are representative of facts stated in the source text. Analysts should be able to compare consistency of the extracted knowledge with the source and identify and trace sources of bias in the data. Novel use of large language models (LLMs) as part of a visual analytics process is encouraged.</p>
+<ol type="1">
+<li><p>Use novel visualizations and visual analytic workflows to examine the bias in each news source. Create visualizations to help FishEye analysts understand how bias in the original sources changes over time. You may use the knowledge graph extracts and may use a large language model to supplement your understanding.</p></li>
+<li><p>FishEye uses two LLM extraction algorithms: ShadGPT and BassLine. Develop visualizations to compare the bias of each algorithm. Though not required, you may develop your own LLM-based extraction and include it in the comparison.</p></li>
+<li><p>FishEye is also interested in understanding the reliability of their human analysts. Use visual analytics to examine potential analyst bias. Provide visual examples of the types of bias present.</p></li>
+<li><p>Identify unreliable actors: news sources, algorithms, or analysts. Use visualizations to provide evidence for your conclusions. Can you use the data provided and a visual analytics workflow to determine who else may be involved?</p></li>
+</ol>
+<p>Note: the VAST challenge is focused on visual analytics and graphical figures should be included with your response to each question. Please include a reasonable number of figures for each question (no more than about 6) and keep written responses as brief as possible (around 250 words per question). Participants are encouraged to new visual representations rather than relying on traditional or existing approaches.</p>
+</section>
+</section>
+<section id="getting-started" class="level1">
+<h1>Getting Started</h1>
+<section id="installing-and-loading-the-required-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="installing-and-loading-the-required-libraries">Installing and loading the required libraries</h2>
+<p>Note: Ensure that the <a href="https://cran.r-project.org/web/packages/pacman/">pacman</a> package has already been installed.</p>
+<p>The following R packages will be used:</p>
+<ul>
+<li><p>tidytext, tidyverse</p></li>
+<li><p>readtext</p></li>
+<li><p>quanteda</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidytext, readtext, quanteda, tidytext, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="importing-multiple-text-files" class="level2">
+<h2 class="anchored" data-anchor-id="importing-multiple-text-files"><strong>Importing Multiple Text Files</strong></h2>
+<section id="creating-a-folder-list" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-folder-list"><strong>Creating a folder list</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_folder <span class="ot">&lt;-</span> <span class="st">"data/articles/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="define-a-function-to-read-all-files-from-a-folder-into-a-data-frame" class="level3">
+<h3 class="anchored" data-anchor-id="define-a-function-to-read-all-files-from-a-folder-into-a-data-frame"><strong>Define a function to read all files from a folder into a data frame</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>text_data <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="fu">paste0</span>(<span class="st">"data/articles"</span>,<span class="st">"/*"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># alternate version: text_data &lt;- readtext("data/articles/*")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Check dataframe</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>corpus_text <span class="ot">&lt;-</span> <span class="fu">corpus</span>(text_data)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(corpus_text, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Corpus consisting of 338 documents, showing 5 documents:
+
+                                   Text Types Tokens Sentences
+ Alvarez PLC__0__0__Haacklee Herald.txt   206    433        18
+    Alvarez PLC__0__0__Lomark Daily.txt   102    170        12
+   Alvarez PLC__0__0__The News Buoy.txt    90    200         9
+ Alvarez PLC__0__1__Haacklee Herald.txt    96    187         8
+    Alvarez PLC__0__1__Lomark Daily.txt   241    504        21</code></pre>
+</div>
+</div>
+</section>
+<section id="text-data-processing" class="level3">
+<h3 class="anchored" data-anchor-id="text-data-processing"><strong>Text Data Processing</strong></h3>
+<ul>
+<li><p>&nbsp;<a href="https://www.rdocumentation.org/packages/tidytext/versions/0.3.1/topics/unnest_tokens"><code>unnest_tokens()</code></a>&nbsp;of&nbsp;<strong>tidytext</strong>&nbsp;package is used to split the dataset into tokens</p></li>
+<li><p>&nbsp;<a href="https://rdrr.io/cran/tidytext/man/stop_words.html"><code>stop_words()</code></a>&nbsp;is used to remove stop-words</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize the text column</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>unnest_words <span class="ot">&lt;-</span> text_data <span class="sc">%&gt;%</span>   </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="at">input =</span> text) </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter tokens to include only alphabetic characters and remove stop words</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>unnest_words <span class="ot">&lt;-</span> <span class="fu">filter</span>(unnest_words, </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">str_detect</span>(word, <span class="st">"[a-z']$"</span>),          </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                       <span class="sc">!</span>word <span class="sc">%in%</span> stop_words<span class="sc">$</span>word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>View dataframe</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(unnest_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 50,147
+Columns: 2
+$ doc_id &lt;chr&gt; "Alvarez PLC__0__0__Haacklee Herald.txt", "Alvarez PLC__0__0__H…
+$ word   &lt;chr&gt; "marine", "sanctuary", "aid", "boosts", "alvarez", "plc's", "su…</code></pre>
+</div>
+</div>
+</section>
+<section id="explore-common-words" class="level3">
+<h3 class="anchored" data-anchor-id="explore-common-words">Explore Common words</h3>
+<p>The code chunk below calculates individual word frequencies to explore common words in the dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>unnest_words <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word,<span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>readtext object consisting of 3261 documents and 0 docvars.
+# A data frame: 3,261 × 3
+  word             n text     
+  &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;    
+1 fishing       2177 "\"\"..."
+2 sustainable   1525 "\"\"..."
+3 company       1036 "\"\"..."
+4 practices      838 "\"\"..."
+5 industry       715 "\"\"..."
+6 transactions   696 "\"\"..."
+# ℹ 3,255 more rows</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Common words from the articles seem to be related to sustainable fishing practices in the larger fishing industry and trade.</p>
+</div>
+</div>
+<p>View dataframe</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(unnest_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 50,147
+Columns: 2
+$ doc_id &lt;chr&gt; "Alvarez PLC__0__0__Haacklee Herald.txt", "Alvarez PLC__0__0__H…
+$ word   &lt;chr&gt; "marine", "sanctuary", "aid", "boosts", "alvarez", "plc's", "su…</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the dataset, it can be seen that under the “doc_id” column, the company mentioned in the article, along with its author is separated by some underscores and numbers. We will split this column into “Company” and “News_Source” to simplify later analysis.</p>
+</div>
+</div>
+</section>
+<section id="split-doc_id-column" class="level3">
+<h3 class="anchored" data-anchor-id="split-doc_id-column">Split doc_id column</h3>
+<p>The column has the format <strong><code>Company__Number__Number__News_Source.txt</code></strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>text_data_split <span class="ot">&lt;-</span> text_data <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="st">"doc_id"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">delim =</span> <span class="st">"__"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Company"</span>, <span class="st">"Number"</span>, <span class="st">"Number2"</span>, <span class="st">"News_Source"</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">too_many =</span> <span class="st">"debug"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>View dataframe</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(text_data_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 338
+Columns: 9
+$ Company          &lt;chr&gt; "Alvarez PLC", "Alvarez PLC", "Alvarez PLC", "Alvarez…
+$ Number           &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"…
+$ Number2          &lt;chr&gt; "0", "0", "0", "1", "1", "1", "0", "0", "0", "1", "1"…
+$ News_Source      &lt;chr&gt; "Haacklee Herald.txt", "Lomark Daily.txt", "The News …
+$ doc_id           &lt;chr&gt; "Alvarez PLC__0__0__Haacklee Herald.txt", "Alvarez PL…
+$ doc_id_ok        &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,…
+$ doc_id_pieces    &lt;int&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,…
+$ doc_id_remainder &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", "…
+$ text             &lt;chr&gt; "Marine Sanctuary Aid Boosts Alvarez PLC's Sustainabl…</code></pre>
+</div>
+</div>
+<p>Drop unnecessary columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>text_data_clean <span class="ot">&lt;-</span> text_data_split <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Number, <span class="sc">-</span>Number2, <span class="sc">-</span>doc_id, <span class="sc">-</span>doc_id_ok, <span class="sc">-</span>doc_id_pieces, <span class="sc">-</span>doc_id_remainder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>View dataframe</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(text_data_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 338
+Columns: 3
+$ Company     &lt;chr&gt; "Alvarez PLC", "Alvarez PLC", "Alvarez PLC", "Alvarez PLC"…
+$ News_Source &lt;chr&gt; "Haacklee Herald.txt", "Lomark Daily.txt", "The News Buoy.…
+$ text        &lt;chr&gt; "Marine Sanctuary Aid Boosts Alvarez PLC's Sustainable Fis…</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="eda" class="level2">
+<h2 class="anchored" data-anchor-id="eda">EDA</h2>
+<p>List of Company and News Sources</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Companies</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">News Sources</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unique values in the "Company" column</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>unique_companies <span class="ot">&lt;-</span> <span class="fu">unique</span>(text_data_clean<span class="sc">$</span>Company)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>unique_companies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Alvarez PLC"                          
+ [2] "Anderson, Brown and Green"            
+ [3] "Arellano Group"                       
+ [4] "Barnes and Sons"                      
+ [5] "Barnett Ltd"                          
+ [6] "Bell, Reynolds and Forbes"            
+ [7] "Bishop-Hernandez"                     
+ [8] "Blackwell, Clark and Lam"             
+ [9] "Bowers Group"                         
+[10] "Brown, Clarke and Martinez"           
+[11] "Burns Inc"                            
+[12] "Cain, Simpson and Hernandez"          
+[13] "Castillo-Elliott"                     
+[14] "Cervantes-Kramer"                     
+[15] "Cisneros-Meyer"                       
+[16] "Clark-Leon"                           
+[17] "Clarke, Scott and Sloan"              
+[18] "Clements, Allen and Sullivan"         
+[19] "Collins, Johnson and Lloyd"           
+[20] "Cook PLC"                             
+[21] "Cooper, Holland and Nelson"           
+[22] "Craig Ltd"                            
+[23] "Cuevas PLC"                           
+[24] "Davis-Boyd"                           
+[25] "Evans-Pearson"                        
+[26] "Flores Ltd"                           
+[27] "Franco-Stuart"                        
+[28] "Frank Group"                          
+[29] "Frey Inc"                             
+[30] "Glover, Moran and Johnson"            
+[31] "Greer-Holder"                         
+[32] "Harper Inc"                           
+[33] "Harrell-Walters"                      
+[34] "Harrington Inc"                       
+[35] "Henderson, Hall and Lutz"             
+[36] "Hernandez-Rojas"                      
+[37] "Hines-Douglas"                        
+[38] "Horn and Sons"                        
+[39] "Hughes-Clark"                         
+[40] "Jackson Inc"                          
+[41] "Jones Group"                          
+[42] "Jones, Davis and Grant"               
+[43] "Kelly-Smith"                          
+[44] "Klein LLC"                            
+[45] "Lutz-Fleming"                         
+[46] "Mann, Myers and Rivera"               
+[47] "Martin LLC"                           
+[48] "Martinez-Le"                          
+[49] "Mcgee and Sons"                       
+[50] "Mclaughlin-Chandler"                  
+[51] "Montoya Group"                        
+[52] "Moore-Simon"                          
+[53] "Murphy, Marshall and Pope"            
+[54] "Murray, Friedman and Wall"            
+[55] "Namorna Transit Ltd"                  
+[56] "NyanzaRiver Worldwide AS"             
+[57] "Oka Seafood Shipping Ges.m.b.H."      
+[58] "Olsen Group"                          
+[59] "Phelps, Brown and Wallace"            
+[60] "Phillips-Newton"                      
+[61] "PregolyaDredge Logistics Incorporated"
+[62] "Ramos-Shelton"                        
+[63] "Rasmussen, Nelson and King"           
+[64] "Rhodes-Thompson"                      
+[65] "Rivas-Stevens"                        
+[66] "Rosario-Melendez"                     
+[67] "Roth, Logan and Moreno"               
+[68] "Sanchez-Moreno"                       
+[69] "Serrano-Cruz"                         
+[70] "Smith-Hull"                           
+[71] "Solis-Lopez"                          
+[72] "Spencer, Richards and Wilson"         
+[73] "Taylor, Prince and Sherman"           
+[74] "Thomas-Weaver"                        
+[75] "Thompson-Padilla"                     
+[76] "Turner-Green"                         
+[77] "Underwood Inc"                        
+[78] "V. Miesel Shipping"                   
+[79] "Valdez, Dalton and Cook"              
+[80] "Vargas-Jensen"                        
+[81] "Vasquez, Chaney and Martinez"         
+[82] "Walker, Erickson and Blake"           
+[83] "Watson-Gray"                          
+[84] "Wilcox-Nelson"                        
+[85] "Wu-Hart"                              
+[86] "York-Castillo"                        </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unique values in the "News_Source" column</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>unique_news_sources <span class="ot">&lt;-</span> <span class="fu">unique</span>(text_data_clean<span class="sc">$</span>News_Source)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>unique_news_sources</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Haacklee Herald.txt"        "Lomark Daily.txt"          
+[3] "The News Buoy.txt"          "Haacklee Herald_Police.txt"
+[5] "Lomark Daily_Police.txt"    "The News Buoy_Police.txt"  </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are a total of:</p>
+<ul>
+<li><p>85 companies being mentioned in the news articles</p></li>
+<li><p>6 news outlets that authored the news articles</p></li>
+</ul>
+</div>
+</div>
+<p>Discovering the company that is mentioned the greatest number of times, and the author of the most news articles</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Companies</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">News Sources</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the frequency of values in the "Company" column and sort by frequency</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>company_freq <span class="ot">&lt;-</span> text_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Company) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>company_freq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 86 × 3
+   Company                        n Percentage
+   &lt;chr&gt;                      &lt;int&gt;      &lt;dbl&gt;
+ 1 Cervantes-Kramer              12       3.55
+ 2 Jones Group                   12       3.55
+ 3 Rasmussen, Nelson and King     8       2.37
+ 4 Alvarez PLC                    6       1.78
+ 5 Anderson, Brown and Green      6       1.78
+ 6 Bell, Reynolds and Forbes      6       1.78
+ 7 Blackwell, Clark and Lam       6       1.78
+ 8 Brown, Clarke and Martinez     6       1.78
+ 9 Burns Inc                      6       1.78
+10 Castillo-Elliott               6       1.78
+# ℹ 76 more rows</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the frequency of values in the "News_Source" column and sort by frequency</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>news_source_freq <span class="ot">&lt;-</span> text_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(News_Source) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>news_source_freq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  News_Source                    n Percentage
+  &lt;chr&gt;                      &lt;int&gt;      &lt;dbl&gt;
+1 The News Buoy.txt            112     33.1  
+2 Haacklee Herald.txt          109     32.2  
+3 Lomark Daily.txt             107     31.7  
+4 Haacklee Herald_Police.txt     6      1.78 
+5 Lomark Daily_Police.txt        2      0.592
+6 The News Buoy_Police.txt       2      0.592</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The top 3 companies with the most mentions in the news articles are:</p>
+<ul>
+<li><p>Cervantes-Kramer (12 - 33.1%)</p></li>
+<li><p>Jones GRoup and Rasmussen (12 - 32.2%)</p></li>
+<li><p>Nelson and King (8 - 31.7%)</p></li>
+</ul>
+<p>The top 3 news outlets with the most number of news articles are:</p>
+<ul>
+<li><p>The News Buoy (112 - 33.1%)</p></li>
+<li><p>Haacklee Herald (109 - 32.2%)</p></li>
+<li><p>Lomark Daily (107 - 31.7%)</p></li>
+</ul>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

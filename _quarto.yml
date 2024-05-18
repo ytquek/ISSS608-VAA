@@ -37,7 +37,9 @@ website:
           - text: "Hands On Exercise 4 Part 3"
             href: "In_class_ex/hands-on_ex4_3.html"
           - text: "Hands On Exercise 5"
-            href: "In_class_ex/hands-on_ex5.html"
+            href: "In_class_ex/hands-on_Ex5.html"
+          - text: "Hands On Exercise 6"
+            href: "In_class_ex/hands-on_Ex6.html"
       - text: Take Home Exercise
         menu:
           - text: "Take Home Exercise 1"
