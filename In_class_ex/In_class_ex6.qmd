@@ -100,3 +100,6 @@ class(KJB)
 explore(KJB)
 ```
 
+```{r}
+pacman::p_load(jsonlite, tidygraph, ggraph, visNetwork, graphlayouts, ggforce, skimr, tidytext , tidyverse)
+```
