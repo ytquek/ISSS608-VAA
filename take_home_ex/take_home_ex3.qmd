@@ -22,23 +22,17 @@ This take home exercise is done in conjunction with the group project. My group 
 
 ## Background
 
-In Oceanus, commercial fishing is a major part of the local economy, and the activities of local fishing companies are often discussed in local news reports, especially when there is a major disruption or controversial issue. Lately, the news is filled with stories of companies who are willing to break the law and fish illegally.
+The business community in Oceanus is dynamic with new startups, mergers, acquisitions, and investments. FishEye International closely watches business records to keep tabs on commercial fishing operators. FishEye's goal is to identify and prevent illegal fishing in the region's sensitive marine ecosystem. Analysts are working with company records that show ownership, shareholders, transactions, and information about the typical products and services of each entity. FishEye's analysts have a hybrid automated/manual process to transform the data into CatchNet: the Oceanus Knowledge Graph.
 
-FishEye International is an organization whose mission is to discover and stop illegal, unreported, and unregulated fishing. FishEye is an independent non-profit, but they share their findings with law enforcement when warranted. FishEye analysts collect open-source data, including news articles and public reports, and have recently started extracting embedded knowledge from these free text sources using several advanced language models. Knowledge from multiple sources is combined to form CatchNet: the Oceanus Knowledge Graph, which is used to search for evidence of possible illegal fishing activity. Analysts know that data may be biased so they review and edit extracted information before it is added to CatchNet. Data for this challenge includes both the extracted and analyst modified knowledge graph and the original source articles.
-
-Recently, the commercial fishing community in Oceanus was rocked with scandal after SouthSeafood Express Corp was caught fishing illegally. The company's leaders claim an innocent mistake, while others in the industry have suggested getting caught was overdue and is likely part of a larger pattern of suspect behavior. FishEye analysts are aware that a polarizing event like this is likely to attract biased perspectives. They are looking for your help to identify sources of bias in their data. They are having particular trouble determining whether bias comes from the source article, the algorithms used to extract the knowledge graph, or possibly somewhere else...
+In the past year, Oceanus's commercial fishing business community was rocked by the news that SouthSeafood Express Corp was caught fishing illegally. FishEye wants to understand temporal patterns and infer what may be happening in Oceanus's fishing marketplace because of SouthSeafood Express Corp's illegal behavior and eventual closure. The competitive nature of Oceanus's fishing market may cause some businesses to react aggressively to capture SouthSeafood Express Corp's business while other reactions may come from the awareness that illegal fishing does not go undetected and unpunished.
 
 ## Tasks and Questions:
 
-Your task is to develop visual analytics approaches that FishEye analysts can use to verify the facts included in their knowledge graph are representative of facts stated in the source text. Analysts should be able to compare consistency of the extracted knowledge with the source and identify and trace sources of bias in the data. Novel use of large language models (LLMs) as part of a visual analytics process is encouraged.
+Whilst there are many questions surrounding the status quo waiting to be answered, the author shall attempt to achieve the following criterias
 
-1.  Use novel visualizations and visual analytic workflows to examine the bias in each news source. Create visualizations to help FishEye analysts understand how bias in the original sources changes over time. You may use the knowledge graph extracts and may use a large language model to supplement your understanding.
+1.) Using your visualizations, find and display examples of typical and atypical business transactions (e.g., mergers, acquisitions, etc.). Can you infer the motivations behind changes in their activity?
 
-2.  FishEye uses two LLM extraction algorithms: ShadGPT and BassLine. Develop visualizations to compare the bias of each algorithm. Though not required, you may develop your own LLM-based extraction and include it in the comparison.
-
-3.  FishEye is also interested in understanding the reliability of their human analysts. Use visual analytics to examine potential analyst bias. Provide visual examples of the types of bias present.
-
-4.  Identify unreliable actors: news sources, algorithms, or analysts. Use visualizations to provide evidence for your conclusions. Can you use the data provided and a visual analytics workflow to determine who else may be involved?
+2.) Develop a visual approach to examine inferences. Infer how the influence of a company changes through time. Can you infer ownership or influence that a network may have?
 
 Note: the VAST challenge is focused on visual analytics and graphical figures should be included with your response to each question. Please include a reasonable number of figures for each question (no more than about 6) and keep written responses as brief as possible (around 250 words per question). Participants are encouraged to new visual representations rather than relying on traditional or existing approaches.
 
@@ -50,185 +44,502 @@ Note: Ensure that the [pacman](https://cran.r-project.org/web/packages/pacman/) 
 
 The following R packages will be used:
 
--   tidytext, tidyverse
+-   tidytext
+
+-   tidyverse
 
 -   readtext
 
 -   quanteda
 
-```{r}
-pacman::p_load(tidytext, readtext, quanteda, tidytext, tidyverse)
-```
+-   jsonlite
 
-## **Importing Multiple Text Files**
+-   igraph
 
-### **Creating a folder list**
+-   tidygraph
 
-```{r}
-data_folder <- "data/articles/"
-```
+-   ggraph
 
-### **Define a function to read all files from a folder into a data frame**
+-   visNetwork
+
+-   [clock](https://cran.r-project.org/web/packages/clock/index.html)
 
 ```{r}
-text_data <- readtext(paste0("data/articles","/*"))
-# alternate version: text_data <- readtext("data/articles/*")
+pacman::p_load(tidytext, readtext, quanteda, tidyverse, jsonlite, igraph, tidygraph, ggraph, visNetwork, clock, graphlayouts)
 ```
+
+## **Importing JSON File**
+
+Direct import of the mc3.json file shows an error message indicating that there's an invalid character in the JSON text, specifically "NaN". As "NaN" is not recognised as a valid value, preprocessing of the JSON file to replace "NaN" is required.
+
+```{r}
+# Read the JSON file as text
+json_text <- readLines("data/mc3.json")
+
+# Replace "NaN" with "null"
+json_text_fixed <- gsub("NaN", "null", json_text)
+
+# Write the fixed JSON text back to a file
+writeLines(json_text_fixed, "data/mc3_fixed.json")
+```
+
+Importing preprocessed mc3_fixed.json file
+
+```{r}
+mc3_data <- fromJSON("data/mc3_fixed.json")
+```
+
+```{r}
+head(mc3_data)
+str(mc3_data)
+```
+
+## Format changes
+
+```{r}
+mc3_edges <-
+  as_tibble(mc3_data$links) %>%
+  distinct() %>%
+  mutate(source = as.character(source),
+         target = as.character(target),
+         type = as.character(type)) %>%
+  group_by(source, target, type) %>%
+  summarise(weights = n()) %>%
+  filter(source != target) %>%
+  ungroup()
+```
+
+```{r}
+mc3_nodes <- as_tibble(mc3_data$nodes) %>%
+  mutate(country = as.character(country), 
+         id = as.character(id), 
+         ProductServices = as.character(ProductServices), 
+         revenue = as.numeric(as.character(revenue)), 
+         type = as.character(type)) %>%
+  select(id, country, type, revenue, ProductServices)
+```
+
+## Finding all the unique values
+
+```{r}
+unique_transaction_types <- mc3_edges %>%
+  select(type) %>%
+  distinct()
+
+# Display the unique transaction types
+print(unique_transaction_types)
+
+unique_transaction_types_nodes <- mc3_nodes %>%
+  select(type) %>%
+  distinct()
+print(unique_transaction_types_nodes)
+
+```
+
+```{r}
+id1 <- mc3_edges %>%
+  select(source) %>%
+  rename(id = source)
+
+id2 <- mc3_edges %>%
+  select(target) %>%
+  rename(id = target)
+
+mc3_nodes1 <- rbind(id1, id2) %>%
+  distinct() %>%
+  left_join(mc3_nodes, by = c("id" = "id")) %>%
+  mutate(unmatched = "drop")
+
+```
+
+```{r}
+# Create the graph object
+mc3_graph <- tbl_graph(nodes = mc3_nodes1, edges = mc3_edges, directed = FALSE) %>%
+  mutate(betweenness_centrality = centrality_betweenness(),
+         closeness_centrality = centrality_closeness())
+  theme_graph()
+```
+
+```{r}
+# Identify top nodes by betweenness centrality
+top_nodes <- mc3_graph %>% 
+  as_tibble() %>% 
+  filter(betweenness_centrality >= 3000000)
+```
+
+```{r}
+# Filter edges for atypical business transactions
+atypical_edges <- mc3_edges %>%
+  filter(type %in% c("Event.Owns.Shareholdership", "Event.WorksFor", "Event.Owns.BeneficialOwnership"))
+
+# Extract nodes that are part of these transactions
+atypical_nodes <- mc3_nodes %>%
+  filter(id %in% unique(c(atypical_edges$source, atypical_edges$target)))
+
+# Create the graph object with filtered data
+atypical_graph <- tbl_graph(nodes = atypical_nodes, edges = atypical_edges, directed = FALSE) %>%
+  mutate(betweenness_centrality = centrality_betweenness(),
+         closeness_centrality = centrality_closeness())
+
+# Define higher centrality thresholds for more filtering
+betweenness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(betweenness_centrality), 0.995)
+closeness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(closeness_centrality), 0.995)
+
+# Filter nodes based on higher centrality thresholds
+filtered_graph <- atypical_graph %>%
+  activate(nodes) %>%
+  filter(betweenness_centrality >= betweenness_threshold | closeness_centrality >= closeness_threshold) %>%
+  activate(edges) %>%
+  filter(edge_is_between())
+
+# Display the refined network graph
+ggraph(filtered_graph, layout = "fr") + # Using Fruchterman-Reingold layout
+  geom_edge_link(aes(edge_alpha = 0.8, edge_width = 0.8)) + # Customize edge appearance
+  geom_node_point(aes(size = betweenness_centrality, color = closeness_centrality)) + # Customize node appearance
+  scale_color_viridis_c() + # Use viridis color scale
+  theme_void() + # Use a void theme
+  labs(title = "Refined Network Graph of Atypical Business Transactions",
+       subtitle = "Nodes colored by closeness centrality and sized by betweenness centrality",
+       caption = "Data Source: mc3.json") # Add titles and captions
+
+```
+
+```{r}
+# Define higher centrality thresholds for more filtering
+betweenness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(betweenness_centrality), 0.995)
+closeness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(closeness_centrality), 0.995)
+
+# Filter nodes based on higher centrality thresholds
+filtered_graph <- atypical_graph %>%
+  activate(nodes) %>%
+  filter(betweenness_centrality >= betweenness_threshold | closeness_centrality >= closeness_threshold) %>%
+  activate(edges) %>%
+  filter(edge_is_between())
+
+# Verify the filtered graph object
+print(filtered_graph)
+
+# Display the refined network graph
+ggraph(filtered_graph, layout = "fr") + # Using Fruchterman-Reingold layout
+  geom_edge_link(aes(edge_alpha = 0.8, edge_width = 0.8)) + # Customize edge appearance
+  geom_node_point(aes(size = betweenness_centrality, color = closeness_centrality)) + # Customize node appearance
+  scale_color_viridis_c() + # Use viridis color scale
+  theme_void() + # Use a void theme
+  labs(title = "Refined Network Graph of Atypical Business Transactions",
+       subtitle = "Nodes colored by closeness centrality and sized by betweenness centrality",
+       caption = "Data Source: mc3.json") # Add titles and captions
+
+
+```
+
+```{r}
+# Filter edges for atypical business transactions
+atypical_edges <- mc3_edges %>%
+  filter(type %in% c("Event.Owns.Shareholdership", "Event.WorksFor", "Event.Owns.BeneficialOwnership"))
+
+# Extract nodes that are part of these transactions
+atypical_nodes <- mc3_nodes %>%
+  filter(id %in% unique(c(atypical_edges$source, atypical_edges$target)))
+
+# Create the graph object with filtered data
+atypical_graph <- tbl_graph(nodes = atypical_nodes, edges = atypical_edges, directed = FALSE) %>%
+  mutate(betweenness_centrality = centrality_betweenness(),
+         closeness_centrality = centrality_closeness())
+
+# Define higher centrality thresholds for more filtering
+betweenness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(betweenness_centrality), 0.995)
+closeness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(closeness_centrality), 0.995)
+
+# Filter nodes based on higher centrality thresholds
+filtered_graph <- atypical_graph %>%
+  activate(nodes) %>%
+  filter(betweenness_centrality >= betweenness_threshold | closeness_centrality >= closeness_threshold)
+
+# Get top 50 links based on the sum of betweenness centrality of source and target nodes
+top_50_links <- filtered_graph %>%
+  activate(edges) %>%
+  mutate(edge_betweenness_sum = .N()$betweenness_centrality[from] + .N()$betweenness_centrality[to]) %>%
+  arrange(desc(edge_betweenness_sum)) %>%
+  slice(1:50)
+
+# Create a new graph object with the top 50 links
+top_50_graph <- tbl_graph(nodes = filtered_graph %>% activate(nodes), edges = top_50_links, directed = FALSE)
+
+# Identify the top nodes for labeling
+top_nodes <- top_50_graph %>%
+  activate(nodes) %>%
+  as_tibble() %>%
+  arrange(desc(betweenness_centrality)) %>%
+  slice(1:10)
+
+# Extract layout data for node positions
+graph_layout <- create_layout(top_50_graph, layout = "fr")
+
+# Display the refined network graph with top 50 links and node labels
+ggraph(graph_layout) + # Using precomputed layout
+  geom_edge_link(aes(edge_alpha = 0.8, edge_width = 0.8), color = "gray") + # Customize edge appearance
+  geom_node_point(aes(size = betweenness_centrality, color = closeness_centrality)) + # Customize node appearance
+  geom_node_text(data = graph_layout, aes(x = x, y = y, label = id), repel = TRUE, size = 3, check_overlap = TRUE) + # Add labels to top nodes
+  scale_color_viridis_c() + # Use viridis color scale
+  theme_void() + # Use a void theme
+  labs(title = "Top 50 Links in Atypical Business Transactions",
+       subtitle = "Nodes colored by closeness centrality and sized by betweenness centrality",
+       caption = "Data Source: mc3.json") # Add titles and captions
+```
+
+### **Interpretation** 
+
+1.  **Node Size (Betweenness Centrality):**
+
+    -   Larger nodes represent entities with higher betweenness centrality. These are nodes that frequently act as intermediaries in the shortest paths between other nodes. They are crucial for the flow of information or transactions in the network.
+
+2.  **Node Color (Closeness Centrality):**
+
+    -   The color of the nodes indicates their closeness centrality. Closeness centrality measures how close a node is to all other nodes in the network. Nodes with higher closeness centrality (often lighter colors) can quickly interact with other nodes.
+
+3.  **Labeled Nodes:**
+
+    -   The labels represent the most central nodes based on betweenness centrality. These are key entities in the network, acting as significant intermediaries in business transactions.
+
+4.  **Node Distribution:**
+
+    -   The dense cluster of nodes in the center indicates a high level of interaction among these entities. Peripheral nodes might indicate entities that are less central but still part of significant transactions.
+
+### **Observations**
+
+-   **Highly Central Entities:**
+
+    -   Entities such as "Augustin Le Texier," "Sullivan and Sons," "Tullio Jacuzzi," and others labeled on the graph are highly central in terms of their ability to broker connections between other nodes.
+
+-   **Dense Core:**
+
+    -   The central area of the graph is densely packed with nodes, indicating a high degree of interconnection among many entities. This suggests a tightly-knit network where many transactions or interactions occur.
+
+-   **Peripheral Nodes:**
+
+    -   Nodes on the periphery, though smaller and less central, still play a role in the network. Their interactions may be with the core or other peripheral nodes.
+
+### **Potential Actions**
+
+1.  **Focus on Key Players:**
+
+    -   Entities with high betweenness and closeness centrality (large, brightly colored nodes) are critical for network connectivity. These entities might be key influencers or major players in business transactions.
+
+2.  **Investigate Clusters:**
+
+    -   The dense central cluster indicates a closely connected group of entities. Investigating these clusters can reveal sub-networks or communities within the larger network.
+
+```{r}
+# Refactored plot with enhancements
+# Enhanced plot with labels, colors, and improved legend
+ggraph(mc3_graph, layout = "fr") +  # Make sure the layout parameter is a string
+  geom_edge_link(aes(edge_alpha = 0.5)) +
+  geom_node_point(aes(size = betweenness_centrality, color = as.factor(type), alpha = ifelse(betweenness_centrality >= 30000000, 1, 0.4))) +  # Adjust alpha
+  geom_node_text(aes(label = ifelse(betweenness_centrality >= 300000000000000, id, "")),
+                 vjust = 1.5, hjust = 1.5, check_overlap = TRUE) +
+  scale_size_continuous(range = c(1, 10)) +
+  scale_color_manual(values = c("Entity.Organization.Company" = "blue", "Entity.Organization.LogisticsCompany" = "green", "Entity.Organization.FishingCompany" = "red","Entity.Person" = "yellow")) +
+  guides(edge_alpha = guide_legend(title = "Edge Alpha"),
+         size = guide_legend(title = "Betweenness Centrality"),
+         color = guide_legend(title = "Node Type")) +
+  theme_graph() +
+  theme(legend.position = "bottom") +
+  labs(title = "Enhanced Company Network Visualization",
+       subtitle = "Key Nodes Highlighted with Betweenness Centrality >= 3,000,000")
+```
+
+```{r}
+# Highlight key nodes with betweenness centrality >= 30,000,000
+key_nodes <- mc3_graph %>%
+  activate(nodes) %>%
+  filter(betweenness_centrality >= 30000000)
+
+# Perform clustering on the graph
+clustered_graph <- mc3_graph %>%
+  mutate(cluster = as.factor(group_louvain()))
+
+# Extract layout data for node positions
+graph_layout <- create_layout(clustered_graph, layout = "fr")
+
+# Enhanced plot with labels, colors, and improved legend
+ggraph(graph_layout) +  # Using precomputed layout
+  geom_edge_link(aes(edge_alpha = 0.5)) +
+  geom_node_point(aes(size = betweenness_centrality, color = cluster, alpha = ifelse(betweenness_centrality >= 3000000, 1, 0.4))) +  # Adjust alpha
+  geom_node_text(aes(label = ifelse(betweenness_centrality >= 30000000, id, "")),
+                 vjust = 1.5, hjust = 1.5, check_overlap = TRUE) +
+  scale_size_continuous(range = c(1, 10)) +
+  scale_color_manual(values = c("1" = "blue", "2" = "green", "3" = "red", "4" = "yellow", "5" = "purple", "6" = "orange", "7" = "pink", "8" = "cyan")) +  # Customize based on the number of clusters
+  guides(edge_alpha = guide_legend(title = "Edge Alpha"),
+         size = guide_legend(title = "Betweenness Centrality"),
+         color = guide_legend(title = "Cluster")) +
+  theme_graph() +
+  theme(legend.position = "bottom") +
+  labs(title = "Enhanced Company Network Visualization",
+       subtitle = "Key Nodes Highlighted with Betweenness Centrality >= 3,000,000")
+
+```
+
+```{r}
+
+# Create an edge list for the network
+edge_list <- mc3_nodes%>%
+  select(id, type) %>%
+  rename(from = id, to = type)
+
+# Build the graph
+g <- graph_from_data_frame(edge_list, directed = FALSE)
+
+# Plot the network
+ggraph(g, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = 0.5)) +
+  geom_node_point(aes(size = degree(g)), color = "blue") +
+  theme_void() +
+  labs(title = "Company Network")
+```
+
+```{r}
+# Example: Market reaction analysis
+# market_data <- mc3_data_flat %>%
+#   group_by(company) %>%
+#   summarise(total_revenue = sum(revenue))
+# 
+# # Plot market share changes
+# ggplot(market_data, aes(x = reorder(company, -total_revenue), y = total_revenue)) +
+#   geom_bar(stat = "identity", fill = "steelblue") +
+#   labs(title = "Market Share Changes", x = "Company", y = "Total Revenue") +
+#   theme_minimal() +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## ALICIA's work
 
 Check dataframe
 
-```{r}
-corpus_text <- corpus(text_data)
-summary(corpus_text, 5)
-```
+-   Opens new tabs within R workspace, not shown in website
 
-### **Text Data Processing**
-
--    [`unnest_tokens()`](https://www.rdocumentation.org/packages/tidytext/versions/0.3.1/topics/unnest_tokens) of **tidytext** package is used to split the dataset into tokens
-
--    [`stop_words()`](https://rdrr.io/cran/tidytext/man/stop_words.html) is used to remove stop-words
-
-```{r}
-# Tokenize the text column
-unnest_words <- text_data %>%   
-  unnest_tokens(output = word, input = text) 
-
-# Filter tokens to include only alphabetic characters and remove stop words
-unnest_words <- filter(unnest_words, 
-                       str_detect(word, "[a-z']$"),          
-                       !word %in% stop_words$word)
-```
-
-View dataframe
-
-```{r}
-glimpse(unnest_words)
-```
-
-### Explore Common words
-
-The code chunk below calculates individual word frequencies to explore common words in the dataset.
-
-```{r}
-unnest_words %>%
-  count(word,sort = TRUE)
-```
-
-::: callout-note
-Common words from the articles seem to be related to sustainable fishing practices in the larger fishing industry and trade.
-:::
-
-View dataframe
-
-```{r}
-glimpse(unnest_words)
-```
-
-::: callout-note
-In the dataset, it can be seen that under the "doc_id" column, the company mentioned in the article, along with its author is separated by some underscores and numbers. We will split this column into "Company" and "News_Source" to simplify later analysis.
-:::
-
-### Split doc_id column
-
-The column has the format **`Company__Number__Number__News_Source.txt`**.
-
-```{r}
-text_data_split <- text_data %>%
-  separate_wider_delim("doc_id",
-                       delim = "__",
-                       names = c("Company", "Number", "Number2", "News_Source"),
-                       too_many = "debug")
-```
-
-View dataframe
-
-```{r}
-glimpse(text_data_split)
-```
-
-Drop unnecessary columns
-
-```{r}
-text_data_clean <- text_data_split %>%
-  select(-Number, -Number2, -doc_id, -doc_id_ok, -doc_id_pieces, -doc_id_remainder)
-```
-
-View dataframe
-
-```{r}
-glimpse(text_data_clean)
-```
-
-## EDA
-
-List of Company and News Sources
+-   Example of the view is shown in the screenshot tab below
 
 ::: panel-tabset
-## Companies
+## Code
 
 ```{r}
-# Unique values in the "Company" column
-unique_companies <- unique(text_data_clean$Company)
-unique_companies
+view(mc3_data[["nodes"]])
+view(mc3_data[["links"]])
 ```
 
-## News Sources
+## Screenshot Example
+
+mc3_data\[\["nodes'\]
+
+![](images/clipboard-1212461262.png)
+
+![](images/clipboard-3963926457.png)
+
+mc3_data\[\["links"\]\]
+
+![](images/clipboard-2580708180.png)
+
+![](images/clipboard-3147037567.png)
+:::
+
+View dataframe
+
+-   Similar info as shown above
 
 ```{r}
-# Unique values in the "News_Source" column
-unique_news_sources <- unique(text_data_clean$News_Source)
-unique_news_sources
+glimpse(mc3_data)
 ```
+
+::: callout-note
+mc3_date\[\["nodes"\]\] dataframe contains 15 columns and 60520 rows.
+
+mc3_date\[\["links"\]\] dataframe contains 11 columns and 75817 rows.
 :::
 
 ::: callout-note
-There are a total of:
+On closer inspection of `mc3_data`, we note that columns containing dates are treated as "Character" data type instead of *date* data type, which is incorrect. Thus, the data type of the following fields need to be changed to "Date"" data type:
 
--   85 companies being mentioned in the news articles
+-   founding_date
 
--   6 news outlets that authored the news articles
+-   \_last_edited_date
+
+-   \_date_added
+
+-   start_date
+
+-   \_last_edited_date
+
+-   \_date_added
+
+-   dob
+
+In addition, some columns in `mc3_data` have missing values, which also need to be handled appropriately for ease of later analysis.
 :::
 
-Discovering the company that is mentioned the greatest number of times, and the author of the most news articles
+## Missing Values
+
+Identify the percentage of missing values within the dataset
+
+```{r}
+# Function to calculate missing value percentages
+calculate_missing_percentage <- function(df) {
+  total_values <- nrow(df) * ncol(df)
+  missing_values <- sum(is.na(df))
+  missing_percentage <- (missing_values / total_values) * 100
+  return(missing_percentage)
+}
+```
 
 ::: panel-tabset
-## Companies
+## Nodes
 
 ```{r}
-# Count the frequency of values in the "Company" column and sort by frequency
-company_freq <- text_data_clean %>%
-  count(Company) %>%
-  mutate(Percentage = n / sum(n) * 100) %>%
-  arrange(desc(n))
-company_freq
+nodes_missing_percentage <- calculate_missing_percentage(mc3_data[["nodes"]])
+nodes_missing_percentage
+
+nodes_missing_by_column <- sapply(mc3_data[["nodes"]], function(x) sum(is.na(x)) / length(x) * 100)
+nodes_missing_by_column
 ```
 
-## News Sources
+## Links
 
 ```{r}
-# Count the frequency of values in the "News_Source" column and sort by frequency
-news_source_freq <- text_data_clean %>%
-  count(News_Source) %>%
-  mutate(Percentage = n / sum(n) * 100) %>%
-  arrange(desc(n))
-news_source_freq
+links_missing_percentage <- calculate_missing_percentage(mc3_data[["links"]])
+links_missing_percentage
+
+links_missing_by_column <- sapply(mc3_data[["links"]], function(x) sum(is.na(x)) / length(x) * 100)
+links_missing_by_column
 ```
 :::
 
 ::: callout-note
-The top 3 companies with the most mentions in the news articles are:
+Nodes: Overall, there are 35.12% missing values. While most columns have no missing values, the majority of those with missing data pertain to optional attributes:
 
--   Cervantes-Kramer (12 - 33.1%)
+-   ProductServices (Optional) - 85.34%
 
--   Jones GRoup and Rasmussen (12 - 32.2%)
+-   PointOfContact (Optional)- 85.38%
 
--   Nelson and King (8 - 31.7%)
+-   HeadofOrg (Optional) - 85.36%
 
-The top 3 news outlets with the most number of news articles are:
+-   founding_date - 85.34%
 
--   The News Buoy (112 - 33.1%)
+-   revenue (Optional) - 85.37%
 
--   Haacklee Herald (109 - 32.2%)
+-   TradeDescription (Optional) - 85.34%
 
--   Lomark Daily (107 - 31.7%)
+-   dob - 14.66%
+
+Links: Overall, there are 9.06% missing values. Most of the columns do not contain missing values, except for:
+
+-   start_date - 0.12%
+
+-   end_date (Optional) - 99.54%
+
+In addition, according to the *VAST2024 - MC3 Data Description* file, all empty values are supposed to have been set to 0. However, there are still some values with "NA".
 :::
+
+### Setting empty values in *`revenue`* to 0
+
+```{r}
+mc3_data$nodes$revenue <- ifelse(is.na(mc3_data$nodes$revenue) | mc3_data$nodes$revenue == "", 0, mc3_data$nodes$revenue)
+```

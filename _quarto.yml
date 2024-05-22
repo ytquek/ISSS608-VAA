@@ -48,6 +48,8 @@ website:
             href: "take_home_ex/take_home_ex1.html"
           - text: "Take Home Exercise 2"
             href: "take_home_ex/take_home_ex2.html"
+          - text: "Take Home Exercise 3"
+            href: "take_home_ex/take_home_ex3.html"
     sidebar:
     contents: auto
 
