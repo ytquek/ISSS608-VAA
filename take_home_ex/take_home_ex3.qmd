@@ -62,10 +62,12 @@ The following R packages will be used:
 
 -   visNetwork
 
+-   plotly
+
 -   [clock](https://cran.r-project.org/web/packages/clock/index.html)
 
 ```{r}
-pacman::p_load(tidytext, readtext, quanteda, tidyverse, jsonlite, igraph, tidygraph, ggraph, visNetwork, clock, graphlayouts)
+pacman::p_load(tidytext, readtext, quanteda, tidyverse, jsonlite, igraph, tidygraph, ggraph, visNetwork, clock, graphlayouts, plotly)
 ```
 
 ## **Importing JSON File**
@@ -105,6 +107,7 @@ head(mc3_data, n = 20)
 
 ## Format changes
 
+### Assigning the Edges
 ```{r}
 mc3_edges <-
   as_tibble(mc3_data$links) %>%
@@ -118,6 +121,7 @@ mc3_edges <-
   ungroup()
 ```
 
+### Assigning the Nodes
 ```{r}
 mc3_nodes <- as_tibble(mc3_data$nodes) %>%
   mutate(country = as.character(country), 
@@ -129,8 +133,9 @@ mc3_nodes <- as_tibble(mc3_data$nodes) %>%
 ```
 
 ## Finding all the unique values
-
-```{r}
+::: panel-tabset
+## Code
+```{r, eval=FALSE}
 unique_transaction_types <- mc3_edges %>%
   select(type) %>%
   distinct()
@@ -145,7 +150,27 @@ print(unique_transaction_types_nodes)
 
 ```
 
-```{r}
+## Output
+```{r, echo=FALSE}
+unique_transaction_types <- mc3_edges %>%
+  select(type) %>%
+  distinct()
+
+# Display the unique transaction types
+print(unique_transaction_types)
+
+unique_transaction_types_nodes <- mc3_nodes %>%
+  select(type) %>%
+  distinct()
+print(unique_transaction_types_nodes)
+
+```
+:::
+
+## Creating the graph object
+::: panel-tabset
+## Code
+```{r, eval=FALSE}
 id1 <- mc3_edges %>%
   select(source) %>%
   rename(id = source)
@@ -161,13 +186,44 @@ mc3_nodes1 <- rbind(id1, id2) %>%
 
 ```
 
-```{r}
+## Output
+```{r, echo=FALSE}
+id1 <- mc3_edges %>%
+  select(source) %>%
+  rename(id = source)
+
+id2 <- mc3_edges %>%
+  select(target) %>%
+  rename(id = target)
+
+mc3_nodes1 <- rbind(id1, id2) %>%
+  distinct() %>%
+  left_join(mc3_nodes, by = c("id" = "id")) %>%
+  mutate(unmatched = "drop")
+
+```
+::: 
+
+::: panel-tabset
+
+##Code
+```{r, eval=FALSE}
 # Create the graph object
 mc3_graph <- tbl_graph(nodes = mc3_nodes1, edges = mc3_edges, directed = FALSE) %>%
   mutate(betweenness_centrality = centrality_betweenness(),
          closeness_centrality = centrality_closeness())
   theme_graph()
 ```
+
+##Output
+```{r, echo=FALSE}
+# Create the graph object
+mc3_graph <- tbl_graph(nodes = mc3_nodes1, edges = mc3_edges, directed = FALSE) %>%
+  mutate(betweenness_centrality = centrality_betweenness(),
+         closeness_centrality = centrality_closeness())
+  theme_graph()
+```
+:::
 
 ```{r}
 # Identify top nodes by betweenness centrality
@@ -176,6 +232,18 @@ top_nodes <- mc3_graph %>%
   filter(betweenness_centrality >= 3000000)
 ```
 
+## Viewing the nodes with more than 2999999 centrality
+```{r}
+
+head(top_nodes, n = 50)
+
+```
+## Finding atypical ownerships
+
+With the dataset we have explored, we first will need to sift out edges with some form of ownership or working relationship.
+
+Following that, the centrality threshold will need to be defined so that most false positives are being filtered out through it.
+### Step 1 Filtering for edges with "Event.Owns.Shareholdership", "Event.WorksFor", "Event.Owns.BeneficialOwnership" ownership
 ```{r}
 # Filter edges for atypical business transactions
 atypical_edges <- mc3_edges %>%
@@ -213,6 +281,7 @@ ggraph(filtered_graph, layout = "fr") + # Using Fruchterman-Reingold layout
 
 ```
 
+### Step 2 filtering out false positives with a centrality threshold
 ```{r}
 # Define higher centrality thresholds for more filtering
 betweenness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(betweenness_centrality), 0.995)
@@ -241,6 +310,17 @@ ggraph(filtered_graph, layout = "fr") + # Using Fruchterman-Reingold layout
 
 ```
 
+
+### Conclusion
+From the output of step 2, the data visualisation is poor to say the least with multiple sparse relationships and only one concentrated relationship shown in the middle of the diagram.
+
+This can be further improved by showing only the top few links to highlight potential atypical transactions instead.
+
+## Refining visualisation 
+We first will need to sift out edges with some form of ownership or working relationship.
+Following that, the centrality threshold will need to be defined so that most false positives are being filtered out through it and then finally using *slice* to only take the top 50 edges.
+
+### Step 1 Filtering for edges with "Event.Owns.Shareholdership", "Event.WorksFor", "Event.Owns.BeneficialOwnership" ownership 
 ```{r}
 # Filter edges for atypical business transactions
 atypical_edges <- mc3_edges %>%
@@ -263,7 +343,10 @@ closeness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(clos
 filtered_graph <- atypical_graph %>%
   activate(nodes) %>%
   filter(betweenness_centrality >= betweenness_threshold | closeness_centrality >= closeness_threshold)
+```
 
+### Step 2, take only the top 50 links
+```{r}
 # Get top 50 links based on the sum of betweenness centrality of source and target nodes
 top_50_links <- filtered_graph %>%
   activate(edges) %>%
@@ -295,6 +378,7 @@ ggraph(graph_layout) + # Using precomputed layout
        subtitle = "Nodes colored by closeness centrality and sized by betweenness centrality",
        caption = "Data Source: mc3.json") # Add titles and captions
 ```
+
 ```{r}
 # Filter edges for atypical business transactions
 atypical_edges <- mc3_edges %>%
@@ -352,76 +436,7 @@ ggraph(graph_layout) + # Using precomputed layout
        caption = "Data Source: mc3.json") # Add titles and captions
 
 ```
-```{r}
-# Filter edges for atypical business transactions
-atypical_edges <- mc3_edges %>%
-  filter(type %in% c("Event.Owns.Shareholdership", "Event.WorksFor", "Event.Owns.BeneficialOwnership"))
 
-# Extract nodes that are part of these transactions
-atypical_nodes <- mc3_nodes %>%
-  filter(id %in% unique(c(atypical_edges$source, atypical_edges$target)))
-
-# Convert id column to integer to match the type with from and to columns
-atypical_nodes <- atypical_nodes %>%
-  mutate(id = as.integer(id))
-
-# Create the graph object with filtered data
-atypical_graph <- tbl_graph(nodes = atypical_nodes, edges = atypical_edges, directed = FALSE) %>%
-  mutate(betweenness_centrality = centrality_betweenness(),
-         closeness_centrality = centrality_closeness())
-
-# Define higher centrality thresholds for more filtering
-betweenness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(betweenness_centrality), 0.995)
-closeness_threshold <- quantile(atypical_graph %>% activate(nodes) %>% pull(closeness_centrality), 0.995)
-
-# Filter nodes based on higher centrality thresholds
-filtered_graph <- atypical_graph %>%
-  activate(nodes) %>%
-  filter(betweenness_centrality >= betweenness_threshold | closeness_centrality >= closeness_threshold)
-
-# Get top 50 links based on the sum of betweenness centrality of source and target nodes
-top_50_links <- filtered_graph %>%
-  activate(edges) %>%
-  mutate(edge_betweenness_sum = .N()$betweenness_centrality[from] + .N()$betweenness_centrality[to]) %>%
-  arrange(desc(edge_betweenness_sum)) %>%
-  slice(1:50)
-
-# Create a new graph object with the top 50 links
-top_50_graph <- tbl_graph(nodes = filtered_graph %>% activate(nodes), edges = top_50_links, directed = FALSE)
-
-# Identify the top nodes for labeling
-top_nodes <- top_50_graph %>%
-  activate(nodes) %>%
-  as_tibble() %>%
-  arrange(desc(betweenness_centrality)) %>%
-  slice(1:10)
-
-# Extract layout data for node positions
-graph_layout <- create_layout(top_50_graph, layout = "fr")
-
-# Create the ggraph plot
-p <- ggraph(graph_layout) +
-  geom_edge_link(aes(width = edge_betweenness_sum / max(edge_betweenness_sum), 
-                     alpha = edge_betweenness_sum / max(edge_betweenness_sum), 
-                     tooltip = edge_betweenness_sum), 
-                 color = "gray") + # Customize edge appearance
-  geom_node_point(aes(size = betweenness_centrality, color = closeness_centrality, 
-                      tooltip = paste("ID:", id, "<br>Betweenness:", betweenness_centrality, 
-                                      "<br>Closeness:", closeness_centrality))) + # Customize node appearance
-  geom_node_text(aes(x = x, y = y, label = id), repel = TRUE, size = 3, check_overlap = TRUE, 
-                 data = graph_layout %>% as_tibble() %>% filter(id %in% top_nodes$id)) + # Add labels to top nodes
-  scale_color_viridis_c() + # Use viridis color scale
-  theme_void() + # Use a void theme
-  labs(title = "Top 50 Links in Atypical Business Transactions",
-       subtitle = "Nodes colored by closeness centrality and sized by betweenness centrality",
-       caption = "Data Source: mc3.json") # Add titles and captions
-
-# Convert ggraph plot to plotly object
-p_plotly <- ggplotly(p, tooltip = "tooltip")
-
-# Display the plotly interactive plot
-p_plotly
-```
 
 ### **Interpretation**
 
@@ -465,29 +480,19 @@ p_plotly
 
     -   The dense central cluster indicates a closely connected group of entities. Investigating these clusters can reveal sub-networks or communities within the larger network.
 
-```{r}
-# Refactored plot with enhancements
-# Enhanced plot with labels, colors, and improved legend
-ggraph(mc3_graph, layout = "fr") +  # Make sure the layout parameter is a string
-  geom_edge_link(aes(edge_alpha = 0.5)) +
-  geom_node_point(aes(size = betweenness_centrality, color = as.factor(type), alpha = ifelse(betweenness_centrality >= 30000000, 1, 0.4))) +  # Adjust alpha
-  geom_node_text(aes(label = ifelse(betweenness_centrality >= 300000000000000, id, "")),
-                 vjust = 1.5, hjust = 1.5, check_overlap = TRUE) +
-  scale_size_continuous(range = c(1, 10)) +
-  scale_color_manual(values = c("Entity.Organization.Company" = "blue", "Entity.Organization.LogisticsCompany" = "green", "Entity.Organization.FishingCompany" = "red","Entity.Person" = "yellow")) +
-  guides(edge_alpha = guide_legend(title = "Edge Alpha"),
-         size = guide_legend(title = "Betweenness Centrality"),
-         color = guide_legend(title = "Node Type")) +
-  theme_graph() +
-  theme(legend.position = "bottom") +
-  labs(title = "Enhanced Company Network Visualization",
-       subtitle = "Key Nodes Highlighted with Betweenness Centrality >= 3,000,000")
-```
-
+### Cluster Investigation
 ```{r}
 # Perform clustering on the graph
 clustered_graph <- mc3_graph %>%
   mutate(cluster = as.factor(group_louvain()))
+
+# Calculate edge betweenness centrality for the entire graph
+edge_betweenness_vals <- edge_betweenness(clustered_graph)
+
+# Add edge betweenness centrality to the graph
+clustered_graph <- clustered_graph %>%
+  activate(edges) %>%
+  mutate(edge_betweenness = edge_betweenness_vals)
 
 # Highlight key nodes with betweenness centrality >= 3,000,000 and their clusters
 key_nodes_and_clusters <- clustered_graph %>%
@@ -501,13 +506,23 @@ filtered_graph <- clustered_graph %>%
   activate(nodes) %>%
   filter(cluster %in% key_nodes_and_clusters)
 
+# Calculate edge betweenness sum for the filtered graph
+filtered_graph <- filtered_graph %>%
+  activate(edges) %>%
+  mutate(edge_betweenness_sum = .N()$betweenness_centrality[from] + .N()$betweenness_centrality[to])
+
 # Extract layout data for node positions
 graph_layout <- create_layout(filtered_graph, layout = "fr")
 
 # Enhanced plot with labels, colors, and improved legend
-ggraph(graph_layout) +  # Using precomputed layout
-  geom_edge_link(aes(edge_alpha = 0.5)) +
-  geom_node_point(aes(size = betweenness_centrality, color = cluster, alpha = ifelse(betweenness_centrality >= 3000000, 1, 0.4))) +  # Adjust alpha
+p <- ggraph(graph_layout) +  # Using precomputed layout
+  geom_edge_link(aes(width = edge_betweenness_sum / max(edge_betweenness_sum), 
+                     alpha = edge_betweenness_sum / max(edge_betweenness_sum), 
+                     tooltip = edge_betweenness_sum), 
+                 color = "gray") + # Customize edge appearance
+  geom_node_point(aes(size = betweenness_centrality, color = cluster, 
+                      alpha = ifelse(betweenness_centrality >= 3000000, 1, 0.4),
+                      tooltip = paste("ID:", id, "<br>Cluster:", cluster, "<br>Betweenness:", betweenness_centrality))) +  # Add tooltip information
   geom_node_text(aes(label = ifelse(betweenness_centrality >= 3000000, id, "")),
                  vjust = 1.5, hjust = 1.5, check_overlap = TRUE) +
   scale_size_continuous(range = c(1, 10)) +
@@ -520,5 +535,9 @@ ggraph(graph_layout) +  # Using precomputed layout
   labs(title = "Enhanced Company Network Visualization",
        subtitle = "Key Nodes Highlighted with Betweenness Centrality >= 3,000,000")
 
-```
+# Convert ggraph plot to plotly object
+p_plotly <- ggplotly(p, tooltip = "tooltip")
 
+# Display the plotly interactive plot
+p_plotly
+```
