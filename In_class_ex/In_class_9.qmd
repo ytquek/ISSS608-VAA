@@ -1,0 +1,58 @@
+---
+title: "Hands on 9"
+author: "You Ting QUEK"
+date: "15 June, 2024"
+date-modified: last-modified
+execute: 
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+```{r}
+pacman::p_load(scatterPlotMatrix, parallelPlot, cluster, factoextra, tidyverse)
+```
+
+```{r}
+wine <- read.csv("data/wine_quality.csv")
+```
+
+```{r}
+ggplot(data = wine,
+       aes(x = type)) +
+  geom_bar()
+```
+
+Dropping column 12 and column 13 to make data cleaner
+
+```{r}
+whitewine <- wine %>%
+  filter(type =="white") %>%
+  select(c(1:11))
+```
+
+```{r}
+scatterPlotMatrix(whitewine,
+                  corrPlotType = "Text",
+                  distribType = 1,
+                  width = 500,
+                  height = 500)
+```
+
+## Clustering
+
+```{r}
+set.seed(123)
+kmeans4 <- kmeans(whitewine, 4, nstart = 25)
+print(kmeans4)
+```
+
+```{r}
+fviz_cluster(kmeans4, data = whitewine)
+```
+
+```{r}
+whitewine <- whitewine %>%
+  mutate(Cluster = kmeans4$Cluster)
+```
